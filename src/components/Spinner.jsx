@@ -1,0 +1,10 @@
+export default function Spinner({ size = 28, color = '#0f7a4b' }) {
+  return (
+    <div className="flex items-center justify-center w-full py-10">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className="animate-spin">
+        <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" strokeOpacity=".15"/>
+        <path d="M12 2a10 10 0 0 1 10 10" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      </svg>
+    </div>
+  )
+}
