@@ -14,27 +14,50 @@ import './index.css'
 
 function Guard({ children }) {
   const { isAuthenticated, hasProfile, loading } = useAuth()
-  if (loading) return <div className="flex items-center justify-center h-screen bg-white"><Spinner/></div>
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-screen bg-white">
+      <Spinner/>
+    </div>
+  )
   if (!isAuthenticated || !hasProfile) return <Navigate to="/onboarding" replace/>
   return children
 }
 
+// Works on both mobile and laptop
 function Shell({ children }) {
   return (
-    <div className="flex flex-col h-screen max-w-md mx-auto bg-gray-50 overflow-hidden">
-      <div className="flex-1 overflow-hidden">{children}</div>
-      <BottomNav/>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* On laptop: centered card. On mobile: full screen */}
+      <div className="flex-1 w-full max-w-md mx-auto flex flex-col bg-white shadow-xl min-h-screen relative">
+        <div className="flex-1 overflow-y-auto">
+          {children}
+        </div>
+        <BottomNav/>
+      </div>
     </div>
   )
 }
 
 function AppRoutes() {
   const { isAuthenticated, hasProfile, loading } = useAuth()
-  if (loading) return <div className="flex items-center justify-center h-screen bg-white"><Spinner/></div>
+
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-screen bg-white">
+      <Spinner/>
+    </div>
+  )
 
   return (
     <Routes>
-      <Route path="/onboarding" element={isAuthenticated && hasProfile ? <Navigate to="/" replace/> : <Onboarding/>}/>
+      <Route path="/onboarding" element={
+        isAuthenticated && hasProfile
+          ? <Navigate to="/" replace/>
+          : <div className="min-h-screen bg-gray-100 flex items-start justify-center py-0 md:py-8">
+              <div className="w-full max-w-md bg-white md:rounded-3xl md:shadow-xl overflow-hidden min-h-screen md:min-h-0">
+                <Onboarding/>
+              </div>
+            </div>
+      }/>
       <Route path="/split/:id"  element={<Shell><SplitDetail/></Shell>}/>
       <Route path="/"           element={<Guard><Shell><Home/></Shell></Guard>}/>
       <Route path="/splits"     element={<Guard><Shell><Home/></Shell></Guard>}/>
