@@ -191,17 +191,24 @@ export default function Onboarding() {
             <div className="mb-8">
               <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Your city</label>
               <div className="grid grid-cols-2 gap-2">
-                {CITIES.map(c => (
-                  <button key={c} type="button" onClick={() => setCity(c)}
-                    className="py-3 rounded-xl text-[13px] font-bold transition-all"
-                    style={{
-                      background: city===c ? '#f0fdf4' : '#f9fafb',
-                      border: `${city===c ? 2 : 1.5}px solid ${city===c ? G : '#e5e7eb'}`,
-                      color: city===c ? G : '#4b5563',
-                    }}>
-                    {c}
-                  </button>
-                ))}
+                {CITIES.map(c => {
+                  const live = c === 'Sunderland'
+                  const sel  = city === c
+                  return (
+                    <button key={c} type="button"
+                      onClick={() => setCity(c)}
+                      className="py-3 rounded-xl text-[13px] font-bold transition-all relative overflow-hidden"
+                      style={{
+                        background: sel ? '#f0fdf4' : '#f9fafb',
+                        border: `${sel ? 2 : 1.5}px solid ${sel ? G : '#e5e7eb'}`,
+                        color: sel ? G : live ? '#4b5563' : '#9ca3af',
+                      }}>
+                      {c}
+                      {live && <span className="block text-[9px] font-semibold mt-0.5" style={{color:G}}>✓ Live now</span>}
+                      {!live && <span className="block text-[9px] font-semibold mt-0.5" style={{color:'#f8c85a'}}>Coming soon</span>}
+                    </button>
+                  )
+                })}
               </div>
               {city && <p className="text-[12px] mt-2 text-center font-semibold" style={{ color: G }}>✓ {city} selected</p>}
             </div>

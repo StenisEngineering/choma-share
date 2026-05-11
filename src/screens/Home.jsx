@@ -66,6 +66,24 @@ export default function Home() {
       {/* Feed */}
       <div className="flex-1 overflow-y-auto scrollbar-none">
 
+        {/* Coming soon banner for non-Sunderland users */}
+        {profile && profile.city !== 'Sunderland' && (
+          <div className="mx-4 mt-4 p-4 rounded-3xl text-center relative overflow-hidden"
+            style={{ background: 'linear-gradient(135deg,#062f23,#0a4a35)', border: '1px solid rgba(200,242,109,0.2)' }}>
+            <div className="text-2xl mb-2">📍</div>
+            <h3 className="font-display font-bold text-[16px] text-white mb-1">
+              Coming to {profile.city} soon!
+            </h3>
+            <p className="text-[12px] mb-3" style={{ color: 'rgba(255,255,255,0.65)' }}>
+              We're launching in Sunderland first. You'll be notified the moment Choma Share goes live in {profile.city}.
+            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold"
+              style={{ background: 'rgba(248,200,90,0.15)', color: '#f8c85a', border: '1px solid rgba(248,200,90,0.3)' }}>
+              🔔 You're on the waitlist
+            </div>
+          </div>
+        )}
+
         {/* Create CTA */}
         <div className="px-4 pt-4">
           <button onClick={() => navigate('/create')}
