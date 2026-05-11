@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Home, LayoutGrid, Plus, Store, User } from 'lucide-react'
+import { Home, LayoutGrid, Plus, Users, User } from 'lucide-react'
 
 const tabs = [
-  { path: '/',        icon: Home,        label: 'Home'   },
-  { path: '/splits',  icon: LayoutGrid,  label: 'Splits' },
-  { path: '/create',  icon: Plus,        label: '',      create: true },
-  { path: '/stores',  icon: Store,       label: 'Stores' },
-  { path: '/profile', icon: User,        label: 'Me'     },
+  { path: '/',        icon: Home,        label: 'Home'    },
+  { path: '/splits',  icon: LayoutGrid,  label: 'Splits'  },
+  { path: '/create',  icon: Plus,        label: '',       create: true },
+  { path: '/circles', icon: Users,       label: 'Circles' },
+  { path: '/profile', icon: User,        label: 'Me'      },
 ]
 
 export default function BottomNav() {
@@ -21,7 +21,7 @@ export default function BottomNav() {
 
         if (t.create) return (
           <button key={t.path} onClick={() => navigate('/create')}
-            className="w-13 h-13 rounded-full flex items-center justify-center -mt-4"
+            className="rounded-full flex items-center justify-center -mt-4"
             style={{ width: 52, height: 52, marginTop: -18, background: 'linear-gradient(135deg,#0f7a4b,#15a66a)', boxShadow: '0 6px 20px rgba(15,122,75,.5)' }}>
             <Plus size={24} color="white" strokeWidth={2.5}/>
           </button>

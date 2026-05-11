@@ -70,14 +70,14 @@ export default function SplitDetail() {
         {/* Savings */}
         <div className="mx-4 mt-4 bg-white border border-gray-100 rounded-3xl p-4 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">You save</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Your share</div>
             <div className="font-display font-black text-[38px] leading-none" style={{ color: '#0f7a4b' }}>£{saving}</div>
-            <div className="text-[11px] text-gray-400 mt-1">{Math.round((saving/split.total_price)*100)}% off buying alone</div>
+            <div className="text-[11px] text-gray-400 mt-1">{Math.round((saving/split.total_price)*100)}% less than buying alone</div>
           </div>
           <div className="text-right">
             <div className="text-[15px] text-gray-300 line-through">£{split.total_price}</div>
             <div className="font-display font-black text-[30px] text-gray-900 leading-none">£{perHead}</div>
-            <div className="text-[11px] text-gray-400 mt-1">your share</div>
+            <div className="text-[11px] text-gray-400 mt-1">per person</div>
           </div>
         </div>
 
@@ -137,7 +137,7 @@ export default function SplitDetail() {
           <button onClick={handleJoin} disabled={joining}
             className="w-full text-white rounded-2xl py-4 text-[16px] font-bold disabled:opacity-50 mb-2.5"
             style={{ background: '#0f7a4b', boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
-            {joining ? 'Joining...' : `Join This Split · Pay £${perHead}`}
+            {joining ? 'Joining...' : 'Join This Split'}
           </button>
         ) : (
           <div className="bg-gray-100 rounded-2xl p-4 text-center text-[14px] font-semibold text-gray-500 mb-2.5">
@@ -150,6 +150,9 @@ export default function SplitDetail() {
         </button>
       </div>
 
+      <div className="mx-4 mb-4 p-3.5 bg-amber-50 border border-amber-100 rounded-2xl">
+        <p className="text-[12px] text-amber-700 leading-relaxed">⚠️ <strong>Choma Share only coordinates splits.</strong> Payment and collection are agreed directly between members. Only join splits with people you trust.</p>
+      </div>
       <ShareSheet split={split} open={shareOpen} onClose={() => setShare(false)}/>
     </div>
   )
