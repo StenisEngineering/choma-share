@@ -90,27 +90,30 @@ export default function Onboarding() {
     <div className="min-h-screen bg-white flex flex-col">
 
       {/* Hero */}
-      <div className="px-6 pt-14 pb-8 flex-shrink-0" style={{ background: '#07130e' }}>
-        <div className="mb-6">
-          <svg width="44" height="44" viewBox="0 0 40 40" fill="none">
-            <rect width="40" height="40" rx="12" fill="url(#g)"/>
-            <defs><linearGradient id="g" x1="0" y1="0" x2="40" y2="40">
-              <stop offset="0%" stopColor="#c8f26d"/>
-              <stop offset="100%" stopColor="#f8c85a"/>
-            </linearGradient></defs>
-            <path d="M26 14.5C24.2 13 21.8 12 19.2 12C13.6 12 9 16.5 9 22C9 27.5 13.6 32 19.2 32C21.8 32 24.2 31 26 29.5" stroke="#07130e" strokeWidth="3" strokeLinecap="round"/>
-            <circle cx="29" cy="14" r="2.5" fill="#07130e"/>
-            <circle cx="29" cy="22" r="2.5" fill="#07130e"/>
-            <circle cx="29" cy="30" r="2.5" fill="#07130e"/>
-            <line x1="26.5" y1="15.2" x2="22" y2="19" stroke="#07130e" strokeWidth="1.5" strokeLinecap="round"/>
-            <line x1="26.5" y1="22"   x2="22" y2="22" stroke="#07130e" strokeWidth="1.5" strokeLinecap="round"/>
-            <line x1="26.5" y1="28.8" x2="22" y2="25" stroke="#07130e" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
+      <div className="flex-shrink-0 relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #062f23 0%, #0a4a35 60%, #0f6647 100%)' }}>
+        <div className="absolute inset-0 opacity-20"
+          style={{ background: 'radial-gradient(circle at 70% 30%, #c8f26d 0%, transparent 60%)' }}/>
+        <div className="relative px-6 pt-12 pb-8 text-center">
+          <div className="flex justify-center mb-5">
+            <img src="/logo.png" alt="Choma Share"
+              className="w-36 h-36 rounded-3xl"
+              style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}/>
+          </div>
+          <h1 className="font-display font-black text-[32px] text-white tracking-tight leading-tight mb-1">
+            Choma <span style={{ color: '#c8f26d' }}>Share</span>
+          </h1>
+          <p className="text-[12px] font-bold uppercase tracking-widest mb-5" style={{ color: '#f8c85a' }}>
+            Buy in Bulk · Split the Cost · Save Together
+          </p>
+          <div className="flex justify-center gap-2 flex-wrap">
+            {["5 Stores · Sunderland", "Free to join", "No payments"].map(t => (
+              <span key={t} className="text-[11px] font-semibold px-3 py-1 rounded-full"
+                style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.15)" }}>
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
-        <h1 className="font-display font-black text-4xl text-white tracking-tight leading-none mb-2">
-          Choma<br/><span style={{ color: '#c8f26d' }}>Share</span>
-        </h1>
-        <p className="text-[14px] text-gray-400">Community bulk buying for African<br/>households in the UK.</p>
       </div>
 
       <div className="flex-1 px-6 pt-6 pb-10 overflow-y-auto">
