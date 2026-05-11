@@ -37,12 +37,14 @@ export default function SplitDetail() {
   if (loading) return <div className="flex items-center justify-center h-full"><Spinner/></div>
   if (!split)  return <div className="flex flex-col items-center justify-center h-full px-6 text-center"><p className="text-gray-500 mb-4">Split not found</p><button onClick={() => navigate(-1)} className="font-semibold" style={{ color: '#0f7a4b' }}>Go back</button></div>
 
-  const left     = spotsLeft(split)
-  const perHead  = pricePerPerson(split)
-  const saving   = savingPerPerson(split)
-  const members  = split.split_members ?? []
-  const isMember = members.some(m => m.user_id === user?.id)
-  const isOpen   = split.status === 'open' && left > 0
+  // Use actual member count as source of truth
+  const members   = split.split_members ?? []
+  const memberCount = members.length
+  const left      = Math.max(0, split.people_needed - memberCount)
+  const perHead   = pricePerPerson(split)
+  const saving    = savingPerPerson(split)
+  const isMember  = members.some(m => m.user_id === user?.id)
+  const isOpen    = split.status === 'open' && left > 0 && memberCount < split.people_needed
 
   return (
     <div className="flex flex-col h-full bg-gray-50">

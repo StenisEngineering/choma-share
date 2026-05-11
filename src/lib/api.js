@@ -84,21 +84,40 @@ export async function createSplit(payload) {
 }
 
 export async function joinSplit(splitId, userId) {
+  // Always get fresh data from DB to avoid race conditions
   const split = await getSplit(splitId)
   if (!split) throw new Error('Split not found')
-  if (split.status !== 'open') throw new Error('This split is no longer open')
-  if (split.people_joined >= split.people_needed) throw new Error('This split is full')
+
+  // Hard checks
+  if (split.status === 'full')      throw new Error('This split is full — no spots left')
+  if (split.status === 'cancelled') throw new Error('This split has been cancelled')
+  if (split.status === 'done')      throw new Error('This split has already happened')
+  if (split.status !== 'open')      throw new Error('This split is no longer accepting members')
+
+  // Count actual members from DB (source of truth)
+  const currentMembers = split.split_members?.length ?? 0
+  if (currentMembers >= split.people_needed) {
+    // Fix status if it wasn't updated properly
+    await supabase.from('splits').update({ status: 'full' }).eq('id', splitId)
+    throw new Error('This split is full — no spots left')
+  }
+
+  // Check already joined
   const already = split.split_members?.some(m => m.user_id === userId)
   if (already) throw new Error('You have already joined this split')
 
+  // Add member
   const { error: me } = await supabase.from('split_members')
     .insert({ split_id: splitId, user_id: userId, status: 'confirmed' })
   if (me) throw me
 
-  const newCount = split.people_joined + 1
+  // Update count — use actual member count as source of truth
+  const newCount = currentMembers + 1
   const newStatus = newCount >= split.people_needed ? 'full' : 'open'
+
   await supabase.from('splits')
-    .update({ people_joined: newCount, status: newStatus }).eq('id', splitId)
+    .update({ people_joined: newCount, status: newStatus })
+    .eq('id', splitId)
 
   return { full: newStatus === 'full' }
 }
