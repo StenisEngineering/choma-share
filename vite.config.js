@@ -7,14 +7,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      devOptions: { enabled: true },
-      includeAssets: ['icon-192.png', 'icon-512.png', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'favicon-16.png', 'favicon-32.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'logo.png'],
       manifest: {
         name: 'Choma Share',
         short_name: 'Choma',
         description: 'Community bulk buying for African households in the UK.',
-        theme_color: '#07130e',
-        background_color: '#ffffff',
+        theme_color: '#062f23',
+        background_color: '#062f23',
         display: 'standalone',
         orientation: 'portrait',
         start_url: '/',
@@ -28,7 +27,6 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
@@ -41,7 +39,10 @@ export default defineConfig({
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
-            options: { cacheName: 'google-fonts', expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 } }
+            options: {
+              cacheName: 'google-fonts',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 }
+            }
           }
         ]
       }

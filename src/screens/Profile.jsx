@@ -18,7 +18,10 @@ export default function Profile() {
     getMySplits(user.id).then(setSplits).catch(()=>{}).finally(()=>setLoading(false))
   }, [user, navigate])
 
-  async function logout() {
+  // Add admin shortcut to profile
+const ADMIN_EMAILS = ['engineeringstenis@gmail.com']
+
+async function logout() {
     try { await signOut(); navigate('/onboarding',{replace:true}) }
     catch(err) { toast(err.message,'error') }
   }
