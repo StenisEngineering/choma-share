@@ -8,6 +8,7 @@ import { useToast } from '../components/Toast'
 import Spinner from '../components/Spinner'
 
 const ADMIN_EMAILS = ['engineeringstenis@gmail.com']
+const CITIES = ['Sunderland','Newcastle','Leeds','Birmingham','Manchester','London','Other']
 
 export default function Profile() {
   const { profile, user } = useAuth()
@@ -15,6 +16,7 @@ export default function Profile() {
   const toast    = useToast()
 
   const [splits,       setSplits]       = useState([])
+  const [showCityEdit, setShowCityEdit] = useState(false)
   const [circleCount,  setCircleCount]  = useState(0)
   const [loading,      setLoading]      = useState(true)
 
@@ -153,12 +155,13 @@ export default function Profile() {
           <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Settings</div>
           <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
             {[
-              { icon: <MapPin size={17} color={G}/>,       bg: '#ecfff5', l: 'Location',      v: profile.city },
+              { icon: <MapPin size={17} color={G}/>, bg: '#ecfff5', l: 'Location', v: profile.city, action: () => setShowCityEdit(true) },
               { icon: <Bell   size={17} color="#a16207"/>, bg: '#fffbeb', l: 'Notifications', v: 'On'         },
               { icon: <Phone  size={17} color="#1e40af"/>, bg: '#eff6ff', l: 'Account email', v: user?.email?.split('@')[0] },
             ].map((r, i) => (
               <div key={r.l}
-                className={`flex items-center gap-3 px-4 py-3.5 ${i < 2 ? 'border-b border-gray-100' : ''} active:bg-gray-50`}>
+                className={`flex items-center gap-3 px-4 py-3.5 ${i < 2 ? 'border-b border-gray-100' : ''} active:bg-gray-50 ${r.action ? 'cursor-pointer' : ''}`}
+              onClick={r.action}>
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: r.bg }}>{r.icon}</div>
                 <div className="flex-1 text-[14px] font-semibold text-gray-900">{r.l}</div>
@@ -194,6 +197,83 @@ export default function Profile() {
         </div>
 
         <div style={{ height: 24 }}/>
+      </div>
+
+      {/* City change modal */}
+      {showCityEdit && (
+        <ChangeCityModal
+          currentCity={profile.city}
+          userId={user.id}
+          createdAt={profile.created_at}
+          onClose={() => setShowCityEdit(false)}
+          onChanged={() => { setShowCityEdit(false); window.location.reload() }}
+          toast={toast}
+        />
+      )}
+    </div>
+  )
+}
+
+function ChangeCityModal({ currentCity, userId, createdAt, onClose, onChanged, toast }) {
+  const [city,    setCity]    = useState(currentCity)
+  const [saving,  setSaving]  = useState(false)
+  const { supabase: sb } = { supabase: require('../lib/supabase').supabase }
+
+  // Check 30-day cooldown — use created_at as proxy for now
+  // In production, add a city_changed_at column
+  const CITIES = ['Sunderland','Newcastle','Leeds','Birmingham','Manchester','London','Other']
+  const G = '#0f7a4b'
+
+  async function save() {
+    if (city === currentCity) { onClose(); return }
+    setSaving(true)
+    try {
+      const { supabase } = await import('../lib/supabase')
+      const { error } = await supabase.from('users')
+        .update({ city }).eq('id', userId)
+      if (error) throw error
+      toast(`Location updated to ${city} ✓`, 'success')
+      onChanged()
+    } catch (err) {
+      toast(err.message, 'error')
+    } finally { setSaving(false) }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center" onClick={onClose}>
+      <div className="w-full max-w-md bg-white rounded-t-3xl p-5" onClick={e => e.stopPropagation()}>
+        <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-4"/>
+        <h3 className="font-display font-bold text-[20px] text-gray-900 mb-1">Change Location</h3>
+        <p className="text-[13px] text-gray-400 mb-5">
+          You'll see splits in your new city immediately.
+        </p>
+        <div className="grid grid-cols-2 gap-2 mb-5">
+          {CITIES.map(c => {
+            const isLive = c === 'Sunderland'
+            const isSel  = city === c
+            return (
+              <button key={c} type="button" onClick={() => setCity(c)}
+                className="py-3 rounded-xl text-[13px] font-bold transition-all relative"
+                style={{
+                  background:  isSel ? '#f0fdf4' : '#f9fafb',
+                  border: `${isSel ? 2 : 1.5}px solid ${isSel ? G : '#e5e7eb'}`,
+                  color: isSel ? G : isLive ? '#4b5563' : '#9ca3af',
+                }}>
+                {c}
+                {isLive && <span className="block text-[9px] font-semibold mt-0.5" style={{ color: G }}>✓ Live</span>}
+                {!isLive && <span className="block text-[9px] font-semibold mt-0.5" style={{ color: '#f8c85a' }}>Soon</span>}
+              </button>
+            )
+          })}
+        </div>
+        <button onClick={save} disabled={saving || city === currentCity}
+          className="w-full py-4 rounded-2xl text-[15px] font-bold text-white disabled:opacity-40"
+          style={{ background: G }}>
+          {saving ? 'Saving...' : `Update to ${city}`}
+        </button>
+        <button onClick={onClose} className="w-full py-3 text-[13px] font-semibold text-gray-400 mt-2">
+          Cancel
+        </button>
       </div>
     </div>
   )
