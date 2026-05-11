@@ -93,11 +93,13 @@ export default function MySplits() {
 }
 
 function SplitRow({ m, navigate }) {
-  const split  = m.split
-  const status = STATUS_STYLE[split?.status] ?? STATUS_STYLE.open
-  const per    = split ? pricePerPerson(split) : 0
-  const saving = split ? savingPerPerson(split) : 0
-  const left   = split ? split.people_needed - split.people_joined : 0
+  const split   = m.split
+  const status  = STATUS_STYLE[split?.status] ?? STATUS_STYLE.open
+  const per     = split ? pricePerPerson(split) : 0
+  const saving  = split ? savingPerPerson(split) : 0
+  const joined  = split?.people_joined ?? 0
+  const needed  = split?.people_needed ?? 0
+  const left    = Math.max(0, needed - joined)
 
   return (
     <div onClick={() => navigate(`/split/${m.split_id}`)}
@@ -122,7 +124,7 @@ function SplitRow({ m, navigate }) {
           £{per} per person · saves £{saving}
         </div>
         <div className="text-[11px] text-gray-400">
-          {split?.people_joined}/{split?.people_needed} joined · {left} left
+          {joined}/{needed} joined · {left === 0 ? 'Full' : `${left} left`}
         </div>
       </div>
     </div>
