@@ -206,7 +206,7 @@ function SplitsTab({ toast }) {
     try {
       const { data, error } = await supabase
         .from('splits')
-        .select(`*, store:stores(name), creator:users!splits_creator_id_fkey(name, email),
+        .select(`*, store:stores(name), creator:users!splits_creator_id_fkey(name, city),
           split_members(id)`)
         .order('created_at', { ascending: false })
         .limit(50)
@@ -261,7 +261,7 @@ function SplitsTab({ toast }) {
             <div className="flex-1 min-w-0">
               <div className="font-bold text-[14px] text-gray-900 truncate">{split.title}</div>
               <div className="text-[11px] text-gray-400 mt-0.5">
-                {split.store?.name} · By {split.creator?.name}
+                {split.store?.name} · {split.creator?.city} · By {split.creator?.name}
               </div>
               <div className="text-[11px] text-gray-400">
                 {split.split_members?.length ?? 0}/{split.people_needed} joined
