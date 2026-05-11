@@ -7,29 +7,20 @@ import ShareSheet from '../components/ShareSheet'
 import Spinner    from '../components/Spinner'
 import { useToast } from '../components/Toast'
 
-const ITEM_ICONS = {
-  'yam':      { icon: '🍠', bg: '#ecfff5' },
-  'turkey':   { icon: '🦃', bg: '#eff6ff' },
-  'pepper':   { icon: '🌶️', bg: '#fff7ed' },
-  'crayfish': { icon: '🐟', bg: '#f0fdf4' },
-  'palm':     { icon: '🫙', bg: '#fefce8' },
-  'rice':     { icon: '🌾', bg: '#f0fdf4' },
-  'chicken':  { icon: '🍗', bg: '#fff7ed' },
-  'fish':     { icon: '🐠', bg: '#eff6ff' },
-  'default':  { icon: '🛒', bg: '#f3f4f6' },
-}
-
 function getIcon(name) {
   const n = name.toLowerCase()
-  if (n.includes('yam'))      return ITEM_ICONS.yam
-  if (n.includes('turkey'))   return ITEM_ICONS.turkey
-  if (n.includes('pepper'))   return ITEM_ICONS.pepper
-  if (n.includes('crayfish')) return ITEM_ICONS.crayfish
-  if (n.includes('palm'))     return ITEM_ICONS.palm
-  if (n.includes('rice'))     return ITEM_ICONS.rice
-  if (n.includes('chicken'))  return ITEM_ICONS.chicken
-  if (n.includes('fish'))     return ITEM_ICONS.fish
-  return ITEM_ICONS.default
+  if (n.includes('yam'))      return { icon: '🍠', bg: '#ecfff5' }
+  if (n.includes('turkey'))   return { icon: '🦃', bg: '#eff6ff' }
+  if (n.includes('chicken'))  return { icon: '🍗', bg: '#fff7ed' }
+  if (n.includes('fish'))     return { icon: '🐟', bg: '#f0fdf4' }
+  if (n.includes('pepper') || n.includes('scotch') || n.includes('bonnet')) return { icon: '🌶️', bg: '#fff7ed' }
+  if (n.includes('banana'))   return { icon: '🍌', bg: '#fefce8' }
+  if (n.includes('tomato'))   return { icon: '🍅', bg: '#fef2f2' }
+  if (n.includes('indomie') || n.includes('noodle')) return { icon: '🍜', bg: '#fefce8' }
+  if (n.includes('rice'))     return { icon: '🌾', bg: '#f0fdf4' }
+  if (n.includes('palm'))     return { icon: '🫙', bg: '#fefce8' }
+  if (n.includes('crayfish')) return { icon: '🦐', bg: '#fff7ed' }
+  return { icon: '🛒', bg: '#f3f4f6' }
 }
 
 const TIMES = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM']

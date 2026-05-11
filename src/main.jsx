@@ -14,6 +14,7 @@ import SplitDetail  from './screens/SplitDetail'
 import CreateSplit   from './screens/CreateSplit'
 import Profile       from './screens/Profile'
 import Admin         from './screens/Admin'
+import AdminLogin    from './screens/AdminLogin'
 import Spinner       from './components/Spinner'
 import './index.css'
 
@@ -37,6 +38,15 @@ function Shell({ children }) {
   )
 }
 
+const ADMIN_EMAILS = ['engineeringstenis@gmail.com']
+
+function AdminRoute() {
+  const { isAuthenticated, user, loading } = useAuth()
+  if (loading) return <div className="flex items-center justify-center min-h-screen bg-white"><Spinner/></div>
+  if (!isAuthenticated || !ADMIN_EMAILS.includes(user?.email)) return <AdminLogin/>
+  return <Admin/>
+}
+
 function AppRoutes() {
   const { isAuthenticated, hasProfile, loading } = useAuth()
   if (loading) return <div className="flex items-center justify-center min-h-screen bg-white"><Spinner/></div>
@@ -52,7 +62,7 @@ function AppRoutes() {
               </div>
             </div>
       }/>
-      <Route path="/admin"     element={<Guard><Admin/></Guard>}/>
+      <Route path="/admin"     element={<AdminRoute/>}/>
       <Route path="/split/:id" element={<Shell><SplitDetail/></Shell>}/>
       <Route path="/"          element={<Guard><Shell><Home/></Shell></Guard>}/>
       <Route path="/splits"    element={<Guard><Shell><MySplits/></Shell></Guard>}/>
