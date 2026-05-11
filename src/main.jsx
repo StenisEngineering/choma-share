@@ -11,6 +11,7 @@ import Stores      from './screens/Stores'
 import SplitDetail from './screens/SplitDetail'
 import CreateSplit  from './screens/CreateSplit'
 import Profile      from './screens/Profile'
+import Admin        from './screens/Admin'
 import Spinner      from './components/Spinner'
 import './index.css'
 
@@ -49,10 +50,12 @@ function AppRoutes() {
               </div>
             </div>
       }/>
+      <Route path="/admin"     element={<Guard><Admin/></Guard>}/>
       <Route path="/split/:id" element={<Shell><SplitDetail/></Shell>}/>
       <Route path="/"          element={<Guard><Shell><Home/></Shell></Guard>}/>
       <Route path="/splits"    element={<Guard><Shell><MySplits/></Shell></Guard>}/>
       <Route path="/create"    element={<Guard><Shell><CreateSplit/></Shell></Guard>}/>
+      <Route path="/circles"   element={<Guard><Shell><Stores/></Shell></Guard>}/>
       <Route path="/stores"    element={<Guard><Shell><Stores/></Shell></Guard>}/>
       <Route path="/profile"   element={<Guard><Shell><Profile/></Shell></Guard>}/>
       <Route path="*"          element={<Navigate to="/" replace/>}/>
