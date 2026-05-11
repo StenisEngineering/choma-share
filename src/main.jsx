@@ -1,4 +1,4 @@
-import { StrictMode, useState, useEffect } from 'react'
+import { StrictMode, useState } from 'react'
 import { createRoot }  from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
@@ -9,6 +9,7 @@ import Onboarding   from './screens/Onboarding'
 import Home         from './screens/Home'
 import MySplits     from './screens/MySplits'
 import Stores       from './screens/Stores'
+import Circles      from './screens/Circles'
 import SplitDetail  from './screens/SplitDetail'
 import CreateSplit   from './screens/CreateSplit'
 import Profile       from './screens/Profile'
@@ -58,7 +59,6 @@ function AppRoutes() {
       <Route path="/create"    element={<Guard><Shell><CreateSplit/></Shell></Guard>}/>
       <Route path="/circles"   element={<Guard><Shell><Circles/></Shell></Guard>}/>
       <Route path="/stores"    element={<Guard><Shell><Stores/></Shell></Guard>}/>
-      <Route path="/store"     element={<Guard><Shell><Stores/></Shell></Guard>}/>
       <Route path="/profile"   element={<Guard><Shell><Profile/></Shell></Guard>}/>
       <Route path="*"          element={<Navigate to="/" replace/>}/>
     </Routes>
@@ -67,8 +67,7 @@ function AppRoutes() {
 
 function App() {
   const [splashDone, setSplashDone] = useState(false)
-  // Only show splash on first load, not on navigation
-  const [firstLoad] = useState(true)
+  const [firstLoad]  = useState(true)
 
   return (
     <>
