@@ -7,19 +7,39 @@ import ShareSheet from '../components/ShareSheet'
 import Spinner    from '../components/Spinner'
 import { useToast } from '../components/Toast'
 
-const ITEMS = [
-  { id:'yam',      name:'Yam Box',       price:75, icon:'🍠', bg:'#ecfff5' },
-  { id:'turkey',   name:'Frozen Turkey', price:60, icon:'🦃', bg:'#eff6ff' },
-  { id:'pepper',   name:'Pepper Carton', price:40, icon:'🌶️', bg:'#fff7ed' },
-  { id:'crayfish', name:'Crayfish Pack', price:35, icon:'🐟', bg:'#f0fdf4' },
-  { id:'palmoil',  name:'Palm Oil',      price:30, icon:'🫙', bg:'#fefce8' },
-  { id:'rice',     name:'Rice Bag',      price:45, icon:'🌾', bg:'#f0fdf4' },
-]
+const ITEM_ICONS = {
+  'yam':      { icon: '🍠', bg: '#ecfff5' },
+  'turkey':   { icon: '🦃', bg: '#eff6ff' },
+  'pepper':   { icon: '🌶️', bg: '#fff7ed' },
+  'crayfish': { icon: '🐟', bg: '#f0fdf4' },
+  'palm':     { icon: '🫙', bg: '#fefce8' },
+  'rice':     { icon: '🌾', bg: '#f0fdf4' },
+  'chicken':  { icon: '🍗', bg: '#fff7ed' },
+  'fish':     { icon: '🐠', bg: '#eff6ff' },
+  'default':  { icon: '🛒', bg: '#f3f4f6' },
+}
+
+function getIcon(name) {
+  const n = name.toLowerCase()
+  if (n.includes('yam'))      return ITEM_ICONS.yam
+  if (n.includes('turkey'))   return ITEM_ICONS.turkey
+  if (n.includes('pepper'))   return ITEM_ICONS.pepper
+  if (n.includes('crayfish')) return ITEM_ICONS.crayfish
+  if (n.includes('palm'))     return ITEM_ICONS.palm
+  if (n.includes('rice'))     return ITEM_ICONS.rice
+  if (n.includes('chicken'))  return ITEM_ICONS.chicken
+  if (n.includes('fish'))     return ITEM_ICONS.fish
+  return ITEM_ICONS.default
+}
+
 const TIMES = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM']
 
 function getWeekends() {
   const dates = []; const d = new Date()
-  while (dates.length < 6) { d.setDate(d.getDate()+1); if (d.getDay()===6||d.getDay()===0) dates.push(new Date(d)) }
+  while (dates.length < 6) {
+    d.setDate(d.getDate() + 1)
+    if (d.getDay() === 6 || d.getDay() === 0) dates.push(new Date(d))
+  }
   return dates
 }
 
@@ -29,9 +49,10 @@ export default function CreateSplit() {
   const toast    = useToast()
 
   const [stores,    setStores]   = useState([])
+  const [allItems,  setAllItems] = useState([]) // all items from selected store
   const [loadingS,  setLS]       = useState(true)
-  const [item,      setItem]     = useState(null)
-  const [store,     setStore]    = useState(null)
+  const [item,      setItem]     = useState(null) // selected store_item object
+  const [store,     setStore]    = useState(null) // selected store id
   const [people,    setPeople]   = useState(3)
   const [date,      setDate]     = useState(null)
   const [time,      setTime]     = useState('11:00 AM')
@@ -44,31 +65,50 @@ export default function CreateSplit() {
 
   useEffect(() => {
     if (!user) { navigate('/onboarding'); return }
-    getStores().then(setStores).catch(()=>{}).finally(()=>setLS(false))
+    getStores().then(data => {
+      setStores(data)
+    }).catch(() => {}).finally(() => setLS(false))
   }, [user, navigate])
 
-  const selItem = ITEMS.find(i => i.id === item)
-  const perHead = selItem ? Math.round(selItem.price/people) : 0
-  const saving  = selItem ? selItem.price - perHead : 0
+  // When store changes, update available items
+  useEffect(() => {
+    if (!store) { setAllItems([]); setItem(null); return }
+    const selectedStore = stores.find(s => s.id === store)
+    const items = selectedStore?.store_items?.filter(i => i.available) ?? []
+    setAllItems(items)
+    setItem(null) // reset item selection
+  }, [store, stores])
+
+  const perHead = item ? Math.round(item.bulk_price / people) : 0
+  const saving  = item ? item.bulk_price - perHead : 0
 
   async function submit() {
-    if (!item||!store||!date) { toast('Please select an item, store and date','error'); return }
+    if (!item || !store || !date) {
+      toast('Please select an item, store and date', 'error'); return
+    }
     setSub(true)
     try {
-      const s = stores.find(s=>s.id===store)
-      const si = s?.store_items?.find(si=>si.name.toLowerCase().includes(selItem.name.toLowerCase()))
       const newSplit = await createSplit({
-        item_id: si?.id ?? null, store_id: store, creator_id: user.id,
-        title: selItem.name, total_price: selItem.price, people_needed: people,
-        people_joined: 1, preferred_date: date.toISOString().split('T')[0],
-        preferred_time: time, is_recurring: recurring,
-        recur_frequency: recurring ? 'monthly' : null, notes, status: 'open',
+        item_id:         item.id,
+        store_id:        store,
+        creator_id:      user.id,
+        title:           item.name,
+        total_price:     item.bulk_price,
+        people_needed:   people,
+        people_joined:   1,
+        preferred_date:  date.toISOString().split('T')[0],
+        preferred_time:  time,
+        is_recurring:    recurring,
+        recur_frequency: recurring ? 'monthly' : null,
+        notes,
+        status:          'open',
       })
       setCreated(newSplit)
-      toast('Split posted!','success')
-      setTimeout(()=>setShare(true), 600)
-    } catch(err) { toast(err.message||'Failed to post split','error') }
-    finally { setSub(false) }
+      toast('Split posted! 🎉', 'success')
+      setTimeout(() => setShare(true), 600)
+    } catch (err) {
+      toast(err.message || 'Failed to post split', 'error')
+    } finally { setSub(false) }
   }
 
   const G = '#0f7a4b'
@@ -76,7 +116,7 @@ export default function CreateSplit() {
   return (
     <div className="flex flex-col h-full bg-gray-50">
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
-        <button onClick={()=>navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium mb-3">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium mb-3">
           <ArrowLeft size={16}/> Back
         </button>
         <h1 className="font-display font-black text-[24px] text-gray-900 tracking-tight">Create a Split</h1>
@@ -86,42 +126,30 @@ export default function CreateSplit() {
       <div className="flex-1 overflow-y-auto scrollbar-none">
         <div className="px-4 pt-4 pb-8 space-y-5">
 
-          {/* Item */}
+          {/* STEP 1 — Select Store First */}
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">What are you splitting?</label>
-            <div className="grid grid-cols-2 gap-2.5">
-              {ITEMS.map(it=>(
-                <button key={it.id} onClick={()=>setItem(it.id)}
-                  className="flex flex-col items-center p-3.5 rounded-2xl border transition-all"
-                  style={{ background: item===it.id?'#f0fdf4':'#fff', borderColor: item===it.id?G:'#e5e7eb', borderWidth: item===it.id?2:1.5 }}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-2" style={{background:it.bg}}>{it.icon}</div>
-                  <div className="text-[13px] font-bold text-gray-900">{it.name}</div>
-                  <div className="text-[11px] font-semibold mt-0.5" style={{color:G}}>£{it.price}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Store */}
-          <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">Which store?</label>
-            {loadingS ? <Spinner size={20}/> : stores.length===0 ? (
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-[13px] text-amber-700">No stores listed yet.</div>
-            ) : (
+            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              1. Which store?
+            </label>
+            {loadingS ? <Spinner size={20}/> : (
               <div className="space-y-2">
-                {stores.map(s=>(
-                  <button key={s.id} onClick={()=>setStore(s.id)}
+                {stores.map(s => (
+                  <button key={s.id} onClick={() => setStore(s.id)}
                     className="w-full flex items-center gap-3 p-3.5 rounded-2xl border transition-all"
-                    style={{ background: store===s.id?'#f0fdf4':'#fff', borderColor: store===s.id?G:'#e5e7eb', borderWidth: store===s.id?2:1.5 }}>
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{background:'#ecfff5'}}>
-                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-                    </div>
+                    style={{
+                      background:   store === s.id ? '#f0fdf4' : '#fff',
+                      borderColor:  store === s.id ? G : '#e5e7eb',
+                      borderWidth:  store === s.id ? 2 : 1.5,
+                    }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
+                      style={{ background: '#ecfff5' }}>🏪</div>
                     <div className="text-left flex-1">
                       <div className="text-[14px] font-bold text-gray-900">{s.name}</div>
                       <div className="text-[11px] text-gray-400">{s.address}</div>
                     </div>
-                    <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center" style={{ background: store===s.id?G:'transparent', borderColor: store===s.id?G:'#d1d5db' }}>
-                      {store===s.id&&<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>}
+                    <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all"
+                      style={{ background: store === s.id ? G : 'transparent', borderColor: store === s.id ? G : '#d1d5db' }}>
+                      {store === s.id && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>}
                     </div>
                   </button>
                 ))}
@@ -129,99 +157,160 @@ export default function CreateSplit() {
             )}
           </div>
 
-          {/* People */}
-          <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">How many people?</label>
-            <div className="bg-white border border-gray-200 rounded-2xl p-3.5 flex items-center gap-3">
-              <button onClick={()=>setPeople(p=>Math.max(2,p-1))} className="w-9 h-9 rounded-full flex items-center justify-center" style={{background:'#ecfff5',border:'1px solid #b6f0d4'}}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-              <div className="flex-1 text-center">
-                <div className="font-display font-bold text-[28px] leading-none" style={{color:G}}>{people}</div>
-                <div className="text-[11px] text-gray-400 mt-0.5">people total</div>
-              </div>
-              <button onClick={()=>setPeople(p=>Math.min(6,p+1))} className="w-9 h-9 rounded-full flex items-center justify-center" style={{background:'#ecfff5',border:'1px solid #b6f0d4'}}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
+          {/* STEP 2 — Select Item (from store's real items) */}
+          {store && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+                2. What are you splitting?
+              </label>
+              {allItems.length === 0 ? (
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-[13px] text-amber-700">
+                  No items listed for this store yet.
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-2.5">
+                  {allItems.map(it => {
+                    const { icon, bg } = getIcon(it.name)
+                    return (
+                      <button key={it.id} onClick={() => setItem(it)}
+                        className="flex flex-col items-center p-3.5 rounded-2xl border transition-all"
+                        style={{
+                          background:  item?.id === it.id ? '#f0fdf4' : '#fff',
+                          borderColor: item?.id === it.id ? G : '#e5e7eb',
+                          borderWidth: item?.id === it.id ? 2 : 1.5,
+                        }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-2" style={{ background: bg }}>
+                          {icon}
+                        </div>
+                        <div className="text-[13px] font-bold text-gray-900">{it.name}</div>
+                        <div className="text-[11px] font-semibold mt-0.5" style={{ color: G }}>£{it.bulk_price}</div>
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
             </div>
-            {selItem && (
+          )}
+
+          {/* STEP 3 — People */}
+          {item && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+                3. How many people?
+              </label>
+              <div className="bg-white border border-gray-200 rounded-2xl p-3.5 flex items-center gap-3">
+                <button onClick={() => setPeople(p => Math.max(2, p-1))}
+                  className="w-9 h-9 rounded-full flex items-center justify-center"
+                  style={{ background: '#ecfff5', border: '1px solid #b6f0d4' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+                <div className="flex-1 text-center">
+                  <div className="font-display font-bold text-[28px] leading-none" style={{ color: G }}>{people}</div>
+                  <div className="text-[11px] text-gray-400 mt-0.5">people total</div>
+                </div>
+                <button onClick={() => setPeople(p => Math.min(6, p+1))}
+                  className="w-9 h-9 rounded-full flex items-center justify-center"
+                  style={{ background: '#ecfff5', border: '1px solid #b6f0d4' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
               <div className="mt-2 flex gap-2">
-                {[{v:`£${perHead}`,l:'each pays'},{v:`£${saving}`,l:'each saves'}].map(s=>(
-                  <div key={s.l} className="flex-1 rounded-xl p-2.5 text-center" style={{background:'#ecfff5',border:'1px solid #d1fae5'}}>
-                    <div className="font-display font-bold text-[18px]" style={{color:G}}>{s.v}</div>
+                {[{ v: `£${perHead}`, l: 'each pays' }, { v: `£${saving}`, l: 'each saves' }].map(s => (
+                  <div key={s.l} className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
+                    <div className="font-display font-bold text-[18px]" style={{ color: G }}>{s.v}</div>
                     <div className="text-[10px] text-gray-400 font-semibold">{s.l}</div>
                   </div>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Date */}
-          <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">Preferred day</label>
-            <div className="grid grid-cols-3 gap-2">
-              {weekends.map(d=>{
-                const sel=date?.toDateString()===d.toDateString()
-                return (
-                  <button key={d.toDateString()} onClick={()=>setDate(d)}
-                    className="py-2.5 rounded-xl border transition-all"
-                    style={{background:sel?'#f0fdf4':'#fff',borderColor:sel?G:'#e5e7eb',borderWidth:sel?2:1.5}}>
-                    <div className="text-[10px] font-bold text-gray-400 uppercase">{d.toLocaleDateString('en-GB',{weekday:'short'})}</div>
-                    <div className="font-display font-bold text-[19px] leading-tight" style={{color:sel?G:'#111827'}}>{d.getDate()}</div>
-                    <div className="text-[9px] text-gray-400">{d.toLocaleDateString('en-GB',{month:'short'})}</div>
+          {/* STEP 4 — Date */}
+          {item && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+                4. Preferred day
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {weekends.map(d => {
+                  const sel = date?.toDateString() === d.toDateString()
+                  return (
+                    <button key={d.toDateString()} onClick={() => setDate(d)}
+                      className="py-2.5 rounded-xl border transition-all"
+                      style={{ background: sel ? '#f0fdf4' : '#fff', borderColor: sel ? G : '#e5e7eb', borderWidth: sel ? 2 : 1.5 }}>
+                      <div className="text-[10px] font-bold text-gray-400 uppercase">{d.toLocaleDateString('en-GB', { weekday: 'short' })}</div>
+                      <div className="font-display font-bold text-[19px] leading-tight" style={{ color: sel ? G : '#111827' }}>{d.getDate()}</div>
+                      <div className="text-[9px] text-gray-400">{d.toLocaleDateString('en-GB', { month: 'short' })}</div>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 5 — Time */}
+          {item && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+                5. Preferred time
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                {TIMES.map(t => (
+                  <button key={t} onClick={() => setTime(t)}
+                    className="text-[12px] font-bold px-3 py-2 rounded-xl border transition-all"
+                    style={{ background: time === t ? '#f0fdf4' : '#fff', borderColor: time === t ? G : '#e5e7eb', color: time === t ? G : '#4b5563' }}>
+                    {t}
                   </button>
-                )
-              })}
+                ))}
+              </div>
             </div>
-          </div>
-
-          {/* Time */}
-          <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">Preferred time</label>
-            <div className="flex gap-2 flex-wrap">
-              {TIMES.map(t=>(
-                <button key={t} onClick={()=>setTime(t)}
-                  className="text-[12px] font-bold px-3 py-2 rounded-xl border transition-all"
-                  style={{background:time===t?'#f0fdf4':'#fff',borderColor:time===t?G:'#e5e7eb',color:time===t?G:'#4b5563'}}>
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
 
           {/* Recurring */}
-          <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">Monthly recurring</label>
-            <div className="bg-white border border-gray-200 rounded-2xl p-4 flex items-center justify-between">
-              <div>
-                <div className="text-[14px] font-semibold text-gray-900">Make this a monthly split</div>
-                <div className="text-[11px] text-gray-400 mt-0.5">Repeat automatically each month</div>
+          {item && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+                Monthly recurring
+              </label>
+              <div className="bg-white border border-gray-200 rounded-2xl p-4 flex items-center justify-between">
+                <div>
+                  <div className="text-[14px] font-semibold text-gray-900">Make this a monthly split</div>
+                  <div className="text-[11px] text-gray-400 mt-0.5">Repeat automatically each month</div>
+                </div>
+                <button onClick={() => setRecur(r => !r)}
+                  className="w-11 h-6 rounded-full relative flex-shrink-0 transition-colors"
+                  style={{ background: recurring ? G : '#d1d5db' }}>
+                  <div className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"
+                    style={{ transform: recurring ? 'translateX(20px)' : 'translateX(2px)' }}/>
+                </button>
               </div>
-              <button onClick={()=>setRecur(r=>!r)}
-                className="w-11 h-6 rounded-full relative flex-shrink-0 transition-colors"
-                style={{background:recurring?G:'#d1d5db'}}>
-                <div className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform" style={{transform:recurring?'translateX(20px)':'translateX(2px)'}}/>
-              </button>
             </div>
-          </div>
+          )}
 
           {/* Notes */}
-          <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">Notes (optional)</label>
-            <textarea value={notes} onChange={e=>setNotes(e.target.value)}
-              placeholder="Any extra details..." rows={3}
-              className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-[14px] text-gray-900 outline-none resize-none placeholder:text-gray-300"/>
-          </div>
+          {item && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+                Notes (optional)
+              </label>
+              <textarea value={notes} onChange={e => setNotes(e.target.value)}
+                placeholder="Any extra details for your split partners..."
+                rows={3}
+                className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-[14px] text-gray-900 outline-none resize-none placeholder:text-gray-300"/>
+            </div>
+          )}
 
-          <button onClick={submit} disabled={!item||!store||!date||submitting}
+          {/* Submit */}
+          <button onClick={submit}
+            disabled={!item || !store || !date || submitting}
             className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
-            style={{background:G,boxShadow:'0 6px 20px rgba(15,122,75,.3)'}}>
-            {submitting?<Spinner size={20} color="white"/>:<>Post My Split <ArrowRight size={18}/></>}
+            style={{ background: G, boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
+            {submitting ? <Spinner size={20} color="white"/> : <>Post My Split <ArrowRight size={18}/></>}
           </button>
         </div>
       </div>
 
-      <ShareSheet split={created} open={shareOpen} onClose={()=>{setShare(false);navigate('/')}}/>
+      <ShareSheet split={created} open={shareOpen} onClose={() => { setShare(false); navigate('/') }}/>
     </div>
   )
 }
