@@ -37,7 +37,7 @@ export default function Onboarding() {
 
   async function verify(e) {
     e.preventDefault()
-    if (otp.length < 6) return
+    if (otp.length < 4) return
     setLoading(true)
     try {
       const { error } = await supabase.auth.verifyOtp({
@@ -145,7 +145,7 @@ export default function Onboarding() {
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
-              maxLength={6}
+              maxLength={8}
               value={otp}
               onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
               placeholder="000000"
@@ -153,7 +153,7 @@ export default function Onboarding() {
               autoComplete="one-time-code"
               className="w-full text-center text-3xl font-display font-bold text-gray-900 bg-gray-50 border border-gray-200 rounded-2xl py-5 mb-6 tracking-widest outline-none focus:border-[#0f7a4b] transition-colors"
             />
-            <button type="submit" disabled={otp.length < 6 || loading}
+            <button type="submit" disabled={otp.length < 4 || loading}
               className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 mb-3 transition-opacity"
               style={{ background: G }}>
               {loading ? <Spinner size={20} color="white"/> : <>Verify <ArrowRight size={18}/></>}
