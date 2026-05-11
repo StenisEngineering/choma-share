@@ -95,9 +95,12 @@ export default function Onboarding() {
           style={{ background: 'radial-gradient(circle at 70% 30%, #c8f26d 0%, transparent 60%)' }}/>
         <div className="relative px-6 pt-12 pb-8 text-center">
           <div className="flex justify-center mb-5">
-            <img src="/logo.png" alt="Choma Share"
+            <picture>
+              <source srcSet="/logo.webp" type="image/webp"/>
+              <img src="/logo.png" alt="Choma Share"
               className="w-36 h-36 rounded-3xl"
               style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}/>
+            </picture>
           </div>
           <h1 className="font-display font-black text-[32px] text-white tracking-tight leading-tight mb-1">
             Choma <span style={{ color: '#c8f26d' }}>Share</span>

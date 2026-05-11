@@ -1,18 +1,19 @@
-import { StrictMode } from 'react'
+import { StrictMode, useState, useEffect } from 'react'
 import { createRoot }  from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { ToastProvider }         from './components/Toast'
-import BottomNav   from './components/BottomNav'
-import Onboarding  from './screens/Onboarding'
-import Home        from './screens/Home'
-import MySplits    from './screens/MySplits'
-import Stores      from './screens/Stores'
-import SplitDetail from './screens/SplitDetail'
-import CreateSplit  from './screens/CreateSplit'
-import Profile      from './screens/Profile'
-import Admin        from './screens/Admin'
-import Spinner      from './components/Spinner'
+import SplashScreen from './components/SplashScreen'
+import BottomNav    from './components/BottomNav'
+import Onboarding   from './screens/Onboarding'
+import Home         from './screens/Home'
+import MySplits     from './screens/MySplits'
+import Stores       from './screens/Stores'
+import SplitDetail  from './screens/SplitDetail'
+import CreateSplit   from './screens/CreateSplit'
+import Profile       from './screens/Profile'
+import Admin         from './screens/Admin'
+import Spinner       from './components/Spinner'
 import './index.css'
 
 function Guard({ children }) {
@@ -63,14 +64,35 @@ function AppRoutes() {
   )
 }
 
+function App() {
+  const [splashDone, setSplashDone] = useState(false)
+  // Only show splash on first load, not on navigation
+  const [firstLoad] = useState(true)
+
+  return (
+    <>
+      {firstLoad && !splashDone && (
+        <SplashScreen onDone={() => setSplashDone(true)}/>
+      )}
+      <div style={{
+        opacity: splashDone ? 1 : 0,
+        transition: 'opacity 0.3s ease',
+        minHeight: '100vh',
+      }}>
+        <BrowserRouter>
+          <AuthProvider>
+            <ToastProvider>
+              <AppRoutes/>
+            </ToastProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </div>
+    </>
+  )
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <ToastProvider>
-          <AppRoutes/>
-        </ToastProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <App/>
   </StrictMode>
 )
