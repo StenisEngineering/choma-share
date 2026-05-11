@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, Shield, Mail } from 'lucide-react'
+import { ArrowRight, Shield, Mail, CheckCircle } from 'lucide-react'
 import { supabase } from '../lib/supabase'
-import { createProfile } from '../lib/api'
+import { createProfile, getProfile } from '../lib/api'
 import { useAuth }  from '../hooks/useAuth'
 import { useToast } from '../components/Toast'
 import Spinner from '../components/Spinner'
@@ -16,39 +16,47 @@ export default function Onboarding() {
 
   const [step,    setStep]    = useState('email')
   const [email,   setEmail]   = useState('')
-  const [otp,     setOtp]     = useState('')
   const [name,    setName]    = useState('')
   const [city,    setCity]    = useState('')
   const [loading, setLoading] = useState(false)
+  const [sent,    setSent]    = useState(false)
 
-  async function sendOtp(e) {
+  // Handle magic link callback — when user clicks link in email
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
+        // Check if profile exists
+        try {
+          await getProfile(session.user.id)
+          // Profile exists — go home
+          await refreshProfile()
+          navigate('/', { replace: true })
+        } catch {
+          // No profile yet — go to profile step
+          setStep('profile')
+        }
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [navigate, refreshProfile])
+
+  async function sendMagicLink(e) {
     e.preventDefault()
     if (!email.trim()) return
     setLoading(true)
     try {
-      const { error } = await supabase.auth.signInWithOtp({ email: email.trim() })
-      if (error) throw error
-      setStep('otp')
-      toast('Code sent! Check your email.', 'success')
-    } catch (err) {
-      toast(err.message || 'Could not send code', 'error')
-    } finally { setLoading(false) }
-  }
-
-  async function verify(e) {
-    e.preventDefault()
-    if (otp.length < 4) return
-    setLoading(true)
-    try {
-      const { error } = await supabase.auth.verifyOtp({
+      const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
-        token: otp,
-        type: 'email',
+        options: {
+          shouldCreateUser: true,
+          emailRedirectTo: window.location.origin + '/onboarding',
+        }
       })
       if (error) throw error
-      setStep('profile')
+      setSent(true)
+      toast('Magic link sent! Check your email.', 'success')
     } catch (err) {
-      toast(err.message || 'Wrong code — try again', 'error')
+      toast(err.message || 'Could not send email', 'error')
     } finally { setLoading(false) }
   }
 
@@ -70,7 +78,6 @@ export default function Onboarding() {
   }
 
   const G = '#0f7a4b'
-  const steps = ['email','otp','profile']
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -96,22 +103,14 @@ export default function Onboarding() {
         <p className="text-[14px] text-gray-400">Community bulk buying for African<br/>households in the UK.</p>
       </div>
 
-      {/* Progress bar */}
-      <div className="flex gap-1.5 px-6 pt-4 pb-2 flex-shrink-0">
-        {steps.map((s, i) => (
-          <div key={s} className="h-1 flex-1 rounded-full transition-all"
-            style={{ background: steps.indexOf(step) >= i ? G : '#e5e7eb' }}/>
-        ))}
-      </div>
-
-      {/* Form */}
-      <div className="flex-1 px-6 pt-4 pb-10 overflow-y-auto">
+      <div className="flex-1 px-6 pt-8 pb-10 overflow-y-auto">
 
         {/* ── Email step ── */}
-        {step === 'email' && (
-          <form onSubmit={sendOtp}>
-            <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">Enter your email</h2>
-            <p className="text-[14px] text-gray-400 mb-5">We'll send a one-time code to sign you in.</p>
+        {step === 'email' && !sent && (
+          <form onSubmit={sendMagicLink}>
+            <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">Sign in</h2>
+            <p className="text-[14px] text-gray-400 mb-6">Enter your email and we'll send you a magic link to sign in instantly.</p>
+
             <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3.5 mb-3 focus-within:border-[#0f7a4b] transition-colors">
               <Mail size={18} color={G}/>
               <input
@@ -124,50 +123,50 @@ export default function Onboarding() {
                 className="flex-1 bg-transparent text-[16px] font-medium text-gray-900 outline-none placeholder:text-gray-300"
               />
             </div>
+
             <div className="flex items-start gap-2 mb-6 text-[12px] text-gray-400">
               <Shield size={13} className="mt-0.5 flex-shrink-0" color={G}/>
-              Your email is only used to verify your identity.
+              We'll send a magic link — no password needed.
             </div>
+
             <button type="submit" disabled={!email.trim() || loading}
-              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 transition-opacity"
+              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
               style={{ background: G }}>
-              {loading ? <Spinner size={20} color="white"/> : <>Send code <ArrowRight size={18}/></>}
+              {loading ? <Spinner size={20} color="white"/> : <>Send magic link <ArrowRight size={18}/></>}
             </button>
           </form>
         )}
 
-        {/* ── OTP step ── */}
-        {step === 'otp' && (
-          <form onSubmit={verify}>
-            <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">Enter the code</h2>
-            <p className="text-[14px] text-gray-400 mb-5">Sent to <strong className="text-gray-700">{email}</strong></p>
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength={8}
-              value={otp}
-              onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
-              placeholder="000000"
-              autoFocus
-              autoComplete="one-time-code"
-              className="w-full text-center text-3xl font-display font-bold text-gray-900 bg-gray-50 border border-gray-200 rounded-2xl py-5 mb-6 tracking-widest outline-none focus:border-[#0f7a4b] transition-colors"
-            />
-            <button type="submit" disabled={otp.length < 4 || loading}
-              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 mb-3 transition-opacity"
-              style={{ background: G }}>
-              {loading ? <Spinner size={20} color="white"/> : <>Verify <ArrowRight size={18}/></>}
+        {/* ── Sent confirmation ── */}
+        {step === 'email' && sent && (
+          <div className="text-center pt-8">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: '#ecfff5' }}>
+              <Mail size={32} color={G}/>
+            </div>
+            <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-2">Check your email</h2>
+            <p className="text-[15px] text-gray-500 mb-2">We sent a magic link to</p>
+            <p className="text-[15px] font-bold text-gray-900 mb-6">{email}</p>
+            <p className="text-[13px] text-gray-400 mb-8">Click the link in your email to sign in. It will bring you back here automatically.</p>
+
+            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[13px] text-gray-500 mb-6">
+              <strong className="text-gray-700">Tip:</strong> Check your spam folder if you don't see it within 1 minute.
+            </div>
+
+            <button onClick={() => setSent(false)}
+              className="w-full py-3 text-[14px] font-semibold text-gray-400 border border-gray-200 rounded-2xl">
+              ← Use a different email
             </button>
-            <button type="button" onClick={() => { setStep('email'); setOtp('') }}
-              className="w-full py-3 text-[13px] font-semibold text-gray-400">
-              ← Different email
-            </button>
-          </form>
+          </div>
         )}
 
         {/* ── Profile step ── */}
         {step === 'profile' && (
           <form onSubmit={saveProfile}>
+            <div className="flex items-center gap-2 mb-6 p-3 rounded-2xl" style={{ background: '#ecfff5' }}>
+              <CheckCircle size={18} color={G}/>
+              <span className="text-[13px] font-semibold" style={{ color: G }}>Email verified successfully!</span>
+            </div>
+
             <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">Almost there 👋</h2>
             <p className="text-[14px] text-gray-400 mb-5">Your name and city so nearby shoppers can find you.</p>
 
@@ -191,27 +190,20 @@ export default function Onboarding() {
                   <button key={c} type="button" onClick={() => setCity(c)}
                     className="py-3 rounded-xl text-[13px] font-bold transition-all"
                     style={{
-                      background:   city === c ? '#f0fdf4' : '#f9fafb',
-                      border:       `${city === c ? 2 : 1.5}px solid ${city === c ? G : '#e5e7eb'}`,
-                      color:        city === c ? G : '#4b5563',
+                      background:  city === c ? '#f0fdf4' : '#f9fafb',
+                      border:      `${city === c ? 2 : 1.5}px solid ${city === c ? G : '#e5e7eb'}`,
+                      color:       city === c ? G : '#4b5563',
                     }}>
                     {c}
                   </button>
                 ))}
               </div>
-              {city && (
-                <p className="text-[12px] mt-2 text-center font-semibold" style={{ color: G }}>
-                  ✓ {city} selected
-                </p>
-              )}
+              {city && <p className="text-[12px] mt-2 text-center font-semibold" style={{ color: G }}>✓ {city} selected</p>}
             </div>
 
-            <button
-              type="submit"
-              disabled={!name.trim() || !city || loading}
-              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 transition-opacity"
-              style={{ background: G }}
-            >
+            <button type="submit" disabled={!name.trim() || !city || loading}
+              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
+              style={{ background: G }}>
               {loading ? <Spinner size={20} color="white"/> : <>Let's go <ArrowRight size={18}/></>}
             </button>
           </form>
