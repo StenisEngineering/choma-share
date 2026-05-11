@@ -58,6 +58,7 @@ function AppRoutes() {
       <Route path="/create"    element={<Guard><Shell><CreateSplit/></Shell></Guard>}/>
       <Route path="/circles"   element={<Guard><Shell><Circles/></Shell></Guard>}/>
       <Route path="/stores"    element={<Guard><Shell><Stores/></Shell></Guard>}/>
+      <Route path="/store"     element={<Guard><Shell><Stores/></Shell></Guard>}/>
       <Route path="/profile"   element={<Guard><Shell><Profile/></Shell></Guard>}/>
       <Route path="*"          element={<Navigate to="/" replace/>}/>
     </Routes>
