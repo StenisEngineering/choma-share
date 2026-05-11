@@ -129,7 +129,7 @@ export default function Home() {
         {/* Circles */}
         <div className="flex items-center justify-between px-4 pt-1 pb-2">
           <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Monthly Circles</h2>
-          <span className="text-[12px] font-semibold" style={{ color: '#0f7a4b' }}>Manage</span>
+          <span className="text-[12px] font-semibold cursor-pointer" style={{ color: '#0f7a4b' }} onClick={() => navigate('/circles')}>Manage</span>
         </div>
         <div className="mx-4 mb-6 bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
           {[
