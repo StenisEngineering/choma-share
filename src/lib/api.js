@@ -138,13 +138,23 @@ export const spotsLeft = (s) => s.people_needed - s.people_joined
 export const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) : ''
 
 export function buildWhatsAppMessage(split) {
-  const per    = pricePerPerson(split)
-  const saving = savingPerPerson(split)
-  const left   = spotsLeft(split)
-  const url    = `${window.location.origin}/split/${split.id}`
+  const members    = split.split_members?.length ?? split.people_joined ?? 1
+  const left       = Math.max(0, split.people_needed - members)
+  const per        = split.total_price > 0 ? Math.round(split.total_price / split.people_needed) : 0
+  const saving     = split.total_price > 0 ? split.total_price - per : 0
+  const storeName  = split.store?.name ?? 'local African store'
+  const storeCity  = split.store?.city ?? 'Sunderland'
+  const url        = `${window.location.origin}/split/${split.id}`
+
+  const priceText  = per > 0
+    ? `Each person pays just £${per} — saving £${saving} each.`
+    : `Price to be confirmed at the store.`
+
   return encodeURIComponent(
-    `Hey! I'm splitting a ${split.title} (£${split.total_price}) at ${split.store?.name}, ${split.store?.city}.\n\n` +
-    `Each person pays just £${per} — saving £${saving} each. ${left} spot${left !== 1 ? 's' : ''} left.\n\n` +
+    `Hey! I'm splitting a ${split.title || 'bulk item'}` +
+    (split.total_price > 0 ? ` (£${split.total_price} total)` : '') +
+    ` at ${storeName}, ${storeCity}.\n\n` +
+    `${priceText} ${left} spot${left !== 1 ? 's' : ''} left.\n\n` +
     `Join here 👉 ${url}`
   )
 }
