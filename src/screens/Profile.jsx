@@ -154,21 +154,37 @@ export default function Profile() {
         <div className="mx-4 mt-4 mb-2">
           <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Settings</div>
           <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-            {[
-              { icon: <MapPin size={17} color={G}/>, bg: '#ecfff5', l: 'Location', v: profile.city, action: () => setShowCityEdit(true) },
-              { icon: <Bell   size={17} color="#a16207"/>, bg: '#fffbeb', l: 'Notifications', v: 'On'         },
-              { icon: <Phone  size={17} color="#1e40af"/>, bg: '#eff6ff', l: 'Account email', v: user?.email?.split('@')[0] },
-            ].map((r, i) => (
-              <div key={r.l}
-                className={`flex items-center gap-3 px-4 py-3.5 ${i < 2 ? 'border-b border-gray-100' : ''} active:bg-gray-50 ${r.action ? 'cursor-pointer' : ''}`}
-              onClick={r.action}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: r.bg }}>{r.icon}</div>
-                <div className="flex-1 text-[14px] font-semibold text-gray-900">{r.l}</div>
-                <div className="text-[12px] text-gray-400 truncate max-w-[120px]">{r.v}</div>
-                <ChevronRight size={15} color="#d1d5db"/>
+            {/* Location — tappable */}
+            <div
+              onClick={() => setShowCityEdit(true)}
+              className="flex items-center gap-3 px-4 py-2.5 border-b border-gray-100 cursor-pointer active:bg-gray-50">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#ecfff5' }}>
+                <MapPin size={17} color={G}/>
               </div>
-            ))}
+              <div className="flex-1 text-[14px] font-semibold text-gray-900">Location</div>
+              <div className="text-[12px] text-gray-400">{profile.city}</div>
+              <ChevronRight size={15} color="#d1d5db"/>
+            </div>
+
+            {/* Notifications */}
+            <div className="flex items-center gap-3 px-4 py-2.5 border-b border-gray-100">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#fffbeb' }}>
+                <Bell size={17} color="#a16207"/>
+              </div>
+              <div className="flex-1 text-[14px] font-semibold text-gray-900">Notifications</div>
+              <div className="text-[12px] text-gray-400">On</div>
+              <ChevronRight size={15} color="#d1d5db"/>
+            </div>
+
+            {/* Account */}
+            <div className="flex items-center gap-3 px-4 py-2.5">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#eff6ff' }}>
+                <Phone size={17} color="#1e40af"/>
+              </div>
+              <div className="flex-1 text-[14px] font-semibold text-gray-900">Account</div>
+              <div className="text-[12px] text-gray-400 truncate max-w-[140px]">{user?.email ?? 'Signed in'}</div>
+              <ChevronRight size={15} color="#d1d5db"/>
+            </div>
 
             {/* Admin link — only visible to admin */}
             {isAdmin && (
