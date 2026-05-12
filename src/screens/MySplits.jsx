@@ -57,7 +57,7 @@ export default function MySplits() {
 
         {active.length > 0 && (
           <>
-            <div className="px-4 pt-4 pb-2">
+            <div className="px-4 pt-3 pb-1">
               <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Active</h2>
             </div>
             <div className="px-4 flex flex-col gap-3">
@@ -71,7 +71,7 @@ export default function MySplits() {
             <div className="px-4 pt-5 pb-2">
               <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Past</h2>
             </div>
-            <div className="px-4 flex flex-col gap-3 pb-6">
+            <div className="px-4 flex flex-col gap-2 pb-4">
               {past.map(m => <SplitRow key={m.split_id} m={m} navigate={navigate}/>)}
             </div>
           </>

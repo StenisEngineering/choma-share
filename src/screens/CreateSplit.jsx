@@ -157,11 +157,11 @@ export default function CreateSplit() {
       </div>
 
       <div className="flex-1 overflow-y-auto scrollbar-none">
-        <div className="px-4 pt-4 pb-8 space-y-5">
+        <div className="px-4 pt-3 pb-4 space-y-3">
 
           {/* STEP 1 — Select Store First */}
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
               1. Which store?
             </label>
             {loadingS ? <Spinner size={20}/> : (
@@ -193,7 +193,7 @@ export default function CreateSplit() {
           {/* STEP 2 — Select Item (from store's real items) */}
           {store && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 2. What are you splitting?
               </label>
               {allItems.length === 0 ? (
@@ -228,7 +228,7 @@ export default function CreateSplit() {
           {/* STEP 3 — People */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 3. How many people?
               </label>
               <div className="bg-white border border-gray-200 rounded-2xl p-3.5 flex items-center gap-3">
@@ -261,7 +261,7 @@ export default function CreateSplit() {
           {/* STEP 4 — Date */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 4. Preferred day
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -284,7 +284,7 @@ export default function CreateSplit() {
           {/* STEP 5 — Time */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 5. Preferred time
               </label>
               <div className="flex gap-2 flex-wrap">
@@ -302,7 +302,7 @@ export default function CreateSplit() {
           {/* Recurring */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 Monthly recurring
               </label>
               <div className="bg-white border border-gray-200 rounded-2xl p-4 flex items-center justify-between">
@@ -323,7 +323,7 @@ export default function CreateSplit() {
           {/* Notes */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2.5 block">
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 Notes (optional)
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}

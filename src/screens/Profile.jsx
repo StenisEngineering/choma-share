@@ -62,7 +62,7 @@ export default function Profile() {
     <div className="flex flex-col h-full bg-gray-50">
 
       {/* Hero */}
-      <div className="bg-white px-5 pt-6 pb-5 border-b border-gray-100 text-center flex-shrink-0">
+      <div className="bg-white px-5 pt-4 pb-3 border-b border-gray-100 text-center flex-shrink-0">
         <div
           className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 font-display font-bold text-3xl text-white"
           style={{ background: 'linear-gradient(135deg,#0f7a4b,#15a66a)', boxShadow: '0 6px 20px rgba(15,122,75,.35)' }}>
@@ -85,7 +85,7 @@ export default function Profile() {
       <div className="flex-1 overflow-y-auto scrollbar-none">
 
         {/* Stats — real data */}
-        <div className="grid grid-cols-3 gap-2.5 mx-4 mt-4">
+        <div className="grid grid-cols-3 gap-2 mx-4 mt-4">
           {[
             { v: totalSplits,                        l: 'Splits'  },
             { v: `£${profile.total_saved ?? 0}`,     l: 'Saved'   },
@@ -126,7 +126,7 @@ export default function Profile() {
               {splits.slice(0, 5).map((m, i, arr) => (
                 <div key={m.split_id}
                   onClick={() => navigate(`/split/${m.split_id}`)}
-                  className={`flex items-center gap-3 px-4 py-3.5 cursor-pointer active:bg-gray-50 ${i < arr.length - 1 ? 'border-b border-gray-100' : ''}`}>
+                  className={`flex items-center gap-3 px-4 py-2.5 cursor-pointer active:bg-gray-50 ${i < arr.length - 1 ? 'border-b border-gray-100' : ''}`}>
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
                     style={{ background: '#ecfff5' }}>🛒</div>
                   <div className="flex-1 min-w-0">
@@ -174,7 +174,7 @@ export default function Profile() {
             {isAdmin && (
               <div
                 onClick={() => navigate('/admin')}
-                className="flex items-center gap-3 px-4 py-3.5 border-t border-gray-100 cursor-pointer active:bg-gray-50">
+                className="flex items-center gap-3 px-4 py-2.5 border-t border-gray-100 cursor-pointer active:bg-gray-50">
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: '#f0fdf4' }}>
                   <ShieldCheck size={17} color={G}/>
@@ -186,7 +186,7 @@ export default function Profile() {
 
             {/* Sign out */}
             <button onClick={logout}
-              className="w-full flex items-center gap-3 px-4 py-3.5 border-t border-gray-100 active:bg-red-50">
+              className="w-full flex items-center gap-3 px-4 py-2.5 border-t border-gray-100 active:bg-red-50">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                 style={{ background: '#fef2f2' }}>
                 <LogOut size={17} color="#ef4444"/>
@@ -204,7 +204,6 @@ export default function Profile() {
         <ChangeCityModal
           currentCity={profile.city}
           userId={user.id}
-          createdAt={profile.created_at}
           onClose={() => setShowCityEdit(false)}
           onChanged={() => { setShowCityEdit(false); window.location.reload() }}
           toast={toast}
@@ -214,13 +213,9 @@ export default function Profile() {
   )
 }
 
-function ChangeCityModal({ currentCity, userId, createdAt, onClose, onChanged, toast }) {
-  const [city,    setCity]    = useState(currentCity)
-  const [saving,  setSaving]  = useState(false)
-  const { supabase: sb } = { supabase: require('../lib/supabase').supabase }
-
-  // Check 30-day cooldown — use created_at as proxy for now
-  // In production, add a city_changed_at column
+function ChangeCityModal({ currentCity, userId, onClose, onChanged, toast }) {
+  const [city,   setCity]   = useState(currentCity)
+  const [saving, setSaving] = useState(false)
   const CITIES = ['Sunderland','Newcastle','Leeds','Birmingham','Manchester','London','Other']
   const G = '#0f7a4b'
 
@@ -228,7 +223,6 @@ function ChangeCityModal({ currentCity, userId, createdAt, onClose, onChanged, t
     if (city === currentCity) { onClose(); return }
     setSaving(true)
     try {
-      const { supabase } = await import('../lib/supabase')
       const { error } = await supabase.from('users')
         .update({ city }).eq('id', userId)
       if (error) throw error

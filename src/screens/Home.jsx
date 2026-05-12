@@ -48,7 +48,7 @@ export default function Home() {
     <div className="flex flex-col h-full bg-gray-50">
 
       {/* Header */}
-      <div className="bg-white px-5 pt-3 pb-4 border-b border-gray-100 flex-shrink-0">
+      <div className="bg-white px-5 pt-2 pb-3 border-b border-gray-100 flex-shrink-0">
         <div className="flex items-start justify-between">
           <div>
             <p className="text-[12px] text-gray-400 font-medium">{greet}</p>
@@ -119,7 +119,7 @@ export default function Home() {
         </div>
 
         {/* Active Splits */}
-        <div className="flex items-center justify-between px-4 pt-4 pb-2">
+        <div className="flex items-center justify-between px-4 pt-3 pb-1">
           <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Active Splits Near You</h2>
           <span className="text-[12px] font-semibold cursor-pointer" style={{ color: '#0f7a4b' }}
             onClick={() => navigate('/splits')}>See all</span>
@@ -131,14 +131,14 @@ export default function Home() {
         )}
 
         {!loading && splits.length === 0 && (
-          <div className="mx-4 mt-2 p-6 bg-white border border-gray-100 rounded-3xl text-center">
+          <div className="mx-4 mt-2 p-4 bg-white border border-gray-100 rounded-3xl text-center">
             <div className="text-3xl mb-2">🛒</div>
             <p className="font-semibold text-gray-700 mb-1">No active splits yet</p>
             <p className="text-[13px] text-gray-400">Be the first — create a split and share it with your community.</p>
           </div>
         )}
 
-        <div className="px-4 flex flex-col gap-3 pb-4">
+        <div className="px-4 flex flex-col gap-2 pb-3">
           {splits.map(s => (
             <SplitCard key={s.id} split={s} onJoin={handleJoin} joining={joining === s.id}/>
           ))}
@@ -151,7 +151,7 @@ export default function Home() {
             onClick={() => navigate('/circles')}>Manage</span>
         </div>
 
-        <div className="mx-4 mb-6 bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+        <div className="mx-4 mb-3 bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
           {circles.length === 0 ? (
             <div className="px-4 py-5 text-center">
               <p className="text-[13px] text-gray-400 mb-3">No circles yet</p>
@@ -167,7 +167,7 @@ export default function Home() {
               <div
                 key={m.circle_id}
                 onClick={() => navigate('/circles')}
-                className={`flex items-center gap-3 px-4 py-3.5 cursor-pointer active:bg-gray-50 ${i < circles.length - 1 ? 'border-b border-gray-100' : ''}`}>
+                className={`flex items-center gap-3 px-4 py-2.5 cursor-pointer active:bg-gray-50 ${i < circles.length - 1 ? 'border-b border-gray-100' : ''}`}>
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: m.circle?.is_private ? '#fef3c7' : '#ecfff5' }}>
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="2" strokeLinecap="round">

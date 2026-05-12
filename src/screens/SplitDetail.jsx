@@ -87,7 +87,7 @@ export default function SplitDetail() {
       <div className="flex-1 overflow-y-auto scrollbar-none">
 
         {/* Savings card */}
-        <div className="mx-4 mt-4 bg-white border border-gray-100 rounded-3xl p-4 shadow-sm flex items-center justify-between">
+        <div className="mx-4 mt-2 bg-white border border-gray-100 rounded-3xl p-4 shadow-sm flex items-center justify-between">
           <div>
             <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Your share</div>
             <div className="font-display font-black text-[38px] leading-none" style={{ color: '#0f7a4b' }}>£{perHead}</div>
@@ -101,7 +101,7 @@ export default function SplitDetail() {
         </div>
 
         {/* Info list */}
-        <div className="mx-4 mt-3 bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+        <div className="mx-4 mt-2 bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
           {[
             { icon: <Calendar size={16} color="#a16207"/>, bg: '#fffbeb',
               p: split.preferred_date ? `${formatDate(split.preferred_date)}${split.preferred_time ? ' · ' + split.preferred_time : ''}` : 'Date TBC',
@@ -125,7 +125,7 @@ export default function SplitDetail() {
 
         {/* Members */}
         <div className="mx-4 mt-3 mb-4">
-          <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2.5">Split Members</div>
+          <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Split Members</div>
           <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
             {members.map((m, i) => {
               const c = COLOURS[i % COLOURS.length]
@@ -175,7 +175,7 @@ export default function SplitDetail() {
 
         {/* Member, split still open */}
         {isMember && isOpen && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center mb-2.5">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center mb-2">
             <div className="text-[15px] font-bold" style={{ color: '#0f7a4b' }}>✓ You're in this split</div>
             <div className="text-[12px] text-gray-400 mt-1">
               Waiting for {left} more person{left !== 1 ? 's' : ''} to join
@@ -186,7 +186,7 @@ export default function SplitDetail() {
         {/* Not member, open — show join */}
         {!isMember && isOpen && (
           <button onClick={handleJoin} disabled={joining}
-            className="w-full text-white rounded-2xl py-4 text-[16px] font-bold disabled:opacity-50 mb-2.5"
+            className="w-full text-white rounded-2xl py-4 text-[16px] font-bold disabled:opacity-50 mb-2"
             style={{ background: '#0f7a4b', boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
             {joining ? 'Joining...' : 'Join This Split'}
           </button>
@@ -194,7 +194,7 @@ export default function SplitDetail() {
 
         {/* Not member, closed */}
         {!isMember && !isOpen && (
-          <div className="bg-gray-100 rounded-2xl p-4 text-center text-[14px] font-semibold text-gray-500 mb-2.5">
+          <div className="bg-gray-100 rounded-2xl p-4 text-center text-[14px] font-semibold text-gray-500 mb-2">
             {isFull ? 'This split is full — no spots left' : `This split is ${split.status}`}
           </div>
         )}
@@ -237,7 +237,7 @@ function SplitFullCoordination({ split, members }) {
 
   return (
     <div className="mb-3">
-      <div className="rounded-2xl p-4 mb-2.5"
+      <div className="rounded-2xl p-4 mb-2"
         style={{ background: 'linear-gradient(135deg,#062f23,#0a4a35)', border: '1px solid rgba(200,242,109,0.2)' }}>
         <div className="text-center mb-3">
           <div className="text-2xl mb-1">🎉</div>
