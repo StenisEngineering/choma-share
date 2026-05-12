@@ -22,7 +22,11 @@ export default function ShareSheet({ split, open, onClose }) {
           <button onClick={onClose}><X size={20} color="#9ca3af"/></button>
         </div>
         <div className="bg-gray-50 border border-gray-100 rounded-2xl p-3.5 mb-4 text-[13px] text-gray-600 leading-relaxed">
-          <strong className="text-gray-900">Hey! I'm splitting a {split.title}{split.total_price > 0 ? ` (£${split.total_price} total)` : ''} at {split.store?.name ?? 'local African store'}, {split.store?.city ?? 'Sunderland'}.</strong><br/>
+          <strong className="text-gray-900">
+            Hey! I&apos;m splitting a {split.title}
+            {split.total_price > 0 && <span> (£{split.total_price} total)</span>}
+            {' '}at {split.store?.name || 'local African store'}, {split.store?.city || 'Sunderland'}.
+          </strong><br/>
           {per > 0 ? `Each person pays just £${per} — saving £${saving} each.` : 'Price to be confirmed at the store.'} {left} spot{left !== 1 ? 's' : ''} left.<br/><br/>
           Join here 👉 {window.location.origin}/split/{split.id}
         </div>
