@@ -15,6 +15,9 @@ import CreateSplit   from './screens/CreateSplit'
 import Profile       from './screens/Profile'
 import Admin         from './screens/Admin'
 import AdminLogin    from './screens/AdminLogin'
+import Privacy       from './screens/Privacy'
+import Terms         from './screens/Terms'
+import StoreOwner    from './screens/StoreOwner'
 import Spinner       from './components/Spinner'
 import './index.css'
 
@@ -70,6 +73,9 @@ function AppRoutes() {
       <Route path="/circles"   element={<Guard><Shell><Circles/></Shell></Guard>}/>
       <Route path="/stores"    element={<Guard><Shell><Stores/></Shell></Guard>}/>
       <Route path="/profile"   element={<Guard><Shell><Profile/></Shell></Guard>}/>
+      <Route path="/privacy"    element={<Privacy/>}/>
+      <Route path="/terms"      element={<Terms/>}/>
+      <Route path="/store-portal" element={<StoreOwner/>}/>
       <Route path="*"          element={<Navigate to="/" replace/>}/>
     </Routes>
   )

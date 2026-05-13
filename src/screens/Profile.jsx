@@ -200,6 +200,26 @@ export default function Profile() {
               </div>
             )}
 
+            {/* Privacy */}
+            <div onClick={() => navigate('/privacy')}
+              className="flex items-center gap-3 px-4 py-2.5 border-t border-gray-100 cursor-pointer active:bg-gray-50">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-gray-50">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div className="flex-1 text-[14px] font-semibold text-gray-700">Privacy Policy</div>
+              <ChevronRight size={15} color="#d1d5db"/>
+            </div>
+
+            {/* Terms */}
+            <div onClick={() => navigate('/terms')}
+              className="flex items-center gap-3 px-4 py-2.5 border-t border-gray-100 cursor-pointer active:bg-gray-50">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-gray-50">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+              </div>
+              <div className="flex-1 text-[14px] font-semibold text-gray-700">Terms of Service</div>
+              <ChevronRight size={15} color="#d1d5db"/>
+            </div>
+
             {/* Sign out */}
             <button onClick={logout}
               className="w-full flex items-center gap-3 px-4 py-2.5 border-t border-gray-100 active:bg-red-50">
