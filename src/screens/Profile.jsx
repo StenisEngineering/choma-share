@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { MapPin, Bell, Phone, LogOut, Star, ChevronRight, ShieldCheck } from 'lucide-react'
 import { useAuth }  from '../hooks/useAuth'
 import { getMySplits, signOut } from '../lib/api'
+import { requestPushPermission } from '../lib/onesignal'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../components/Toast'
 import Spinner from '../components/Spinner'
@@ -17,6 +18,7 @@ export default function Profile() {
 
   const [splits,       setSplits]       = useState([])
   const [showCityEdit, setShowCityEdit] = useState(false)
+  const [pushEnabled, setPushEnabled] = useState(Notification.permission === 'granted')
   const [circleCount,  setCircleCount]  = useState(0)
   const [loading,      setLoading]      = useState(true)
 
@@ -167,12 +169,22 @@ export default function Profile() {
             </div>
 
             {/* Notifications */}
-            <div className="flex items-center gap-3 px-4 py-2.5 border-b border-gray-100">
+            <div
+              onClick={async () => {
+                if (!pushEnabled) {
+                  const ok = await requestPushPermission(user.id)
+                  if (ok) { setPushEnabled(true); toast('Push notifications enabled ✓', 'success') }
+                  else toast('Please allow notifications in your browser settings', 'error')
+                }
+              }}
+              className="flex items-center gap-3 px-4 py-2.5 border-b border-gray-100 cursor-pointer active:bg-gray-50">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#fffbeb' }}>
                 <Bell size={17} color="#a16207"/>
               </div>
               <div className="flex-1 text-[14px] font-semibold text-gray-900">Notifications</div>
-              <div className="text-[12px] text-gray-400">On</div>
+              <div className="text-[12px] font-semibold" style={{ color: pushEnabled ? '#0f7a4b' : '#f59e0b' }}>
+                {pushEnabled ? 'Enabled' : 'Tap to enable'}
+              </div>
               <ChevronRight size={15} color="#d1d5db"/>
             </div>
 

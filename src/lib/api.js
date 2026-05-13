@@ -80,6 +80,15 @@ export async function createSplit(payload) {
   // add creator as first member
   await supabase.from('split_members')
     .insert({ split_id: data.id, user_id: payload.creator_id, status: 'confirmed' })
+
+  // Notify users in same city
+  try {
+    const { notifyNewSplit } = await import('./notifications')
+    const { data: creator } = await supabase.from('users').select('name').eq('id', payload.creator_id).single()
+    const splitWithStore = await getSplit(data.id)
+    await notifyNewSplit(splitWithStore, creator?.name ?? 'Someone')
+  } catch (e) { console.error('Notification error:', e) }
+
   return data
 }
 
@@ -118,6 +127,16 @@ export async function joinSplit(splitId, userId) {
   await supabase.from('splits')
     .update({ people_joined: newCount, status: newStatus })
     .eq('id', splitId)
+
+  // Send notifications
+  try {
+    const { notifySplitJoined, notifySplitFull } = await import('./notifications')
+    const freshSplit = await getSplit(splitId)
+    const joiner = freshSplit.split_members?.find(m => m.user_id === userId)
+    const joinerName = joiner?.user?.name ?? 'Someone'
+    await notifySplitJoined(freshSplit, joinerName)
+    if (newStatus === 'full') await notifySplitFull(freshSplit)
+  } catch (e) { console.error('Notification error:', e) }
 
   return { full: newStatus === 'full' }
 }

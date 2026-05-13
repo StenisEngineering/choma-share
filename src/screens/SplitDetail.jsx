@@ -5,6 +5,7 @@ import { useAuth }   from '../hooks/useAuth'
 import { useSplit }  from '../hooks/useSplits'
 import { joinSplit, pricePerPerson, savingPerPerson, formatDate } from '../lib/api'
 import ShareSheet from '../components/ShareSheet'
+import CompletionPrompt from '../components/CompletionPrompt'
 import Spinner    from '../components/Spinner'
 import { useToast } from '../components/Toast'
 
@@ -157,6 +158,9 @@ export default function SplitDetail() {
           </div>
         </div>
       </div>
+
+      {/* Completion confirmation prompt */}
+      <CompletionPrompt split={split} userId={user?.id} onDone={() => window.location.reload()}/>
 
       {/* Trust note */}
       <div className="mx-4 mb-2 p-3 bg-amber-50 border border-amber-100 rounded-2xl">

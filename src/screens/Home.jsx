@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Bell, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
+import NotificationBell from '../components/NotificationBell'
 import { useAuth }   from '../hooks/useAuth'
 import { useSplits } from '../hooks/useSplits'
 import { joinSplit }  from '../lib/api'
@@ -56,8 +57,8 @@ export default function Home() {
               {profile?.name ? `${profile.name} 👋` : 'Choma Share'}
             </h1>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mt-1">
-            <Bell size={18} color="#6b7280"/>
+          <div className="mt-1">
+            <NotificationBell/>
           </div>
         </div>
 
