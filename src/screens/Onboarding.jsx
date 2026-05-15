@@ -90,29 +90,85 @@ export default function Onboarding() {
     <div className="min-h-screen bg-white flex flex-col">
 
       {/* Hero */}
-      <div className="flex-shrink-0 relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #062f23 0%, #0a4a35 60%, #0f6647 100%)' }}>
-        <div className="absolute inset-0 opacity-20"
-          style={{ background: 'radial-gradient(circle at 70% 30%, #c8f26d 0%, transparent 60%)' }}/>
+      <div className="flex-shrink-0 relative overflow-hidden" style={{ background: 'linear-gradient(170deg, #041f16 0%, #062f23 50%, #0a3d2e 100%)' }}>
+
+        {/* Glows */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 80% 10%, rgba(200,242,109,0.14) 0%, transparent 55%)' }}/>
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 15% 90%, rgba(248,200,90,0.08) 0%, transparent 45%)' }}/>
+
         <div className="relative px-6 pt-12 pb-8 text-center">
+
+          {/* Logo */}
           <div className="flex justify-center mb-5">
             <picture>
               <source srcSet="/logo.webp" type="image/webp"/>
               <img src="/logo.png" alt="Choma Share"
-              className="w-36 h-36 rounded-3xl"
-              style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}/>
+                width="120" height="120"
+                style={{
+                  borderRadius: '28px',
+                  boxShadow: '0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07)',
+                }}/>
             </picture>
           </div>
-          <h1 className="font-display font-black text-[32px] text-white tracking-tight leading-tight mb-1">
+
+          {/* App name */}
+          <h1 style={{
+            fontFamily: 'Fraunces, Georgia, serif',
+            fontSize: '38px',
+            fontWeight: 900,
+            color: 'white',
+            letterSpacing: '-1px',
+            lineHeight: 1,
+            marginBottom: '10px',
+          }}>
             Choma <span style={{ color: '#c8f26d' }}>Share</span>
           </h1>
-          <p className="text-[12px] font-bold uppercase tracking-widest mb-5" style={{ color: '#f8c85a' }}>
+
+          {/* Primary tagline */}
+          <p style={{
+            fontSize: '15px',
+            fontWeight: 800,
+            color: '#f8c85a',
+            letterSpacing: '0.3px',
+            marginBottom: '8px',
+          }}>
             Buy in Bulk · Split the Cost · Save Together
           </p>
+
+          {/* Sub tagline */}
+          <p style={{
+            fontSize: '13px',
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.6)',
+            lineHeight: 1.55,
+            marginBottom: '20px',
+          }}>
+            Your community. Your groceries.<br/>
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>Half the cost.</span>
+          </p>
+
+          {/* Trust pills */}
           <div className="flex justify-center gap-2 flex-wrap">
-            {["5 Stores · Sunderland", "Free to join", "No payments"].map(t => (
-              <span key={t} className="text-[11px] font-semibold px-3 py-1 rounded-full"
-                style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.15)" }}>
-                {t}
+            {[
+              { icon: '🏪', text: '5 Stores · Sunderland' },
+              { icon: '✓',  text: 'Free to join'         },
+              { icon: '💚', text: 'No payments'           },
+            ].map(p => (
+              <span key={p.text} style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                fontSize: '11px',
+                fontWeight: 600,
+                padding: '5px 12px',
+                borderRadius: '99px',
+                background: 'rgba(255,255,255,0.07)',
+                color: 'rgba(255,255,255,0.75)',
+                border: '1px solid rgba(255,255,255,0.12)',
+              }}>
+                <span>{p.icon}</span>{p.text}
               </span>
             ))}
           </div>

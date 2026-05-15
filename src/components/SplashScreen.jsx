@@ -4,157 +4,184 @@ export default function SplashScreen({ onDone }) {
   const [phase, setPhase] = useState('enter')
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('hold'), 600)
-    const t2 = setTimeout(() => setPhase('exit'), 2400)
-    const t3 = setTimeout(() => onDone?.(), 2750)
+    const t1 = setTimeout(() => setPhase('hold'), 500)
+    const t2 = setTimeout(() => setPhase('exit'), 2600)
+    const t3 = setTimeout(() => onDone?.(), 2950)
     return () => [t1, t2, t3].forEach(clearTimeout)
   }, [onDone])
 
+  const entered = phase !== 'enter'
+
   return (
-    <div
-      className="fixed inset-0 flex flex-col items-center justify-center z-[999]"
+    <div className="fixed inset-0 z-[999] flex flex-col"
       style={{
-        background: 'linear-gradient(160deg, #062f23 0%, #0a4a35 50%, #0f6647 100%)',
-        transition: 'opacity 0.35s ease, transform 0.35s ease',
+        background: 'linear-gradient(170deg, #041f16 0%, #062f23 45%, #0a3d2e 100%)',
         opacity: phase === 'exit' ? 0 : 1,
-        transform: phase === 'exit' ? 'scale(1.04)' : 'scale(1)',
+        transform: phase === 'exit' ? 'scale(1.03)' : 'scale(1)',
+        transition: 'opacity 0.35s ease, transform 0.35s ease',
         pointerEvents: phase === 'exit' ? 'none' : 'all',
-      }}
-    >
-      {/* Background glow */}
-      <div className="absolute inset-0 opacity-25"
-        style={{ background: 'radial-gradient(circle at 50% 40%, #c8f26d 0%, transparent 55%)' }}/>
+      }}>
 
-      {/* Main content */}
-      <div
-        style={{
-          transition: 'transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease',
-          transform: phase === 'enter' ? 'scale(0.6) translateY(20px)' : 'scale(1) translateY(0)',
-          opacity: phase === 'enter' ? 0 : 1,
-        }}
-        className="relative flex flex-col items-center px-8"
-      >
+      {/* Radial glow top right */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 75% 15%, rgba(200,242,109,0.13) 0%, transparent 55%)' }}/>
+
+      {/* Radial glow bottom left */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 20% 85%, rgba(248,200,90,0.08) 0%, transparent 45%)' }}/>
+
+      {/* Content — vertically centred with generous spacing */}
+      <div className="flex-1 flex flex-col items-center justify-center px-8">
+
         {/* Logo */}
-        <picture>
-          <source srcSet="/logo.webp" type="image/webp"/>
-          <img
-            src="/logo.png"
-            alt="Choma Share"
-            width="160"
-            height="160"
-            className="rounded-3xl mb-6"
-            style={{ boxShadow: '0 24px 80px rgba(0,0,0,0.5)' }}
-          />
-        </picture>
+        <div style={{
+          opacity: entered ? 1 : 0,
+          transform: entered ? 'scale(1) translateY(0)' : 'scale(0.65) translateY(24px)',
+          transition: 'opacity 0.55s ease, transform 0.65s cubic-bezier(0.34,1.56,0.64,1)',
+        }}>
+          <picture>
+            <source srcSet="/logo.webp" type="image/webp"/>
+            <img src="/logo.png" alt="Choma Share"
+              width="140" height="140"
+              style={{
+                borderRadius: '32px',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)',
+                display: 'block',
+              }}/>
+          </picture>
+        </div>
 
-        {/* App name — clear and large */}
-        <div
-          style={{
-            transition: 'opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s',
-            opacity: phase === 'enter' ? 0 : 1,
-            transform: phase === 'enter' ? 'translateY(8px)' : 'translateY(0)',
-          }}
-          className="text-center mb-3"
-        >
+        {/* App name */}
+        <div style={{
+          marginTop: '24px',
+          opacity: entered ? 1 : 0,
+          transform: entered ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'opacity 0.5s ease 0.18s, transform 0.5s ease 0.18s',
+          textAlign: 'center',
+        }}>
           <h1 style={{
-            fontFamily: 'Fraunces, serif',
-            fontSize: '36px',
+            fontFamily: 'Fraunces, Georgia, serif',
+            fontSize: '40px',
             fontWeight: 900,
             color: 'white',
-            letterSpacing: '-1px',
+            letterSpacing: '-1.5px',
             lineHeight: 1,
+            margin: 0,
           }}>
             Choma <span style={{ color: '#c8f26d' }}>Share</span>
           </h1>
         </div>
 
-        {/* Tagline — bigger, clearer, easier to read */}
-        <div
-          style={{
-            transition: 'opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s',
-            opacity: phase === 'enter' ? 0 : 1,
-            transform: phase === 'enter' ? 'translateY(8px)' : 'translateY(0)',
-          }}
-          className="text-center mb-5"
-        >
-          <p style={{
-            fontSize: '15px',
-            fontWeight: 700,
-            color: '#f8c85a',
-            letterSpacing: '0.5px',
-          }}>
-            Buy in Bulk · Split the Cost · Save Together
-          </p>
-        </div>
-
-        {/* Description — fills the space your friend noticed */}
-        <div
-          style={{
-            transition: 'opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s',
-            opacity: phase === 'enter' ? 0 : 1,
-            transform: phase === 'enter' ? 'translateY(8px)' : 'translateY(0)',
-          }}
-          className="text-center"
-        >
-          <p style={{
-            fontSize: '13px',
-            color: 'rgba(255,255,255,0.55)',
-            lineHeight: 1.5,
-          }}>
-            Community bulk buying for African<br/>households in the UK 🇬🇧🇳🇬
-          </p>
-        </div>
-      </div>
-
-      {/* Loading dots */}
-      <div
-        className="absolute bottom-16 flex gap-2"
-        style={{
-          transition: 'opacity 0.4s ease 0.5s',
-          opacity: phase === 'enter' ? 0 : 1,
-        }}
-      >
-        {[0, 1, 2].map(i => (
-          <div
-            key={i}
-            className="w-2 h-2 rounded-full"
-            style={{
-              background: '#c8f26d',
-              animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* City badge */}
-      <div
-        className="absolute bottom-28"
-        style={{
-          transition: 'opacity 0.5s ease 0.7s',
-          opacity: phase === 'enter' ? 0 : 0.6,
-        }}
-      >
+        {/* Primary tagline — BIG and bold */}
         <div style={{
+          marginTop: '14px',
+          opacity: entered ? 1 : 0,
+          transform: entered ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'opacity 0.5s ease 0.32s, transform 0.5s ease 0.32s',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontSize: '17px',
+            fontWeight: 800,
+            color: '#f8c85a',
+            letterSpacing: '0.2px',
+            lineHeight: 1.3,
+            margin: 0,
+          }}>
+            Buy in Bulk · Split the Cost<br/>Save Together
+          </p>
+        </div>
+
+        {/* Sub-tagline */}
+        <div style={{
+          marginTop: '12px',
+          opacity: entered ? 1 : 0,
+          transform: entered ? 'translateY(0)' : 'translateY(12px)',
+          transition: 'opacity 0.5s ease 0.46s, transform 0.5s ease 0.46s',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontSize: '14px',
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.6)',
+            lineHeight: 1.5,
+            margin: 0,
+          }}>
+            Your community. Your groceries.<br/>
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>Half the cost.</span>
+          </p>
+        </div>
+
+        {/* Divider line */}
+        <div style={{
+          marginTop: '20px',
+          opacity: entered ? 0.2 : 0,
+          transition: 'opacity 0.5s ease 0.55s',
+          width: '48px',
+          height: '1px',
+          background: '#c8f26d',
+        }}/>
+
+        {/* Description */}
+        <div style={{
+          marginTop: '14px',
+          opacity: entered ? 1 : 0,
+          transform: entered ? 'translateY(0)' : 'translateY(10px)',
+          transition: 'opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontSize: '12px',
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.4)',
+            letterSpacing: '0.3px',
+            margin: 0,
+            lineHeight: 1.6,
+          }}>
+            African raw food & groceries<br/>for households in the UK
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom section */}
+      <div className="flex flex-col items-center pb-12 gap-4">
+
+        {/* Location badge */}
+        <div style={{
+          opacity: entered ? 1 : 0,
+          transition: 'opacity 0.5s ease 0.7s',
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
-          fontSize: '11px',
-          fontWeight: 600,
-          color: 'rgba(255,255,255,0.5)',
-          letterSpacing: '1px',
-          textTransform: 'uppercase',
+          background: 'rgba(200,242,109,0.1)',
+          border: '1px solid rgba(200,242,109,0.2)',
+          borderRadius: '99px',
+          padding: '5px 14px',
         }}>
-          <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 0C2.69 0 0 2.69 0 6C0 10.5 6 15 6 15C6 15 12 10.5 12 6C12 2.69 9.31 0 6 0ZM6 8.5C4.62 8.5 3.5 7.38 3.5 6C3.5 4.62 4.62 3.5 6 3.5C7.38 3.5 8.5 4.62 8.5 6C8.5 7.38 7.38 8.5 6 8.5Z"
-              fill="#c8f26d" opacity="0.7"/>
+          <svg width="10" height="13" viewBox="0 0 10 13" fill="none">
+            <path d="M5 0C2.24 0 0 2.24 0 5C0 8.75 5 13 5 13C5 13 10 8.75 10 5C10 2.24 7.76 0 5 0ZM5 6.5C4.17 6.5 3.5 5.83 3.5 5C3.5 4.17 4.17 3.5 5 3.5C5.83 3.5 6.5 4.17 6.5 5C6.5 5.83 5.83 6.5 5 6.5Z"
+              fill="#c8f26d"/>
           </svg>
-          Live in Sunderland
+          <span style={{ fontSize: '11px', fontWeight: 700, color: '#c8f26d', letterSpacing: '0.8px', textTransform: 'uppercase' }}>
+            Live in Sunderland
+          </span>
+        </div>
+
+        {/* Loading dots */}
+        <div style={{ display: 'flex', gap: '6px', opacity: entered ? 1 : 0, transition: 'opacity 0.4s ease 0.6s' }}>
+          {[0,1,2].map(i => (
+            <div key={i} style={{
+              width: '6px', height: '6px', borderRadius: '50%',
+              background: '#c8f26d',
+              animation: `splash-bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
+            }}/>
+          ))}
         </div>
       </div>
 
       <style>{`
-        @keyframes bounce {
-          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+        @keyframes splash-bounce {
+          0%, 80%, 100% { transform: scale(0.5); opacity: 0.35; }
           40% { transform: scale(1); opacity: 1; }
         }
       `}</style>
