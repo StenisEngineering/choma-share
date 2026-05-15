@@ -20,6 +20,7 @@ import Terms         from './screens/Terms'
 import StoreOwner    from './screens/StoreOwner'
 import Spinner       from './components/Spinner'
 import IOSInstallBanner from './components/IOSInstallBanner'
+import { initOneSignal } from './lib/onesignal'
 import './index.css'
 
 function Guard({ children }) {
@@ -100,6 +101,11 @@ function AppRoutes() {
 function App() {
   const [splashDone, setSplashDone] = useState(false)
   const [firstLoad]  = useState(true)
+
+  // Init OneSignal on mount
+  React.useEffect(() => {
+    initOneSignal().catch(console.error)
+  }, [])
 
   return (
     <>

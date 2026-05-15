@@ -172,7 +172,7 @@ export default function Profile() {
             <div
               onClick={async () => {
                 if (!pushEnabled) {
-                  const ok = await requestPushPermission(user.id)
+                  const ok = await requestPushPermission(user.id, profile?.city)
                   if (ok) { setPushEnabled(true); toast('Push notifications enabled ✓', 'success') }
                   else toast('Please allow notifications in your browser settings', 'error')
                 }

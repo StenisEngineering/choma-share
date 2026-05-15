@@ -1,48 +1,61 @@
-// OneSignal Push Notifications
-// Sign up at onesignal.com → create a Web Push app → get your App ID
-// Then add VITE_ONESIGNAL_APP_ID to your Cloudflare environment variables
+// OneSignal Push Notifications for Choma Share
+// App ID: bee90f91-ad77-42e0-98ea-6f528c83f073
 
-const ONESIGNAL_APP_ID = import.meta.env.VITE_ONESIGNAL_APP_ID
+const APP_ID = import.meta.env.VITE_ONESIGNAL_APP_ID || 'bee90f91-ad77-42e0-98ea-6f528c83f073'
+
+let initialized = false
 
 export async function initOneSignal() {
-  if (!ONESIGNAL_APP_ID) {
-    console.log('OneSignal App ID not configured — push notifications disabled')
-    return
-  }
+  if (initialized || typeof window === 'undefined') return
+  if (!APP_ID) return
 
   try {
     // Load OneSignal SDK
-    window.OneSignalDeferred = window.OneSignalDeferred || []
-    
-    await new Promise((resolve) => {
+    await new Promise((resolve, reject) => {
+      if (window.OneSignalDeferred) { resolve(); return }
       const script = document.createElement('script')
       script.src = 'https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js'
       script.defer = true
       script.onload = resolve
+      script.onerror = reject
       document.head.appendChild(script)
     })
 
+    window.OneSignalDeferred = window.OneSignalDeferred || []
     window.OneSignalDeferred.push(async function(OneSignal) {
       await OneSignal.init({
-        appId: ONESIGNAL_APP_ID,
-        safari_web_id: '',
+        appId: APP_ID,
+        serviceWorkerPath: '/OneSignalSDKWorker.js',
         notifyButton: { enable: false },
         allowLocalhostAsSecureOrigin: true,
+        welcomeNotification: {
+          title: 'Welcome to Choma Share!',
+          message: "You'll be notified when new splits are available near you.",
+        },
       })
+      initialized = true
+      console.log('OneSignal initialized')
     })
   } catch (err) {
     console.error('OneSignal init error:', err)
   }
 }
 
-export async function requestPushPermission(userId) {
-  if (!window.OneSignal || !ONESIGNAL_APP_ID) return false
+export async function requestPushPermission(userId, city) {
+  if (typeof window === 'undefined') return false
   try {
+    await initOneSignal()
+    if (!window.OneSignal) return false
+
     const permission = await window.OneSignal.Notifications.requestPermission()
     if (permission) {
-      // Tag user so we can send targeted notifications
-      await window.OneSignal.User.addTag('user_id', userId)
-      await window.OneSignal.User.addTag('app', 'choma-share')
+      // Tag user for targeted notifications
+      await window.OneSignal.User.addTags({
+        user_id: userId,
+        city: city || 'Sunderland',
+        app: 'choma-share',
+      })
+      console.log('Push permission granted, user tagged')
       return true
     }
     return false
@@ -53,10 +66,17 @@ export async function requestPushPermission(userId) {
 }
 
 export async function setUserCity(city) {
-  if (!window.OneSignal || !ONESIGNAL_APP_ID) return
+  if (typeof window === 'undefined' || !window.OneSignal) return
   try {
     await window.OneSignal.User.addTag('city', city)
   } catch (err) {
     console.error('OneSignal tag error:', err)
   }
+}
+
+export async function isPushEnabled() {
+  try {
+    if (!window.OneSignal) return false
+    return await window.OneSignal.Notifications.isPushSupported()
+  } catch { return false }
 }
