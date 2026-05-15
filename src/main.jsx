@@ -19,6 +19,7 @@ import Privacy       from './screens/Privacy'
 import Terms         from './screens/Terms'
 import StoreOwner    from './screens/StoreOwner'
 import Spinner       from './components/Spinner'
+import IOSInstallBanner from './components/IOSInstallBanner'
 import './index.css'
 
 function Guard({ children }) {
@@ -30,9 +31,24 @@ function Guard({ children }) {
 
 function Shell({ children }) {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="flex-1 w-full max-w-md mx-auto flex flex-col bg-white shadow-xl min-h-screen relative">
-        <div className="flex-1 overflow-y-auto scrollbar-none">
+    <div style={{ minHeight: '100vh', minHeight: '100dvh', background: '#e5e7eb', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        flex: 1,
+        width: '100%',
+        maxWidth: '448px',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'white',
+        boxShadow: '0 0 40px rgba(0,0,0,0.15)',
+        // Full height including safe areas
+        minHeight: '100vh',
+        minHeight: '100dvh',
+        position: 'relative',
+        // iPhone top safe area
+        paddingTop: 'env(safe-area-inset-top)',
+      }}>
+        <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
           {children}
         </div>
         <BottomNav/>
@@ -59,8 +75,8 @@ function AppRoutes() {
       <Route path="/onboarding" element={
         isAuthenticated && hasProfile
           ? <Navigate to="/" replace/>
-          : <div className="min-h-screen bg-gray-100 flex items-start justify-center py-0 md:py-8">
-              <div className="w-full max-w-md bg-white md:rounded-3xl md:shadow-xl overflow-hidden min-h-screen md:min-h-0">
+          : <div style={{ minHeight:'100vh', minHeight:'100dvh', background:'#f3f4f6', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingTop: 0 }}>
+              <div style={{ width:'100%', maxWidth:'448px', background:'white', overflow:'hidden', minHeight:'100vh', minHeight:'100dvh' }}>
                 <Onboarding/>
               </div>
             </div>
@@ -90,10 +106,12 @@ function App() {
       {firstLoad && !splashDone && (
         <SplashScreen onDone={() => setSplashDone(true)}/>
       )}
+      <IOSInstallBanner/>
       <div style={{
         opacity: splashDone ? 1 : 0,
         transition: 'opacity 0.3s ease',
         minHeight: '100vh',
+        minHeight: '100dvh',
       }}>
         <BrowserRouter>
           <AuthProvider>

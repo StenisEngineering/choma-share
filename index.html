@@ -2,13 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- viewport-fit=cover is critical for iPhone notch/home indicator -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+    <!-- iOS PWA -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Choma Share" />
-    <meta name="description" content="Community bulk buying for African households in the UK." />
+
+    <!-- SEO & meta -->
+    <meta name="description" content="Share bulk food. Save money together. Community bulk buying for African households in the UK." />
     <meta name="theme-color" content="#062f23" />
+    <meta name="author" content="Creovate Global Ltd"/>
+    <meta name="copyright" content="© 2026 Creovate Global Ltd"/>
+
+    <!-- Open Graph for WhatsApp link previews -->
+    <meta property="og:title" content="Choma Share — Share bulk food. Save money together."/>
+    <meta property="og:description" content="Find people nearby to split African food items. Yam, turkey, chicken, pepper and more."/>
+    <meta property="og:image" content="https://share.choma.app/logo.png"/>
+    <meta property="og:url" content="https://share.choma.app"/>
+    <meta property="og:type" content="website"/>
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Choma Share"/>
+    <meta name="twitter:description" content="Share bulk food. Save money together."/>
+    <meta name="twitter:image" content="https://share.choma.app/logo.png"/>
 
     <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -17,16 +37,15 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
-    <!-- Fonts -->
+    <!-- Preload critical assets -->
     <link rel="preload" href="/logo.webp" as="image" type="image/webp"/>
+
+    <!-- Fonts — non-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preload" href="/logo.webp" as="image" type="image/webp"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <title>Choma Share · Creovate Global Ltd</title>
-    <meta name="author" content="Creovate Global Ltd"/>
-    <meta name="copyright" content="© 2026 Creovate Global Ltd"/>
   </head>
   <body>
     <div id="root"></div>

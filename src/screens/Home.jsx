@@ -150,6 +150,15 @@ export default function Home() {
           ))}
         </div>
 
+        {/* Store owner confidence */}
+        <div className="mx-4 mb-3 p-3 rounded-2xl flex items-start gap-2.5"
+          style={{ background: '#f0fdf4', border: '1px solid #b6f0d4' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <p className="text-[11px] leading-relaxed" style={{ color: '#0f7a4b' }}>
+            <strong>Choma Share does not handle payments or deliveries.</strong> We connect people to share bulk food costs. You pay the store directly.
+          </p>
+        </div>
+
         {/* Monthly Circles — real data */}
         <div className="flex items-center justify-between px-4 pt-1 pb-2">
           <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Monthly Circles</h2>

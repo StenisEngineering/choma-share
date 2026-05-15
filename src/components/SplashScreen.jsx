@@ -123,16 +123,17 @@ export default function SplashScreen({ onDone }) {
         {/* Description */}
         <div style={{ ...fade(0.42), marginBottom: '24px' }}>
           <p style={{
-            fontSize: '13px',
+            fontSize: '12.5px',
             fontWeight: 400,
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(255,255,255,0.5)',
             textAlign: 'center',
-            lineHeight: 1.6,
+            lineHeight: 1.65,
             margin: 0,
-            maxWidth: '240px',
+            maxWidth: '260px',
           }}>
-            Find people nearby to split<br/>
-            African food items in your area.
+            Split yam, turkey, chicken, fish,<br/>
+            pepper, plantain &amp; more —<br/>
+            with people near you.
           </p>
         </div>
 

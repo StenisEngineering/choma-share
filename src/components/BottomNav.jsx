@@ -14,25 +14,52 @@ export default function BottomNav() {
   const navigate     = useNavigate()
 
   return (
-    <nav className="flex-shrink-0 h-20 bg-[#07130e] flex items-center justify-around px-2 pb-5 pt-2">
+    <nav style={{
+      background: '#07130e',
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      paddingLeft: '8px',
+      paddingRight: '8px',
+      paddingTop: '8px',
+      // Safe area for iPhone home indicator
+      paddingBottom: 'calc(12px + env(safe-area-inset-bottom))',
+    }}>
       {tabs.map(t => {
         const active = pathname === t.path
         const Icon   = t.icon
 
         if (t.create) return (
           <button key={t.path} onClick={() => navigate('/create')}
-            className="rounded-full flex items-center justify-center"
-            style={{ width: 52, height: 52, marginTop: -18, background: 'linear-gradient(135deg,#0f7a4b,#15a66a)', boxShadow: '0 6px 20px rgba(15,122,75,.5)' }}>
+            style={{
+              width: 52, height: 52,
+              marginTop: -18,
+              borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'linear-gradient(135deg,#0f7a4b,#15a66a)',
+              boxShadow: '0 6px 20px rgba(15,122,75,.5)',
+              border: 'none', cursor: 'pointer', flexShrink: 0,
+            }}>
             <Plus size={24} color="white" strokeWidth={2.5}/>
           </button>
         )
 
         return (
           <button key={t.path} onClick={() => navigate(t.path)}
-            className="flex flex-col items-center gap-1 flex-1 py-1 transition-opacity"
-            style={{ opacity: active ? 1 : 0.4 }}>
+            style={{
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', gap: '4px',
+              flex: 1, paddingTop: '4px', paddingBottom: '4px',
+              opacity: active ? 1 : 0.4,
+              background: 'none', border: 'none', cursor: 'pointer',
+            }}>
             <Icon size={22} color={active ? '#c8f26d' : '#fff'} strokeWidth={2}/>
-            <span className="text-[10px] font-bold" style={{ color: active ? '#c8f26d' : '#fff' }}>{t.label}</span>
+            <span style={{
+              fontSize: '10px', fontWeight: 700,
+              color: active ? '#c8f26d' : '#fff',
+              fontFamily: 'DM Sans, sans-serif',
+            }}>{t.label}</span>
           </button>
         )
       })}

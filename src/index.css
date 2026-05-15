@@ -3,26 +3,62 @@
 @tailwind components;
 @tailwind utilities;
 
-*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+/* ── Reset & base ─────────────────────────────── */
+*, *::before, *::after {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html {
+  /* Use dynamic viewport height — fixes iOS keyboard issues */
+  height: -webkit-fill-available;
+}
 
 body {
   font-family: 'DM Sans', sans-serif;
   background: #e5e7eb;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
+  /* Prevent iOS rubber-band bounce on body */
+  overscroll-behavior: none;
 }
 
 #root {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
+/* ── Typography ───────────────────────────────── */
 .font-display { font-family: 'Fraunces', serif; }
+
+/* ── Scrollbar ────────────────────────────────── */
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-input, textarea, select { -webkit-appearance: none; }
+
+/* ── Form elements ────────────────────────────── */
+input, textarea, select {
+  -webkit-appearance: none;
+  /* Prevent iOS zoom on focus (font-size must be >= 16px or use this) */
+  font-size: 16px;
+}
+
 button { user-select: none; }
 
+/* ── Safe area utilities ──────────────────────── */
+.safe-top    { padding-top:    env(safe-area-inset-top);    }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.safe-left   { padding-left:   env(safe-area-inset-left);   }
+.safe-right  { padding-right:  env(safe-area-inset-right);  }
+
+/* ── Animations ───────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-up { animation: fadeUp 0.25s ease forwards; }
+
+/* ── iOS PWA fullscreen ───────────────────────── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .mb-safe { margin-bottom:  env(safe-area-inset-bottom); }
+}

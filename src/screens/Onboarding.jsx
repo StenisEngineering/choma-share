@@ -169,6 +169,41 @@ export default function Onboarding() {
 
       <div className="flex-1 px-6 pt-6 pb-10 overflow-y-auto">
 
+        {/* ── How it works ── */}
+        {step === 'auth' && (
+          <div className="mb-5">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3 text-center">
+              How it works
+            </p>
+            <div className="flex flex-col gap-2">
+              {[
+                { n:'1', title:'Create a split',        sub:'Choose your item — yam, turkey, pepper, chicken and more',  color:'#0f7a4b' },
+                { n:'2', title:'People nearby join',    sub:'Others in your area reserve their portion',                 color:'#1e40af' },
+                { n:'3', title:'Meet at the store',     sub:'The group buys together and pays the store directly',       color:'#a16207' },
+                { n:'4', title:'Save money together',   sub:'Everyone gets what they need without buying too much',      color:'#7c3aed' },
+              ].map(s => (
+                <div key={s.n} className="flex items-center gap-3 bg-gray-50 rounded-2xl px-3.5 py-3">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-[13px] font-bold text-white"
+                    style={{ background: s.color }}>
+                    {s.n}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-bold text-gray-900">{s.title}</div>
+                    <div className="text-[11px] text-gray-400 mt-0.5 leading-relaxed">{s.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Trust note */}
+            <div className="mt-3 p-3 rounded-2xl bg-amber-50 border border-amber-100">
+              <p className="text-[11px] text-amber-700 text-center leading-relaxed">
+                <strong>Choma Share does not hold payments or deliver orders.</strong> We help people connect to share bulk food items safely and clearly.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* ── Auth step ── */}
         {step === 'auth' && (
           <form onSubmit={handleAuth}>
@@ -195,7 +230,7 @@ export default function Onboarding() {
               <Mail size={17} color="#9ca3af"/>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                 placeholder="your@email.com" autoFocus autoComplete="email"
-                className="flex-1 bg-transparent text-[15px] font-medium text-gray-900 outline-none placeholder:text-gray-300"/>
+                style={{ fontSize: "16px", fontFamily: "inherit" }} className="flex-1 bg-transparent font-medium text-gray-900 outline-none placeholder:text-gray-300"/>
             </div>
 
             {/* Password */}
@@ -204,7 +239,7 @@ export default function Onboarding() {
               <input type={showPw ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
                 placeholder={mode === 'signup' ? 'Create a password (min 6 chars)' : 'Your password'}
                 autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                className="flex-1 bg-transparent text-[15px] font-medium text-gray-900 outline-none placeholder:text-gray-300"/>
+                style={{ fontSize: "16px", fontFamily: "inherit" }} className="flex-1 bg-transparent font-medium text-gray-900 outline-none placeholder:text-gray-300"/>
               <button type="button" onClick={() => setShowPw(s => !s)}>
                 {showPw ? <EyeOff size={17} color="#9ca3af"/> : <Eye size={17} color="#9ca3af"/>}
               </button>
@@ -233,7 +268,7 @@ export default function Onboarding() {
               <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Your name</label>
               <input type="text" value={name} onChange={e => setName(e.target.value)}
                 placeholder="First name" autoFocus autoComplete="given-name"
-                className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3.5 text-[15px] font-medium text-gray-900 outline-none focus:border-[#0f7a4b] transition-colors placeholder:text-gray-300"/>
+                style={{ fontSize: "16px", fontFamily: "inherit" }} className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3.5 font-medium text-gray-900 outline-none focus:border-[#0f7a4b] transition-colors placeholder:text-gray-300"/>
             </div>
 
             <div className="mb-8">
