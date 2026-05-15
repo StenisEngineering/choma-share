@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react'
 
 export default function SplashScreen({ onDone }) {
-  const [phase, setPhase] = useState('enter') // enter | hold | exit
+  const [phase, setPhase] = useState('enter')
 
   useEffect(() => {
-    // enter → hold after 600ms
     const t1 = setTimeout(() => setPhase('hold'), 600)
-    // hold → exit after 2000ms
-    const t2 = setTimeout(() => setPhase('exit'), 2000)
-    // call onDone after exit animation (300ms)
-    const t3 = setTimeout(() => onDone?.(), 2350)
+    const t2 = setTimeout(() => setPhase('exit'), 2400)
+    const t3 = setTimeout(() => onDone?.(), 2750)
     return () => [t1, t2, t3].forEach(clearTimeout)
   }, [onDone])
 
@@ -25,19 +22,19 @@ export default function SplashScreen({ onDone }) {
       }}
     >
       {/* Background glow */}
-      <div className="absolute inset-0 opacity-30"
+      <div className="absolute inset-0 opacity-25"
         style={{ background: 'radial-gradient(circle at 50% 40%, #c8f26d 0%, transparent 55%)' }}/>
 
-      {/* Logo */}
+      {/* Main content */}
       <div
         style={{
           transition: 'transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease',
           transform: phase === 'enter' ? 'scale(0.6) translateY(20px)' : 'scale(1) translateY(0)',
           opacity: phase === 'enter' ? 0 : 1,
         }}
-        className="relative flex flex-col items-center"
+        className="relative flex flex-col items-center px-8"
       >
-        {/* Logo image */}
+        {/* Logo */}
         <picture>
           <source srcSet="/logo.webp" type="image/webp"/>
           <img
@@ -45,27 +42,66 @@ export default function SplashScreen({ onDone }) {
             alt="Choma Share"
             width="160"
             height="160"
-            className="rounded-3xl mb-5"
+            className="rounded-3xl mb-6"
             style={{ boxShadow: '0 24px 80px rgba(0,0,0,0.5)' }}
           />
         </picture>
 
-        {/* Tagline */}
+        {/* App name — clear and large */}
         <div
           style={{
-            transition: 'opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s',
+            transition: 'opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s',
             opacity: phase === 'enter' ? 0 : 1,
-            transform: phase === 'enter' ? 'translateY(10px)' : 'translateY(0)',
+            transform: phase === 'enter' ? 'translateY(8px)' : 'translateY(0)',
+          }}
+          className="text-center mb-3"
+        >
+          <h1 style={{
+            fontFamily: 'Fraunces, serif',
+            fontSize: '36px',
+            fontWeight: 900,
+            color: 'white',
+            letterSpacing: '-1px',
+            lineHeight: 1,
+          }}>
+            Choma <span style={{ color: '#c8f26d' }}>Share</span>
+          </h1>
+        </div>
+
+        {/* Tagline — bigger, clearer, easier to read */}
+        <div
+          style={{
+            transition: 'opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s',
+            opacity: phase === 'enter' ? 0 : 1,
+            transform: phase === 'enter' ? 'translateY(8px)' : 'translateY(0)',
+          }}
+          className="text-center mb-5"
+        >
+          <p style={{
+            fontSize: '15px',
+            fontWeight: 700,
+            color: '#f8c85a',
+            letterSpacing: '0.5px',
+          }}>
+            Buy in Bulk · Split the Cost · Save Together
+          </p>
+        </div>
+
+        {/* Description — fills the space your friend noticed */}
+        <div
+          style={{
+            transition: 'opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s',
+            opacity: phase === 'enter' ? 0 : 1,
+            transform: phase === 'enter' ? 'translateY(8px)' : 'translateY(0)',
           }}
           className="text-center"
         >
-          <p className="text-[12px] font-bold uppercase tracking-[3px]"
-            style={{ color: '#f8c85a' }}>
-            Buy in Bulk · Split the Cost
-          </p>
-          <p className="text-[12px] font-bold uppercase tracking-[3px] mt-0.5"
-            style={{ color: '#f8c85a' }}>
-            Save Together
+          <p style={{
+            fontSize: '13px',
+            color: 'rgba(255,255,255,0.55)',
+            lineHeight: 1.5,
+          }}>
+            Community bulk buying for African<br/>households in the UK 🇬🇧🇳🇬
           </p>
         </div>
       </div>
@@ -81,13 +117,39 @@ export default function SplashScreen({ onDone }) {
         {[0, 1, 2].map(i => (
           <div
             key={i}
-            className="w-1.5 h-1.5 rounded-full"
+            className="w-2 h-2 rounded-full"
             style={{
               background: '#c8f26d',
               animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
             }}
           />
         ))}
+      </div>
+
+      {/* City badge */}
+      <div
+        className="absolute bottom-28"
+        style={{
+          transition: 'opacity 0.5s ease 0.7s',
+          opacity: phase === 'enter' ? 0 : 0.6,
+        }}
+      >
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          fontSize: '11px',
+          fontWeight: 600,
+          color: 'rgba(255,255,255,0.5)',
+          letterSpacing: '1px',
+          textTransform: 'uppercase',
+        }}>
+          <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 0C2.69 0 0 2.69 0 6C0 10.5 6 15 6 15C6 15 12 10.5 12 6C12 2.69 9.31 0 6 0ZM6 8.5C4.62 8.5 3.5 7.38 3.5 6C3.5 4.62 4.62 3.5 6 3.5C7.38 3.5 8.5 4.62 8.5 6C8.5 7.38 7.38 8.5 6 8.5Z"
+              fill="#c8f26d" opacity="0.7"/>
+          </svg>
+          Live in Sunderland
+        </div>
       </div>
 
       <style>{`
