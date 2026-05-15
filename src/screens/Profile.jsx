@@ -244,7 +244,12 @@ export default function Profile() {
           </div>
         </div>
 
-        <div style={{ height: 24 }}/>
+        {/* Creovate branding */}
+        <div className="text-center py-4">
+          <p className="text-[10px] text-gray-300 font-medium">© 2026 Creovate Global Ltd</p>
+          <p className="text-[10px] text-gray-300 mt-0.5">Choma Share · share.choma.app</p>
+        </div>
+        <div style={{ height: 8 }}/>
       </div>
 
       {/* City change modal */}

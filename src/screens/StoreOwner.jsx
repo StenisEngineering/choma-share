@@ -83,9 +83,8 @@ function StoreLoginScreen({ email, setEmail, password, setPassword, onLogin, loa
             {loading ? <Spinner size={18} color="white"/> : 'Sign In'}
           </button>
         </form>
-        <p className="text-center text-[12px] text-gray-400 pb-5 px-6">
-          Not set up yet? Email <span style={{ color: '#0f7a4b' }}>hello@choma.app</span> to get your store on Choma Share.
-        </p>
+        <p className="text-center text-[12px] text-gray-400 pb-2 px-6">Not set up yet? Email <span style={{ color: '#0f7a4b' }}>hello@choma.app</span></p>
+        <p className="text-center text-[11px] text-gray-300 pb-5">© 2026 Creovate Global Ltd</p>
       </div>
     </div>
   )

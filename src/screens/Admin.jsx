@@ -43,7 +43,7 @@ export default function Admin() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#c8f26d' }}>
-              Admin Panel
+              Admin Panel · Creovate Global Ltd
             </p>
             <h1 className="font-display font-black text-[24px] text-white tracking-tight">
               Choma Share

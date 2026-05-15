@@ -270,6 +270,10 @@ export default function Onboarding() {
         )}
 
       </div>
+      {/* Creovate footer */}
+      <div className="text-center py-3">
+        <p className="text-[10px] text-gray-300">© 2026 Creovate Global Ltd · Choma Share</p>
+      </div>
     </div>
   )
 }

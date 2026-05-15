@@ -12,10 +12,10 @@ export default function Privacy() {
         <h1 className="font-display font-bold text-[18px] text-gray-900">Privacy Policy</h1>
       </div>
       <div className="px-5 py-5 max-w-2xl mx-auto prose prose-sm text-gray-600">
-        <p className="text-[12px] text-gray-400 mb-4">Last updated: May 2026</p>
+        <p className="text-[12px] text-gray-400 mb-4">Last updated: May 2026 · © Creovate Global Ltd</p>
 
         <Section title="1. Who We Are">
-          Choma Share is operated by Stenis Engineering, based in Sunderland, United Kingdom. We built Choma Share to help African households in the UK coordinate bulk grocery purchases together.
+          Choma Share is a product of Creovate Global Ltd, based in Sunderland, United Kingdom. We built Choma Share to help African households in the UK coordinate bulk grocery purchases together.
           Contact: hello@choma.app
         </Section>
 
@@ -48,8 +48,14 @@ export default function Privacy() {
         </Section>
 
         <Section title="9. Contact">
-          For any privacy concerns contact us at hello@choma.app or write to Stenis Engineering, Sunderland, United Kingdom.
+          For any privacy concerns contact us at hello@choma.app or write to Creovate Global Ltd, Sunderland, United Kingdom.
         </Section>
+      </div>
+
+      {/* Footer */}
+      <div className="px-5 py-6 border-t border-gray-100 text-center">
+        <p className="text-[11px] text-gray-300">© 2026 Creovate Global Ltd. All rights reserved.</p>
+        <p className="text-[11px] text-gray-300 mt-1">Choma Share · share.choma.app</p>
       </div>
     </div>
   )

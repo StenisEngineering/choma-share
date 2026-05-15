@@ -12,7 +12,7 @@ export default function Terms() {
         <h1 className="font-display font-bold text-[18px] text-gray-900">Terms of Service</h1>
       </div>
       <div className="px-5 py-5 max-w-2xl mx-auto">
-        <p className="text-[12px] text-gray-400 mb-4">Last updated: May 2026</p>
+        <p className="text-[12px] text-gray-400 mb-4">Last updated: May 2026 · © Creovate Global Ltd</p>
 
         <Section title="1. What Choma Share Does">
           Choma Share is a coordination platform that helps people organise bulk grocery purchases together. We connect shoppers — we do not sell goods, handle payments, or provide delivery services.
@@ -53,6 +53,12 @@ export default function Terms() {
         <Section title="10. Contact">
           For any questions about these terms contact hello@choma.app
         </Section>
+      </div>
+
+      {/* Footer */}
+      <div className="px-5 py-6 border-t border-gray-100 text-center">
+        <p className="text-[11px] text-gray-300">© 2026 Creovate Global Ltd. All rights reserved.</p>
+        <p className="text-[11px] text-gray-300 mt-1">Choma Share · share.choma.app</p>
       </div>
     </div>
   )
