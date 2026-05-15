@@ -84,7 +84,9 @@ export default function Home() {
         {profile && profile.city !== 'Sunderland' && (
           <div className="mx-4 mt-4 p-4 rounded-3xl text-center relative overflow-hidden"
             style={{ background: 'linear-gradient(135deg,#062f23,#0a4a35)', border: '1px solid rgba(200,242,109,0.2)' }}>
-            <div className="text-2xl mb-2">📍</div>
+            <div className="w-10 h-10 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{background:'rgba(200,242,109,0.12)'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8f26d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
             <h3 className="font-display font-bold text-[16px] text-white mb-1">
               Coming to {profile.city} soon!
             </h3>
@@ -93,7 +95,8 @@ export default function Home() {
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold"
               style={{ background: 'rgba(248,200,90,0.15)', color: '#f8c85a', border: '1px solid rgba(248,200,90,0.3)' }}>
-              🔔 You're on the waitlist
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              You're on the waitlist
             </div>
           </div>
         )}
@@ -133,7 +136,9 @@ export default function Home() {
 
         {!loading && splits.length === 0 && (
           <div className="mx-4 mt-2 p-4 bg-white border border-gray-100 rounded-3xl text-center">
-            <div className="text-3xl mb-2">🛒</div>
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{background:'#f3f4f6'}}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </div>
             <p className="font-semibold text-gray-700 mb-1">No active splits yet</p>
             <p className="text-[13px] text-gray-400">Be the first — create a split and share it with your community.</p>
           </div>

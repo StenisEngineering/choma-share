@@ -119,7 +119,9 @@ export default function Circles() {
               <div className="px-4 pt-4 pb-6">
                 {myCircles.length === 0 ? (
                   <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
-                    <div className="text-4xl mb-3">👥</div>
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{background:'#f3f4f6'}}>
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
                     <p className="font-display font-bold text-[18px] text-gray-900 mb-2">No circles yet</p>
                     <p className="text-[13px] text-gray-400 mb-5">
                       Create a circle for your church group, family, or community — then split together every month.
@@ -153,7 +155,9 @@ export default function Circles() {
               <div className="px-4 pt-4 pb-6">
                 {publicCircles.length === 0 ? (
                   <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
-                    <div className="text-4xl mb-3">🔍</div>
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{background:'#f3f4f6'}}>
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  </div>
                     <p className="font-display font-bold text-[18px] text-gray-900 mb-2">No public circles yet</p>
                     <p className="text-[13px] text-gray-400">Be the first to create a public circle in your area.</p>
                   </div>
@@ -165,7 +169,7 @@ export default function Circles() {
                         <div className="flex items-start gap-3">
                           <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
                             style={{ background: '#ecfff5' }}>
-                            👥
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
                           </div>
                           <div className="flex-1 min-w-0">
                             <h3 className="font-bold text-[15px] text-gray-900">{circle.name}</h3>

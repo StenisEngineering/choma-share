@@ -44,7 +44,9 @@ export default function MySplits() {
 
         {!loading && splits.length === 0 && (
           <div className="mx-4 mt-6 p-8 bg-white border border-gray-100 rounded-3xl text-center shadow-sm">
-            <div className="text-4xl mb-3">🛒</div>
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{background:'#f3f4f6'}}>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </div>
             <p className="font-display font-bold text-[18px] text-gray-900 mb-2">No splits yet</p>
             <p className="text-[13px] text-gray-400 mb-5">Create your first split and share it with your community.</p>
             <button onClick={() => navigate('/create')}

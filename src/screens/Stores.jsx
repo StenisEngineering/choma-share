@@ -76,7 +76,9 @@ export default function Stores() {
 
         {!loading && filtered.length === 0 && (
           <div className="mx-4 mt-4 p-6 bg-white border border-gray-100 rounded-3xl text-center shadow-sm">
-            <div className="text-3xl mb-2">📍</div>
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-2" style={{background:'#f3f4f6'}}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
             <p className="font-semibold text-gray-700 mb-1">No stores in {cityFilter} yet</p>
             <p className="text-[13px] text-gray-400">We're expanding soon. Try viewing All stores.</p>
             <button onClick={() => setCityFilter('All')}
@@ -97,7 +99,7 @@ export default function Stores() {
                 <div className="flex items-start gap-3">
                   <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl"
                     style={{ background: '#ecfff5' }}>
-                    🏪
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -107,7 +109,7 @@ export default function Stores() {
                       {/* City label */}
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: '#ecfff5', color: '#0f7a4b', border: '1px solid #b6f0d4' }}>
-                        📍 {store.city}
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="#0f7a4b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> {store.city}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 text-[12px] text-gray-400 mt-0.5">

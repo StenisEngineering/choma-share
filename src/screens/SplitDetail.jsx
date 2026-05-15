@@ -73,7 +73,7 @@ export default function SplitDetail() {
         {isFull && (
           <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 mb-3 text-[10px] font-bold"
             style={{ background: 'rgba(248,200,90,.15)', color: '#f8c85a', border: '1px solid rgba(248,200,90,.25)' }}>
-            🎉 Split is Full
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f8c85a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Split is Full
           </div>
         )}
         <h1 className="font-display font-black text-[30px] text-white tracking-tight leading-none mb-2">
@@ -144,7 +144,10 @@ export default function SplitDetail() {
                     style={m.user_id === split.creator_id
                       ? { background: '#fffbeb', color: '#a16207' }
                       : { background: '#ecfff5', color: '#0f7a4b' }}>
-                    {m.user_id === split.creator_id ? 'Host' : `⭐ ${m.user?.reliability_score ?? '5.0'}`}
+                    {m.user_id === split.creator_id ? 'Host' : <span style={{display:'inline-flex',alignItems:'center',gap:'3px'}}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#f8c85a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    {m.user?.reliability_score ?? '5.0'}
+                  </span>}
                   </span>
                 </div>
               )
@@ -244,7 +247,9 @@ function SplitFullCoordination({ split, members }) {
       <div className="rounded-2xl p-4 mb-2"
         style={{ background: 'linear-gradient(135deg,#062f23,#0a4a35)', border: '1px solid rgba(200,242,109,0.2)' }}>
         <div className="text-center mb-3">
-          <div className="text-2xl mb-1">🎉</div>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{background:'rgba(200,242,109,0.15)'}}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8f26d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
           <div className="font-display font-bold text-[17px] text-white mb-1">Split is Full!</div>
           <div className="text-[12px]" style={{ color: 'rgba(255,255,255,0.7)' }}>
             All {split.people_needed} members joined. Time to coordinate!
@@ -254,9 +259,9 @@ function SplitFullCoordination({ split, members }) {
         {/* Quick summary */}
         <div className="bg-white/10 rounded-xl p-3 mb-3 space-y-1">
           {[
-            { icon: '📅', text: `${date}${time ? ' at ' + time : ''}` },
-            { icon: '🏪', text: `${store}${addr ? ' · ' + addr : ''}` },
-            { icon: '💰', text: `£${per} each — pay store directly` },
+            { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>, text: `${date}${time ? ' at ' + time : ''}` },
+            { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>, text: `${store}${addr ? ' · ' + addr : ''}` },
+            { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>, text: `£${per} each — pay store directly` },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-2">
               <span className="text-[14px]">{r.icon}</span>
