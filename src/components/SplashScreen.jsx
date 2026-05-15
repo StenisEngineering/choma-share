@@ -1,188 +1,202 @@
 import { useEffect, useState } from 'react'
 
+// SVG icons — consistent, clean, no emoji
+const IconBasket = ({ size = 28, color = '#c8f26d' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <path d="M16 10a4 4 0 01-8 0"/>
+  </svg>
+)
+
+const IconUsers = ({ size = 20, color = 'rgba(255,255,255,0.5)' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+    <path d="M16 3.13a4 4 0 010 7.75"/>
+  </svg>
+)
+
+const IconPin = ({ size = 14, color = '#c8f26d' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+  </svg>
+)
+
+const IconStore = ({ size = 16, color = 'rgba(255,255,255,0.65)' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+)
+
+const IconWallet = ({ size = 16, color = 'rgba(255,255,255,0.65)' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12V7H5a2 2 0 010-4h14v4"/>
+    <path d="M3 5v14a2 2 0 002 2h16v-5"/>
+    <path d="M18 12a2 2 0 000 4h4v-4z"/>
+  </svg>
+)
+
 export default function SplashScreen({ onDone }) {
   const [phase, setPhase] = useState('enter')
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('hold'), 500)
-    const t2 = setTimeout(() => setPhase('exit'), 2600)
-    const t3 = setTimeout(() => onDone?.(), 2950)
+    const t1 = setTimeout(() => setPhase('hold'), 400)
+    const t2 = setTimeout(() => setPhase('exit'), 2800)
+    const t3 = setTimeout(() => onDone?.(), 3100)
     return () => [t1, t2, t3].forEach(clearTimeout)
   }, [onDone])
 
-  const entered = phase !== 'enter'
+  const show = phase !== 'enter'
+
+  const fade = (delay) => ({
+    opacity: show ? 1 : 0,
+    transform: show ? 'translateY(0)' : 'translateY(14px)',
+    transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
+  })
 
   return (
     <div className="fixed inset-0 z-[999] flex flex-col"
       style={{
-        background: 'linear-gradient(170deg, #041f16 0%, #062f23 45%, #0a3d2e 100%)',
+        background: 'linear-gradient(170deg, #041f16 0%, #062f23 50%, #0a3d2e 100%)',
         opacity: phase === 'exit' ? 0 : 1,
-        transform: phase === 'exit' ? 'scale(1.03)' : 'scale(1)',
-        transition: 'opacity 0.35s ease, transform 0.35s ease',
+        transition: 'opacity 0.35s ease',
         pointerEvents: phase === 'exit' ? 'none' : 'all',
       }}>
 
-      {/* Radial glow top right */}
+      {/* Atmospheric glows */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 75% 15%, rgba(200,242,109,0.13) 0%, transparent 55%)' }}/>
-
-      {/* Radial glow bottom left */}
+        style={{ background: 'radial-gradient(ellipse at 70% 10%, rgba(200,242,109,0.12) 0%, transparent 50%)' }}/>
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 20% 85%, rgba(248,200,90,0.08) 0%, transparent 45%)' }}/>
+        style={{ background: 'radial-gradient(ellipse at 20% 90%, rgba(248,200,90,0.07) 0%, transparent 45%)' }}/>
 
-      {/* Content — vertically centred with generous spacing */}
-      <div className="flex-1 flex flex-col items-center justify-center px-8">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-8 gap-0">
 
-        {/* Logo */}
+        {/* Logo with spring animation */}
         <div style={{
-          opacity: entered ? 1 : 0,
-          transform: entered ? 'scale(1) translateY(0)' : 'scale(0.65) translateY(24px)',
-          transition: 'opacity 0.55s ease, transform 0.65s cubic-bezier(0.34,1.56,0.64,1)',
+          opacity: show ? 1 : 0,
+          transform: show ? 'scale(1) translateY(0)' : 'scale(0.6) translateY(20px)',
+          transition: 'opacity 0.55s ease 0s, transform 0.65s cubic-bezier(0.34,1.56,0.64,1) 0s',
+          marginBottom: '22px',
         }}>
           <picture>
             <source srcSet="/logo.webp" type="image/webp"/>
-            <img src="/logo.png" alt="Choma Share"
-              width="140" height="140"
-              style={{
-                borderRadius: '32px',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)',
-                display: 'block',
-              }}/>
+            <img src="/logo.png" alt="Choma Share" width="130" height="130"
+              style={{ borderRadius: '30px', boxShadow: '0 20px 56px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.07)', display: 'block' }}/>
           </picture>
         </div>
 
         {/* App name */}
-        <div style={{
-          marginTop: '24px',
-          opacity: entered ? 1 : 0,
-          transform: entered ? 'translateY(0)' : 'translateY(12px)',
-          transition: 'opacity 0.5s ease 0.18s, transform 0.5s ease 0.18s',
-          textAlign: 'center',
-        }}>
+        <div style={{ ...fade(0.15), marginBottom: '10px' }}>
           <h1 style={{
             fontFamily: 'Fraunces, Georgia, serif',
-            fontSize: '40px',
+            fontSize: '42px',
             fontWeight: 900,
             color: 'white',
             letterSpacing: '-1.5px',
             lineHeight: 1,
+            textAlign: 'center',
             margin: 0,
           }}>
             Choma <span style={{ color: '#c8f26d' }}>Share</span>
           </h1>
         </div>
 
-        {/* Primary tagline — BIG and bold */}
-        <div style={{
-          marginTop: '14px',
-          opacity: entered ? 1 : 0,
-          transform: entered ? 'translateY(0)' : 'translateY(12px)',
-          transition: 'opacity 0.5s ease 0.32s, transform 0.5s ease 0.32s',
-          textAlign: 'center',
-        }}>
+        {/* Primary tagline */}
+        <div style={{ ...fade(0.28), marginBottom: '14px' }}>
           <p style={{
-            fontSize: '17px',
-            fontWeight: 800,
+            fontSize: '16px',
+            fontWeight: 700,
             color: '#f8c85a',
+            textAlign: 'center',
             letterSpacing: '0.2px',
-            lineHeight: 1.3,
+            lineHeight: 1.4,
             margin: 0,
           }}>
-            Buy in Bulk · Split the Cost<br/>Save Together
+            Share bulk food.<br/>Save money together.
           </p>
         </div>
-
-        {/* Sub-tagline */}
-        <div style={{
-          marginTop: '12px',
-          opacity: entered ? 1 : 0,
-          transform: entered ? 'translateY(0)' : 'translateY(12px)',
-          transition: 'opacity 0.5s ease 0.46s, transform 0.5s ease 0.46s',
-          textAlign: 'center',
-        }}>
-          <p style={{
-            fontSize: '14px',
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.6)',
-            lineHeight: 1.5,
-            margin: 0,
-          }}>
-            Your community. Your groceries.<br/>
-            <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>Half the cost.</span>
-          </p>
-        </div>
-
-        {/* Divider line */}
-        <div style={{
-          marginTop: '20px',
-          opacity: entered ? 0.2 : 0,
-          transition: 'opacity 0.5s ease 0.55s',
-          width: '48px',
-          height: '1px',
-          background: '#c8f26d',
-        }}/>
 
         {/* Description */}
-        <div style={{
-          marginTop: '14px',
-          opacity: entered ? 1 : 0,
-          transform: entered ? 'translateY(0)' : 'translateY(10px)',
-          transition: 'opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s',
-          textAlign: 'center',
-        }}>
+        <div style={{ ...fade(0.42), marginBottom: '24px' }}>
           <p style={{
-            fontSize: '12px',
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.4)',
-            letterSpacing: '0.3px',
-            margin: 0,
+            fontSize: '13px',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.55)',
+            textAlign: 'center',
             lineHeight: 1.6,
+            margin: 0,
+            maxWidth: '240px',
           }}>
-            African raw food & groceries<br/>for households in the UK
+            Find people nearby to split<br/>
+            African food items in your area.
           </p>
+        </div>
+
+        {/* Feature pills with SVG icons */}
+        <div style={{ ...fade(0.55), display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          {[
+            { Icon: IconStore,  text: '5 Stores'    },
+            { Icon: IconUsers,  text: 'Community'   },
+            { Icon: IconWallet, text: 'Save money'  },
+          ].map(({ Icon, text }) => (
+            <div key={text} style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '5px 12px',
+              borderRadius: '99px',
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.1)',
+            }}>
+              <Icon size={13} color="rgba(255,255,255,0.55)"/>
+              <span style={{ fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.3px' }}>
+                {text}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Bottom section */}
-      <div className="flex flex-col items-center pb-12 gap-4">
+      {/* Bottom */}
+      <div className="flex flex-col items-center pb-10 gap-3">
 
         {/* Location badge */}
         <div style={{
-          opacity: entered ? 1 : 0,
-          transition: 'opacity 0.5s ease 0.7s',
+          ...fade(0.65),
           display: 'flex',
           alignItems: 'center',
-          gap: '6px',
+          gap: '5px',
           background: 'rgba(200,242,109,0.1)',
           border: '1px solid rgba(200,242,109,0.2)',
           borderRadius: '99px',
           padding: '5px 14px',
         }}>
-          <svg width="10" height="13" viewBox="0 0 10 13" fill="none">
-            <path d="M5 0C2.24 0 0 2.24 0 5C0 8.75 5 13 5 13C5 13 10 8.75 10 5C10 2.24 7.76 0 5 0ZM5 6.5C4.17 6.5 3.5 5.83 3.5 5C3.5 4.17 4.17 3.5 5 3.5C5.83 3.5 6.5 4.17 6.5 5C6.5 5.83 5.83 6.5 5 6.5Z"
-              fill="#c8f26d"/>
-          </svg>
+          <IconPin size={12} color="#c8f26d"/>
           <span style={{ fontSize: '11px', fontWeight: 700, color: '#c8f26d', letterSpacing: '0.8px', textTransform: 'uppercase' }}>
             Live in Sunderland
           </span>
         </div>
 
         {/* Loading dots */}
-        <div style={{ display: 'flex', gap: '6px', opacity: entered ? 1 : 0, transition: 'opacity 0.4s ease 0.6s' }}>
+        <div style={{ display: 'flex', gap: '5px', opacity: show ? 1 : 0, transition: 'opacity 0.4s ease 0.7s' }}>
           {[0,1,2].map(i => (
             <div key={i} style={{
-              width: '6px', height: '6px', borderRadius: '50%',
+              width: '5px', height: '5px', borderRadius: '50%',
               background: '#c8f26d',
-              animation: `splash-bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
+              animation: `sp-bounce 1.2s ease-in-out ${i*0.18}s infinite`,
             }}/>
           ))}
         </div>
       </div>
 
       <style>{`
-        @keyframes splash-bounce {
-          0%, 80%, 100% { transform: scale(0.5); opacity: 0.35; }
-          40% { transform: scale(1); opacity: 1; }
+        @keyframes sp-bounce {
+          0%,80%,100% { transform:scale(0.45); opacity:0.3; }
+          40% { transform:scale(1); opacity:1; }
         }
       `}</style>
     </div>

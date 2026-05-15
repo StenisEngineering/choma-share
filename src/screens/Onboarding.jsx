@@ -90,85 +90,77 @@ export default function Onboarding() {
     <div className="min-h-screen bg-white flex flex-col">
 
       {/* Hero */}
-      <div className="flex-shrink-0 relative overflow-hidden" style={{ background: 'linear-gradient(170deg, #041f16 0%, #062f23 50%, #0a3d2e 100%)' }}>
+      <div className="flex-shrink-0 relative overflow-hidden"
+        style={{ background: 'linear-gradient(170deg, #041f16 0%, #062f23 50%, #0a3d2e 100%)' }}>
 
-        {/* Glows */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 80% 10%, rgba(200,242,109,0.14) 0%, transparent 55%)' }}/>
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 15% 90%, rgba(248,200,90,0.08) 0%, transparent 45%)' }}/>
+          style={{ background: 'radial-gradient(ellipse at 75% 10%, rgba(200,242,109,0.12) 0%, transparent 50%)' }}/>
 
-        <div className="relative px-6 pt-12 pb-8 text-center">
+        <div className="relative px-6 pt-10 pb-8 text-center">
 
           {/* Logo */}
           <div className="flex justify-center mb-5">
             <picture>
               <source srcSet="/logo.webp" type="image/webp"/>
-              <img src="/logo.png" alt="Choma Share"
-                width="120" height="120"
-                style={{
-                  borderRadius: '28px',
-                  boxShadow: '0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07)',
-                }}/>
+              <img src="/logo.png" alt="Choma Share" width="110" height="110"
+                style={{ borderRadius: '26px', boxShadow: '0 16px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07)' }}/>
             </picture>
           </div>
 
           {/* App name */}
           <h1 style={{
             fontFamily: 'Fraunces, Georgia, serif',
-            fontSize: '38px',
+            fontSize: '36px',
             fontWeight: 900,
             color: 'white',
             letterSpacing: '-1px',
             lineHeight: 1,
-            marginBottom: '10px',
+            marginBottom: '8px',
           }}>
             Choma <span style={{ color: '#c8f26d' }}>Share</span>
           </h1>
 
-          {/* Primary tagline */}
+          {/* Tagline */}
           <p style={{
             fontSize: '15px',
-            fontWeight: 800,
+            fontWeight: 700,
             color: '#f8c85a',
-            letterSpacing: '0.3px',
-            marginBottom: '8px',
+            letterSpacing: '0.2px',
+            marginBottom: '6px',
           }}>
-            Buy in Bulk · Split the Cost · Save Together
+            Share bulk food. Save money together.
           </p>
 
-          {/* Sub tagline */}
+          {/* Description */}
           <p style={{
             fontSize: '13px',
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.6)',
+            color: 'rgba(255,255,255,0.55)',
             lineHeight: 1.55,
-            marginBottom: '20px',
+            marginBottom: '18px',
           }}>
-            Your community. Your groceries.<br/>
-            <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>Half the cost.</span>
+            Find people nearby to split African<br/>food items in your area.
           </p>
 
-          {/* Trust pills */}
+          {/* Pills with SVG icons */}
           <div className="flex justify-center gap-2 flex-wrap">
             {[
-              { icon: '🏪', text: '5 Stores · Sunderland' },
-              { icon: '✓',  text: 'Free to join'         },
-              { icon: '💚', text: 'No payments'           },
+              { label: '5 Stores · Sunderland', svg: <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
+              { label: 'Free to join',           svg: <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg> },
+              { label: 'No payments',            svg: <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round"><path d="M21 12V7H5a2 2 0 010-4h14v4"/><path d="M3 5v14a2 2 0 002 2h16v-5"/><path d="M18 12a2 2 0 000 4h4v-4z"/></svg> },
             ].map(p => (
-              <span key={p.text} style={{
+              <span key={p.label} style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '5px',
                 fontSize: '11px',
                 fontWeight: 600,
-                padding: '5px 12px',
+                padding: '5px 11px',
                 borderRadius: '99px',
                 background: 'rgba(255,255,255,0.07)',
-                color: 'rgba(255,255,255,0.75)',
-                border: '1px solid rgba(255,255,255,0.12)',
+                color: 'rgba(255,255,255,0.7)',
+                border: '1px solid rgba(255,255,255,0.11)',
               }}>
-                <span>{p.icon}</span>{p.text}
+                {p.svg}{p.label}
               </span>
             ))}
           </div>
