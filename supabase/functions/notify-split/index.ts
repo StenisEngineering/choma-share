@@ -7,7 +7,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 const ONESIGNAL_APP_ID  = Deno.env.get('ONESIGNAL_APP_ID')  || 'bee90f91-ad77-42e0-98ea-6f528c83f073'
 const ONESIGNAL_API_KEY = Deno.env.get('ONESIGNAL_API_KEY')  || ''
 const SUPABASE_URL      = Deno.env.get('SUPABASE_URL')       || ''
-const SUPABASE_KEY      = Deno.env.get('SUPABASE_SERVICE_KEY')|| ''
+const SUPABASE_KEY      = Deno.env.get('SERVICE_ROLE_KEY')|| ''
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
