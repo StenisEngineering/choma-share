@@ -32,9 +32,15 @@ function Guard({ children }) {
 
 function Shell({ children }) {
   return (
-    <div style={{ minHeight: '100vh', minHeight: '100dvh', background: '#e5e7eb', display: 'flex', flexDirection: 'column' }}>
+    <div style={{
+      height: '100vh',
+      height: '100dvh',
+      background: '#e5e7eb',
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+    }}>
       <div style={{
-        flex: 1,
         width: '100%',
         maxWidth: '448px',
         margin: '0 auto',
@@ -42,14 +48,18 @@ function Shell({ children }) {
         flexDirection: 'column',
         background: 'white',
         boxShadow: '0 0 40px rgba(0,0,0,0.15)',
-        // Full height including safe areas
-        minHeight: '100vh',
-        minHeight: '100dvh',
-        position: 'relative',
-        // iPhone top safe area
+        height: '100%',
+        overflow: 'hidden',
         paddingTop: 'env(safe-area-inset-top)',
       }}>
-        <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+          height: 0, /* critical — forces flex child to scroll */
+        }}>
           {children}
         </div>
         <BottomNav/>
@@ -76,8 +86,8 @@ function AppRoutes() {
       <Route path="/onboarding" element={
         isAuthenticated && hasProfile
           ? <Navigate to="/" replace/>
-          : <div style={{ minHeight:'100vh', minHeight:'100dvh', background:'#f3f4f6', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingTop: 0 }}>
-              <div style={{ width:'100%', maxWidth:'448px', background:'white', overflow:'hidden', minHeight:'100vh', minHeight:'100dvh' }}>
+          : <div style={{ height:'100vh', height:'100dvh', background:'#f3f4f6', display:'flex', alignItems:'flex-start', justifyContent:'center', overflow:'hidden' }}>
+              <div style={{ width:'100%', maxWidth:'448px', background:'white', height:'100%', overflowY:'auto', WebkitOverflowScrolling:'touch' }}>
                 <Onboarding/>
               </div>
             </div>
