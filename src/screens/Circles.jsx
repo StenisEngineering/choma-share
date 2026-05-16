@@ -218,22 +218,27 @@ export default function Circles() {
 }
 
 function CircleCard({ circle, role, onLeave, navigate, toast, userId }) {
-  const [showInvite, setShowInvite] = useState(false)
   const memberCount = circle?.circle_members?.[0]?.count ?? 0
 
   function copyInviteCode() {
     const link = `${window.location.origin}/join-circle/${circle.invite_code}`
     navigator.clipboard.writeText(link)
-    toast('Invite link copied! 📋', 'success')
+    toast('Invite link copied!', 'success')
   }
+
+  const iconBg = circle?.is_private ? '#fef3c7' : '#ecfff5'
+  const iconColor = circle?.is_private ? '#a16207' : G
 
   return (
     <div className="bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden">
       <div className="p-4">
         <div className="flex items-start gap-3">
-          <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
-            style={{ background: circle?.is_private ? '#fef3c7' : '#ecfff5' }}>
-            {circle?.is_private ? '🔒' : '👥'}
+          <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: iconBg }}>
+            {circle?.is_private
+              ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            }
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
@@ -253,24 +258,24 @@ function CircleCard({ circle, role, onLeave, navigate, toast, userId }) {
                 <Users size={11} color="#9ca3af"/>
                 <span className="text-[11px] text-gray-400">{memberCount} member{memberCount !== 1 ? 's' : ''}</span>
               </div>
-              {circle?.is_private
-                ? <div className="flex items-center gap-1"><Lock size={11} color="#9ca3af"/><span className="text-[11px] text-gray-400">Private</span></div>
-                : <div className="flex items-center gap-1"><Globe size={11} color="#9ca3af"/><span className="text-[11px] text-gray-400">Public</span></div>
-              }
+              <div className="flex items-center gap-1">
+                {circle?.is_private
+                  ? <Lock size={11} color="#9ca3af"/>
+                  : <Globe size={11} color="#9ca3af"/>
+                }
+                <span className="text-[11px] text-gray-400">{circle?.is_private ? 'Private' : 'Public'}</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-2 mt-3">
-          <button
-            onClick={copyInviteCode}
+          <button onClick={copyInviteCode}
             className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-bold"
             style={{ background: '#f0fdf4', color: G, border: '1px solid #b6f0d4' }}>
             <Copy size={13}/> Copy Invite Link
           </button>
-          <button
-            onClick={onLeave}
+          <button onClick={onLeave}
             className="px-3 py-2.5 rounded-xl text-[12px] font-bold bg-red-50 text-red-500">
             Leave
           </button>
