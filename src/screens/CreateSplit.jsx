@@ -113,10 +113,14 @@ export default function CreateSplit() {
   }
 
   const G = '#0f7a4b'
-  const isSunderland = !profile?.city || profile?.city === 'Sunderland'
+
+  // Wait for profile to load
+  if (!profile) return <div className="flex items-center justify-center h-full"><Spinner/></div>
+
+  const isSunderland = profile.city === 'Sunderland'
 
   // Coming soon gate for non-Sunderland users
-  if (profile && !isSunderland) return (
+  if (!isSunderland) return (
     <div className="flex flex-col h-full bg-gray-50">
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
         <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium">

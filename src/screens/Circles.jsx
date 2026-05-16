@@ -340,14 +340,14 @@ function CreateCircleSheet({ userId, city, onClose, onCreated, toast }) {
             <input value={name} onChange={e => setName(e.target.value)}
               placeholder="e.g. Church Food Circle, Family Group"
               autoFocus
-              className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-[14px] outline-none focus:border-[#0f7a4b] transition-colors"/>
+              style={{fontSize:"16px",fontFamily:"inherit"}} className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:border-[#0f7a4b] transition-colors"/>
           </div>
 
           <div>
             <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Description (optional)</label>
             <input value={desc} onChange={e => setDesc(e.target.value)}
               placeholder="What is this circle for?"
-              className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-[14px] outline-none focus:border-[#0f7a4b] transition-colors"/>
+              style={{fontSize:"16px",fontFamily:"inherit"}} className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:border-[#0f7a4b] transition-colors"/>
           </div>
 
           {/* Private toggle */}

@@ -12,15 +12,17 @@ export default function Stores() {
   const [loading,  setLoading]  = useState(true)
   const [selected, setSelected] = useState(null)
   const [cityFilter, setCityFilter] = useState('All')
+  const [loadError, setLoadError] = useState(null)
 
   useEffect(() => {
     getStores().then(data => {
-      setStores(data)
-      // Default filter to user's city if it has stores
+      setStores(data ?? [])
       if (profile?.city && data.some(s => s.city === profile.city)) {
         setCityFilter(profile.city)
       }
-    }).catch(() => {}).finally(() => setLoading(false))
+    }).catch(err => {
+      setLoadError(err.message)
+    }).finally(() => setLoading(false))
   }, [profile])
 
   // Get unique cities from stores
@@ -73,6 +75,11 @@ export default function Stores() {
 
       <div className="flex-1 overflow-y-auto scrollbar-none">
         {loading && <Spinner/>}
+        {loadError && (
+          <div className="mx-4 mt-4 p-4 bg-red-50 border border-red-100 rounded-2xl text-[13px] text-red-600">
+            Could not load stores. Please check your connection and try again.
+          </div>
+        )}
 
         {!loading && filtered.length === 0 && (
           <div className="mx-4 mt-4 p-6 bg-white border border-gray-100 rounded-3xl text-center shadow-sm">
