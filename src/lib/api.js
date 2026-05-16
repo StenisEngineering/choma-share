@@ -35,8 +35,12 @@ export async function createProfile({ id, name, phone, city }) {
 
 // STORES
 export async function getStores() {
+  // Only return active stores — respects admin hide/show setting
   const { data, error } = await supabase
-    .from('stores').select('*, store_items(*)').order('name')
+    .from('stores')
+    .select('*, store_items(*)')
+    .eq('active', true)
+    .order('name')
   if (error) throw error
   return data ?? []
 }

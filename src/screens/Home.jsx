@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus } from 'lucide-react'
@@ -17,6 +18,12 @@ export default function Home() {
   const [joining,  setJoining]  = useState(null)
   const [circles,  setCircles]  = useState([])
   const { splits, loading, error, refresh } = useSplits()
+
+  // Listen for pull-to-refresh event
+  React.useEffect(() => {
+    window.addEventListener('choma-refresh', refresh)
+    return () => window.removeEventListener('choma-refresh', refresh)
+  }, [refresh])
 
   // Load real circles from Supabase
   useEffect(() => {

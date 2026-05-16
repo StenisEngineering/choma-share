@@ -216,6 +216,17 @@ export default function Profile() {
               </div>
             )}
 
+            {/* Support */}
+            <div onClick={() => navigate('/support')}
+              className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 cursor-pointer active:bg-gray-50">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: '#eff6ff' }}>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div className="flex-1 text-[14px] font-semibold text-gray-900">Help & Support</div>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
             {/* Privacy */}
             <div onClick={() => navigate('/privacy')}
               className="flex items-center gap-3 px-4 py-2.5 border-t border-gray-100 cursor-pointer active:bg-gray-50">

@@ -15,16 +15,19 @@ export default function BottomNav() {
 
   return (
     <nav style={{
-      background: '#07130e',
       flexShrink: 0,
+      background: '#07130e',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-around',
       paddingLeft: '8px',
       paddingRight: '8px',
       paddingTop: '8px',
-      // Safe area for iPhone home indicator
-      paddingBottom: 'calc(12px + env(safe-area-inset-bottom))',
+      paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
+      // Ensure nav never disappears
+      position: 'relative',
+      zIndex: 10,
+      minHeight: '60px',
     }}>
       {tabs.map(t => {
         const active = pathname === t.path
@@ -34,11 +37,11 @@ export default function BottomNav() {
           <button key={t.path} onClick={() => navigate('/create')}
             style={{
               width: 52, height: 52,
-              marginTop: -18,
+              marginBottom: 4,
               borderRadius: '50%',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               background: 'linear-gradient(135deg,#0f7a4b,#15a66a)',
-              boxShadow: '0 6px 20px rgba(15,122,75,.5)',
+              boxShadow: '0 4px 16px rgba(15,122,75,.5)',
               border: 'none', cursor: 'pointer', flexShrink: 0,
             }}>
             <Plus size={24} color="white" strokeWidth={2.5}/>
@@ -49,10 +52,12 @@ export default function BottomNav() {
           <button key={t.path} onClick={() => navigate(t.path)}
             style={{
               display: 'flex', flexDirection: 'column',
-              alignItems: 'center', gap: '4px',
-              flex: 1, paddingTop: '4px', paddingBottom: '4px',
+              alignItems: 'center', gap: '3px',
+              flex: 1,
+              paddingTop: '4px', paddingBottom: '4px',
               opacity: active ? 1 : 0.4,
               background: 'none', border: 'none', cursor: 'pointer',
+              minWidth: 0,
             }}>
             <Icon size={22} color={active ? '#c8f26d' : '#fff'} strokeWidth={2}/>
             <span style={{
