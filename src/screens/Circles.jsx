@@ -38,12 +38,18 @@ export default function Circles() {
 
       // Public circles I haven't joined
       const myIds = (mine ?? []).map(m => m.circle_id)
-      const { data: pub } = await supabase
+      let pubQuery = supabase
         .from('circles')
         .select('*, circle_members(count)')
         .eq('is_private', false)
-        .not('id', 'in', myIds.length > 0 ? `(${myIds.join(',')})` : '(null)')
         .order('created_at', { ascending: false })
+
+      // Only filter if there are circles to exclude
+      if (myIds.length > 0) {
+        pubQuery = pubQuery.not('id', 'in', `(${myIds.join(',')})`)
+      }
+
+      const { data: pub } = await pubQuery
       setPublicCircles(pub ?? [])
     } catch (err) {
       toast(err.message, 'error')

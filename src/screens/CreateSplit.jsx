@@ -124,7 +124,9 @@ export default function CreateSplit() {
         </button>
       </div>
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
-        <div className="text-5xl mb-4">📍</div>
+        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{background:'#f0fdf4'}}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
         <h2 className="font-display font-bold text-[22px] text-gray-900 tracking-tight mb-2">
           Coming to {profile.city} soon
         </h2>
@@ -133,7 +135,7 @@ export default function CreateSplit() {
         </p>
         <div className="px-5 py-3 rounded-2xl text-[13px] font-bold"
           style={{ background: '#f0fdf4', color: '#0f7a4b', border: '1px solid #b6f0d4' }}>
-          🔔 You're on the waitlist for {profile.city}
+          You're on the waitlist for {profile.city}
         </div>
       </div>
     </div>
@@ -141,23 +143,6 @@ export default function CreateSplit() {
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
-      {/* Coming soon gate */}
-      {!isSunderland && (
-        <div className="flex-1 flex flex-col items-center justify-center px-6 text-center py-16">
-          <div className="text-5xl mb-4">📍</div>
-          <h2 className="font-display font-bold text-[22px] text-gray-900 tracking-tight mb-2">
-            Coming to {profile?.city} soon
-          </h2>
-          <p className="text-[14px] text-gray-400 mb-6 leading-relaxed">
-            Splits are currently only available in Sunderland. We're expanding to {profile?.city} very soon — you'll be the first to know.
-          </p>
-          <div className="px-5 py-3 rounded-2xl text-[13px] font-bold"
-            style={{ background: '#f0fdf4', color: '#0f7a4b', border: '1px solid #b6f0d4' }}>
-            🔔 You're on the waitlist for {profile?.city}
-          </div>
-        </div>
-      )}
-
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
         <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium mb-3">
           <ArrowLeft size={16}/> Back
