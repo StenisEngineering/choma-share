@@ -25,9 +25,9 @@ export default function UpdateBanner() {
     // If update is available — auto apply silently on app open
     // Only if the page has just loaded (not mid-session)
     if (needRefresh) {
-      const pageAge = Date.now() - performance.timing.navigationStart
-      // If page loaded less than 3 seconds ago — silent auto refresh
-      if (pageAge < 3000) {
+      // Use performance.now() — works on all browsers including iOS Safari
+      const pageAge = performance.now()
+      if (pageAge < 4000) {
         updateServiceWorker(true)
       }
       // Otherwise keep the banner (user might be mid-session)
@@ -38,8 +38,8 @@ export default function UpdateBanner() {
   // (user is mid-session — don't force refresh)
   if (!needRefresh) return null
 
-  const pageAge = Date.now() - performance.timing.navigationStart
-  if (pageAge < 3000) return null // silently updating, no banner needed
+  const pageAge = performance.now()
+  if (pageAge < 4000) return null // silently updating, no banner needed
 
   return (
     <div style={{
