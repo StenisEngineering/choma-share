@@ -292,12 +292,18 @@ export default function CreateSplit() {
                 </button>
               </div>
               <div className="mt-2 flex gap-2">
-                {[{ v: `£${perHead}`, l: 'each pays' }, { v: `£${saving}`, l: 'each saves' }].map(s => (
-                  <div key={s.l} className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
-                    <div className="font-display font-bold text-[18px]" style={{ color: G }}>{s.v}</div>
-                    <div className="text-[10px] text-gray-400 font-semibold">{s.l}</div>
+                <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
+                  <div className="font-display font-bold text-[18px]" style={{ color: G }}>
+                    {priceMin && priceMax ? `£${perMin}–£${perMax}` : perHead > 0 ? `£${perHead}` : '£0'}
                   </div>
-                ))}
+                  <div className="text-[10px] text-gray-400 font-semibold">each pays</div>
+                </div>
+                <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
+                  <div className="font-display font-bold text-[18px]" style={{ color: G }}>
+                    {midPrice > 0 ? `£${Math.round(midPrice - perHead)}` : '£0'}
+                  </div>
+                  <div className="text-[10px] text-gray-400 font-semibold">each saves</div>
+                </div>
               </div>
             </div>
           )}
