@@ -90,7 +90,7 @@ export default function Support() {
           <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
 
             {/* WhatsApp */}
-            <a href="https://wa.me/447000000000?text=Hi%2C%20I%20need%20help%20with%20Choma%20Share"
+            <a href="https://wa.me/447899842777?text=Hi%2C%20I%20need%20help%20with%20Choma%20Share"
               target="_blank" rel="noreferrer"
               className="flex items-center gap-3 px-4 py-3.5 border-b border-gray-50 active:bg-gray-50">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
