@@ -25,11 +25,14 @@ function getIcon(name) {
 
 const TIMES = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM']
 
-function getWeekends() {
-  const dates = []; const d = new Date()
-  while (dates.length < 6) {
-    d.setDate(d.getDate() + 1)
-    if (d.getDay() === 6 || d.getDay() === 0) dates.push(new Date(d))
+function getNext14Days() {
+  const dates = []
+  const d = new Date()
+  d.setHours(0, 0, 0, 0)
+  for (let i = 1; i <= 14; i++) {
+    const day = new Date(d)
+    day.setDate(d.getDate() + i)
+    dates.push(day)
   }
   return dates
 }
@@ -54,7 +57,7 @@ export default function CreateSplit() {
   const [submitting,setSub]      = useState(false)
   const [created,   setCreated]  = useState(null)
   const [shareOpen, setShare]    = useState(false)
-  const weekends = getWeekends()
+  const next14Days = getNext14Days()
 
   useEffect(() => {
     if (!user) { navigate('/onboarding'); return }
@@ -314,20 +317,36 @@ export default function CreateSplit() {
               <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 4. Preferred day
               </label>
-              <div className="grid grid-cols-3 gap-2">
-                {weekends.map(d => {
+              <div className="grid grid-cols-4 gap-2">
+                {next14Days.map(d => {
                   const sel = date?.toDateString() === d.toDateString()
+                  const isWeekend = d.getDay() === 0 || d.getDay() === 6
                   return (
                     <button key={d.toDateString()} onClick={() => setDate(d)}
-                      className="py-2.5 rounded-xl border transition-all"
-                      style={{ background: sel ? '#f0fdf4' : '#fff', borderColor: sel ? G : '#e5e7eb', borderWidth: sel ? 2 : 1.5 }}>
-                      <div className="text-[10px] font-bold text-gray-400 uppercase">{d.toLocaleDateString('en-GB', { weekday: 'short' })}</div>
-                      <div className="font-display font-bold text-[19px] leading-tight" style={{ color: sel ? G : '#111827' }}>{d.getDate()}</div>
-                      <div className="text-[9px] text-gray-400">{d.toLocaleDateString('en-GB', { month: 'short' })}</div>
+                      className="py-2.5 rounded-xl border transition-all relative"
+                      style={{
+                        background: sel ? '#f0fdf4' : '#fff',
+                        borderColor: sel ? G : isWeekend ? '#d1fae5' : '#e5e7eb',
+                        borderWidth: sel ? 2 : 1.5,
+                      }}>
+                      <div className="text-[10px] font-bold uppercase"
+                        style={{ color: sel ? G : isWeekend ? '#059669' : '#9ca3af' }}>
+                        {d.toLocaleDateString('en-GB', { weekday: 'short' })}
+                      </div>
+                      <div className="font-display font-bold text-[17px] leading-tight"
+                        style={{ color: sel ? G : '#111827' }}>
+                        {d.getDate()}
+                      </div>
+                      <div className="text-[9px] text-gray-400">
+                        {d.toLocaleDateString('en-GB', { month: 'short' })}
+                      </div>
                     </button>
                   )
                 })}
               </div>
+              <p className="text-[10px] text-gray-400 mt-1">
+                <span style={{ color: '#059669', fontWeight: 600 }}>Green border</span> = weekend
+              </p>
             </div>
           )}
 
