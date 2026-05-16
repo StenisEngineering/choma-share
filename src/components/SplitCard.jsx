@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { MapPin, Calendar } from 'lucide-react'
-import { spotsLeft, pricePerPerson, formatDate } from '../lib/api'
+import { spotsLeft, pricePerPerson, priceRangePerPerson, formatDate } from '../lib/api'
 
 const COLOURS = [
   'bg-emerald-100 text-emerald-800',
@@ -17,6 +17,7 @@ export default function SplitCard({ split, onJoin, joining }) {
   const left        = Math.max(0, split.people_needed - memberCount)
   const isFull      = left === 0 || split.status === 'full'
   const perHead     = pricePerPerson(split)
+  const priceRange  = priceRangePerPerson(split)
   const members     = split.split_members ?? []
 
   return (
@@ -42,7 +43,7 @@ export default function SplitCard({ split, onJoin, joining }) {
           </span>
         ) : (
           <span className="text-[11px] font-bold px-2.5 py-1 rounded-full ml-2 bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
-            £{perHead} each
+            {priceRange ? priceRange.text : perHead > 0 ? `£${perHead} each` : 'Price TBC'}
           </span>
         )}
       </div>

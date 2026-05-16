@@ -41,8 +41,15 @@ export default function CompletionPrompt({ split, userId, onDone }) {
           const { data: u } = await supabase.from('users')
             .select('total_splits, reliability_score').eq('id', uid).single()
           if (u) {
+            // Calculate actual saving for this user
+            const memberCount = split.split_members?.length ?? split.people_needed
+            const saving = split.total_price > 0
+              ? Math.round(split.total_price - (split.total_price / memberCount))
+              : 0
+
             await supabase.from('users').update({
               total_splits: (u.total_splits ?? 0) + 1,
+              total_saved:  (u.total_saved  ?? 0) + saving,
               reliability_score: Math.min(5, (u.reliability_score ?? 5))
             }).eq('id', uid)
           }

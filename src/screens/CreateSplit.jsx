@@ -43,6 +43,8 @@ export default function CreateSplit() {
   const [allItems,  setAllItems] = useState([]) // all items from selected store
   const [loadingS,  setLS]       = useState(true)
   const [item,      setItem]     = useState(null) // selected store_item object
+  const [priceMin,  setPriceMin]  = useState('')
+  const [priceMax,  setPriceMax]  = useState('')
   const [store,     setStore]    = useState(null) // selected store id
   const [people,    setPeople]   = useState(3)
   const [date,      setDate]     = useState(null)
@@ -68,10 +70,16 @@ export default function CreateSplit() {
     const items = selectedStore?.store_items?.filter(i => i.available) ?? []
     setAllItems(items)
     setItem(null) // reset item selection
+    setPriceMin('')
+    setPriceMax('')
   }, [store, stores])
 
-  const perHead = item ? Math.round(item.bulk_price / people) : 0
-  const saving  = item ? item.bulk_price - perHead : 0
+  const midPrice = (priceMin && priceMax)
+    ? (parseFloat(priceMin) + parseFloat(priceMax)) / 2
+    : item?.bulk_price ?? 0
+  const perMin = (priceMin && people) ? Math.round(parseFloat(priceMin) / people) : 0
+  const perMax = (priceMax && people) ? Math.round(parseFloat(priceMax) / people) : 0
+  const perHead = midPrice > 0 ? Math.round(midPrice / people) : 0
 
   async function submit() {
     if (!item || !store || !date) {
@@ -84,7 +92,9 @@ export default function CreateSplit() {
         store_id:        store,
         creator_id:      user.id,
         title:           item.name,
-        total_price:     item.bulk_price,
+        total_price:     midPrice,
+        price_min:       parseFloat(priceMin) || item.bulk_price || 0,
+        price_max:       parseFloat(priceMax) || item.bulk_price || 0,
         people_needed:   people,
         people_joined:   1,
         preferred_date:  date.toISOString().split('T')[0],
@@ -220,6 +230,51 @@ export default function CreateSplit() {
                       </button>
                     )
                   })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* STEP 2b — Price Range */}
+          {item && (
+            <div>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+                2b. What's the price range? (optional)
+              </label>
+              <p className="text-[11px] text-gray-400 mb-2">
+                Prices vary at stores. Enter a min and max so members know what to expect.
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
+                  <span className="text-[14px] font-bold text-gray-400">£</span>
+                  <input
+                    type="number"
+                    value={priceMin}
+                    onChange={e => setPriceMin(e.target.value)}
+                    placeholder="Min e.g. 60"
+                    style={{ fontSize: '16px' }}
+                    className="flex-1 bg-transparent outline-none text-gray-900 font-semibold"
+                  />
+                </div>
+                <span className="text-gray-400 font-bold">—</span>
+                <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
+                  <span className="text-[14px] font-bold text-gray-400">£</span>
+                  <input
+                    type="number"
+                    value={priceMax}
+                    onChange={e => setPriceMax(e.target.value)}
+                    placeholder="Max e.g. 80"
+                    style={{ fontSize: '16px' }}
+                    className="flex-1 bg-transparent outline-none text-gray-900 font-semibold"
+                  />
+                </div>
+              </div>
+              {priceMin && priceMax && (
+                <div className="mt-2 flex gap-2">
+                  <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
+                    <div className="font-display font-bold text-[16px]" style={{ color: '#0f7a4b' }}>£{perMin}–£{perMax}</div>
+                    <div className="text-[10px] text-gray-400 font-semibold">per person</div>
+                  </div>
                 </div>
               )}
             </div>

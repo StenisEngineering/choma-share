@@ -95,7 +95,27 @@ Deno.serve(async (req) => {
       const left = split.people_needed - 1
       const city = store.city || 'Sunderland'
 
-      // Notify all users in same city except creator
+      // Get users watching this item in same city
+      const { data: watchers } = await supabase
+        .from('watchlist')
+        .select('user_id')
+        .eq('item_name', split.title)
+
+      const watcherIds = (watchers ?? [])
+        .map((w: any) => w.user_id)
+        .filter((id: string) => id !== split.creator_id)
+
+      // Notify watchers with higher priority message
+      if (watcherIds.length > 0) {
+        await sendPush({
+          title: `${split.title} split available!`,
+          body:  `${creator?.name || 'Someone'} created a ${split.title} split at ${store.name}.${per > 0 ? ` £${per} each.` : ''} You're watching this item.`,
+          url:   `https://share.choma.app/split/${split.id}`,
+          userIds: watcherIds,
+        })
+      }
+
+      // Notify all other users in same city
       await sendPush({
         title: `New split in ${city}`,
         body:  `${creator?.name || 'Someone'} is splitting ${split.title} at ${store.name}.${per > 0 ? ` £${per} each.` : ''} ${left} spot${left !== 1 ? 's' : ''} left.`,

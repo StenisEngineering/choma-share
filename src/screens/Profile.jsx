@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { MapPin, Bell, Phone, LogOut, Star, ChevronRight, ShieldCheck } from 'lucide-react'
 import { useAuth }  from '../hooks/useAuth'
 import { getMySplits, signOut } from '../lib/api'
+import Watchlist from '../components/Watchlist'
 import { requestPushPermission } from '../lib/onesignal'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../components/Toast'
@@ -151,6 +152,9 @@ export default function Profile() {
             </div>
           )}
         </div>
+
+        {/* Watchlist */}
+        <Watchlist userId={user?.id}/>
 
         {/* Settings */}
         <div className="mx-4 mt-4 mb-2">

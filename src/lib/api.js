@@ -151,8 +151,16 @@ export async function getMySplits(userId) {
 }
 
 // HELPERS
-export const pricePerPerson = (s) => Math.round(s.total_price / s.people_needed)
-export const savingPerPerson = (s) => s.total_price - pricePerPerson(s)
+export const pricePerPerson = (s) => Math.round((s.total_price || 0) / (s.people_needed || 1))
+
+export const priceRangePerPerson = (s) => {
+  if (!s.price_min || !s.price_max || s.price_min === s.price_max) return null
+  const min = Math.round(s.price_min / s.people_needed)
+  const max = Math.round(s.price_max / s.people_needed)
+  return { min, max, text: `£${min}–£${max}` }
+}
+
+export const savingPerPerson = (s) => (s.total_price || 0) - pricePerPerson(s)
 export const spotsLeft = (s) => s.people_needed - s.people_joined
 export const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) : ''
 
