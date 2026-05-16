@@ -128,8 +128,9 @@ function App() {
       <div style={{
         opacity: splashDone ? 1 : 0,
         transition: 'opacity 0.3s ease',
-        minHeight: '100vh',
-        minHeight: '100dvh',
+        height: '100vh',
+        height: '100dvh',
+        overflow: 'hidden',
       }}>
         <BrowserRouter>
           <AuthProvider>
