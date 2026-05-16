@@ -20,6 +20,7 @@ import Terms         from './screens/Terms'
 import StoreOwner    from './screens/StoreOwner'
 import Spinner       from './components/Spinner'
 import IOSInstallBanner from './components/IOSInstallBanner'
+import UpdateBanner    from './components/UpdateBanner'
 import { initOneSignal } from './lib/onesignal'
 import './index.css'
 
@@ -123,6 +124,7 @@ function App() {
         <SplashScreen onDone={() => setSplashDone(true)}/>
       )}
       <IOSInstallBanner/>
+      <UpdateBanner/>
       <div style={{
         opacity: splashDone ? 1 : 0,
         transition: 'opacity 0.3s ease',

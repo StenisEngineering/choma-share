@@ -24,7 +24,11 @@ export default defineConfig({
           { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
         ]
       },
+      // Force immediate activation of new service worker
+      selfDestroying: false,
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/OneSignalSDK/],
