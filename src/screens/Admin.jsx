@@ -35,11 +35,15 @@ export default function Admin() {
   }, [user])
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+      display: 'flex', flexDirection: 'column',
+      background: '#f9fafb', overflow: 'hidden',
+    }}>
 
       {/* Header */}
-      <div className="px-5 pt-10 pb-4 flex-shrink-0"
-        style={{ background: 'linear-gradient(145deg,#062f23,#0a4a35)' }}>
+      <div className="px-5 pb-4 flex-shrink-0"
+        style={{ background: 'linear-gradient(145deg,#062f23,#0a4a35)', paddingTop: 'max(40px, env(safe-area-inset-top))' }}>
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#c8f26d' }}>
@@ -77,7 +81,7 @@ export default function Admin() {
       </div>
 
       {/* Tab content */}
-      <div className="flex-1 overflow-y-auto scrollbar-none px-4 pt-4 pb-8">
+      <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden", WebkitOverflowScrolling: "touch", minHeight: 0, padding: "16px 16px 48px" }}>
         {tab === 'stats'  && <StatsTab toast={toast}/>}
         {tab === 'stores' && <StoresTab toast={toast}/>}
         {tab === 'splits' && <SplitsTab toast={toast}/>}
@@ -138,7 +142,7 @@ function StatsTab({ toast }) {
       </div>
 
       <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
-        <h3 className="font-bold text-[14px] text-gray-900 mb-3">Split Status Breakdown</h3>
+        <h3 className="font-bold text-[16px] text-gray-900 mb-3">Split Status Breakdown</h3>
         {[
           { l: 'Open',      v: stats.openSplits, c: G },
           { l: 'Full',      v: stats.fullSplits, c: '#a16207' },
@@ -259,7 +263,7 @@ function SplitsTab({ toast }) {
         <div key={split.id} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
           <div className="flex items-start justify-between mb-2">
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-[14px] text-gray-900 truncate">{split.title}</div>
+              <div className="font-bold text-[16px] text-gray-900 truncate">{split.title}</div>
               <div className="text-[11px] text-gray-400 mt-0.5">
                 {split.store?.name} · {split.creator?.city} · By {split.creator?.name}
               </div>
@@ -342,7 +346,7 @@ function UsersTab({ toast }) {
 
       <input value={search} onChange={e => setSearch(e.target.value)}
         placeholder="Search by name or city..."
-        className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-[14px] outline-none focus:border-[#0f7a4b]"/>
+        className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-[16px] outline-none focus:border-[#0f7a4b]"/>
 
       {loading ? <Spinner/> : filtered.map(u => (
         <div key={u.id} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
@@ -352,7 +356,7 @@ function UsersTab({ toast }) {
               {u.name?.[0]?.toUpperCase() ?? '?'}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-[14px] text-gray-900">{u.name}</div>
+              <div className="font-bold text-[16px] text-gray-900">{u.name}</div>
               <div className="flex items-center gap-2 text-[11px] text-gray-400 mt-0.5">
                 <MapPin size={10}/> {u.city}
                 <span>· {u.total_splits ?? 0} splits</span>
@@ -417,10 +421,10 @@ function StoreCard({ store, expanded, onToggle, onRefresh, toast }) {
         {editing ? (
           <div className="space-y-2">
             <input value={storeName} onChange={e => setStoreName(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-[14px] font-semibold outline-none focus:border-[#0f7a4b]"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-[16px] font-semibold outline-none focus:border-[#0f7a4b]"
               placeholder="Store name"/>
             <input value={storeAddr} onChange={e => setStoreAddr(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-[13px] outline-none focus:border-[#0f7a4b]"
+              style={{fontSize:"16px",fontFamily:"inherit"}} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 outline-none focus:border-[#0f7a4b]"
               placeholder="Address"/>
             <div className="flex gap-2">
               <button onClick={saveStore} disabled={saving}
@@ -437,7 +441,9 @@ function StoreCard({ store, expanded, onToggle, onRefresh, toast }) {
         ) : (
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-              style={{ background: store.active ? '#ecfff5' : '#f3f4f6' }}>🏪</div>
+              style={{ background: store.active ? '#ecfff5' : '#f3f4f6' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={store.active ? "#0f7a4b" : "#9ca3af"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-[15px] text-gray-900">{store.name}</h3>
@@ -673,13 +679,13 @@ function AddStoreButton({ onAdded, toast }) {
         <h3 className="font-display font-bold text-[18px] text-gray-900 mb-4">Add New Store</h3>
         <div className="space-y-3">
           <input value={name} onChange={e => setName(e.target.value)}
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[14px] outline-none focus:border-[#0f7a4b]"
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[16px] outline-none focus:border-[#0f7a4b]"
             placeholder="Store name" autoFocus/>
           <input value={address} onChange={e => setAddress(e.target.value)}
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[14px] outline-none focus:border-[#0f7a4b]"
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[16px] outline-none focus:border-[#0f7a4b]"
             placeholder="Full address"/>
           <input value={city} onChange={e => setCity(e.target.value)}
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[14px] outline-none focus:border-[#0f7a4b]"
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[16px] outline-none focus:border-[#0f7a4b]"
             placeholder="City"/>
           <button onClick={add} disabled={saving}
             className="w-full py-3.5 rounded-2xl text-[15px] font-bold text-white"
