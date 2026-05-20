@@ -50,6 +50,10 @@ export default function CreateSplit() {
   const [priceMax,  setPriceMax]  = useState('')
   const [priceTBC,  setPriceTBC]  = useState(false)
   const [store,     setStore]    = useState(null) // selected store id
+  const [useOtherStore,   setUseOtherStore]   = useState(false)
+  const [otherStoreName,  setOtherStoreName]  = useState('')
+  const [otherStoreAddr,  setOtherStoreAddr]  = useState('')
+  const [customItemName,  setCustomItemName]  = useState('')
   const [people,    setPeople]   = useState(3)
   const [date,      setDate]     = useState(null)
   const [time,      setTime]     = useState('11:00 AM')
@@ -86,16 +90,24 @@ export default function CreateSplit() {
   const perHead = midPrice > 0 ? Math.round(midPrice / people) : 0
 
   async function submit() {
-    if (!item || !store || !date) {
-      toast('Please select an item, store and date', 'error'); return
+    if (useOtherStore) {
+      if (!otherStoreName.trim()) { toast('Please enter the store name', 'error'); return }
+      if (!customItemName.trim()) { toast('Please enter the item name', 'error'); return }
+      if (!date) { toast('Please select a date', 'error'); return }
+    } else {
+      if (!item || !store || !date) {
+        toast('Please select an item, store and date', 'error'); return
+      }
     }
     setSub(true)
     try {
       const newSplit = await createSplit({
-        item_id:         item.id,
-        store_id:        store,
+        item_id:         useOtherStore ? null : item.id,
+        store_id:        useOtherStore ? null : store,
         creator_id:      user.id,
-        title:           item.name,
+        title:           useOtherStore ? customItemName.trim() : item.name,
+        custom_store:    useOtherStore ? otherStoreName.trim() : null,
+        custom_address:  useOtherStore ? otherStoreAddr.trim() : null,
         total_price:     priceTBC ? 0 : midPrice,
         price_min:       priceTBC ? 0 : (parseFloat(priceMin) || item.bulk_price || 0),
         price_max:       priceTBC ? 0 : (parseFloat(priceMax) || item.bulk_price || 0),
@@ -192,7 +204,88 @@ export default function CreateSplit() {
                 ))}
               </div>
             )}
+
+            {/* Other store option */}
+            <button
+              onClick={() => {
+                setUseOtherStore(o => {
+                  if (!o) { setStore(null); setItem(null); setAllItems([]) }
+                  return !o
+                })
+              }}
+              className="w-full flex items-center gap-3 p-3.5 rounded-2xl border transition-all mt-2"
+              style={{
+                background:  useOtherStore ? '#f0fdf4' : '#fff',
+                borderColor: useOtherStore ? G : '#e5e7eb',
+                borderWidth: useOtherStore ? 2 : 1.5,
+                borderStyle: 'dashed',
+              }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: useOtherStore ? '#ecfff5' : '#f9fafb' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={useOtherStore ? G : '#9ca3af'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </div>
+              <div className="text-left flex-1">
+                <div className="text-[15px] font-bold" style={{ color: useOtherStore ? G : '#6b7280' }}>
+                  My store isn't listed
+                </div>
+                <div className="text-[12px] text-gray-400">Add a store not on Choma Share yet</div>
+              </div>
+              <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                style={{ background: useOtherStore ? G : 'transparent', borderColor: useOtherStore ? G : '#d1d5db' }}>
+                {useOtherStore && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>}
+              </div>
+            </button>
+
+            {/* Other store inputs */}
+            {useOtherStore && (
+              <div className="space-y-2 mt-2">
+                <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-[#0f7a4b]">
+                  <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Store name *</div>
+                  <input
+                    type="text"
+                    value={otherStoreName}
+                    onChange={e => setOtherStoreName(e.target.value)}
+                    placeholder="e.g. Afro Caribbean Foods"
+                    style={{ fontSize: '16px', fontFamily: 'inherit' }}
+                    className="w-full bg-transparent outline-none text-gray-900 font-semibold"
+                  />
+                </div>
+                <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-[#0f7a4b]">
+                  <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Store address (optional)</div>
+                  <input
+                    type="text"
+                    value={otherStoreAddr}
+                    onChange={e => setOtherStoreAddr(e.target.value)}
+                    placeholder="e.g. 12 High Street, Sunderland"
+                    style={{ fontSize: '16px', fontFamily: 'inherit' }}
+                    className="w-full bg-transparent outline-none text-gray-900 font-semibold"
+                  />
+                </div>
+              </div>
+            )}
           </div>
+
+          {/* STEP 2 — Custom item if other store */}
+          {useOtherStore && (
+            <div>
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+                2. What are you splitting?
+              </label>
+              <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-[#0f7a4b]">
+                <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Item name *</div>
+                <input
+                  type="text"
+                  value={customItemName}
+                  onChange={e => setCustomItemName(e.target.value)}
+                  placeholder="e.g. Yam Box, Turkey Carton..."
+                  style={{ fontSize: '16px', fontFamily: 'inherit' }}
+                  className="w-full bg-transparent outline-none text-gray-900 font-semibold"
+                />
+              </div>
+            </div>
+          )}
 
           {/* STEP 2 — Select Item (from store's real items) */}
           {store && (
@@ -447,7 +540,7 @@ export default function CreateSplit() {
 
           {/* Submit */}
           <button onClick={submit}
-            disabled={!item || !store || !date || submitting}
+            disabled={useOtherStore ? (!otherStoreName.trim() || !customItemName.trim() || !date || submitting) : (!item || !store || !date || submitting)}
             className="w-full text-white rounded-2xl py-4 text-[17px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
             style={{ background: G, boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
             {submitting ? <Spinner size={20} color="white"/> : <>Post My Split <ArrowRight size={18}/></>}
