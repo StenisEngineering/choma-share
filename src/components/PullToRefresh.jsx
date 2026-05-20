@@ -4,41 +4,53 @@ export default function PullToRefresh({ onRefresh, children }) {
   const [pulling,   setPulling]   = useState(false)
   const [distance,  setDistance]  = useState(0)
   const [refreshing,setRefreshing]= useState(false)
-  const startY  = useRef(null)
-  const el      = useRef(null)
-  const THRESHOLD = 70
+  const startY    = useRef(null)
+  const pulling_  = useRef(false)
+  const el        = useRef(null)
+  const THRESHOLD = 65
 
   useEffect(() => {
     const node = el.current
     if (!node) return
 
     function onTouchStart(e) {
-      // Only trigger if scrolled to top
-      if (node.scrollTop > 0) return
       startY.current = e.touches[0].clientY
+      pulling_.current = false
     }
 
     function onTouchMove(e) {
       if (startY.current === null) return
       const dy = e.touches[0].clientY - startY.current
-      if (dy < 0) { startY.current = null; return }
-      if (dy > 0 && node.scrollTop === 0) {
+
+      // Only intercept pull-down when at top of scroll
+      if (dy > 8 && node.scrollTop <= 0) {
+        pulling_.current = true
+        // Only preventDefault when actually pulling — this prevents scroll lock
         e.preventDefault()
-        setDistance(Math.min(dy * 0.5, THRESHOLD + 20))
+        setDistance(Math.min(dy * 0.45, THRESHOLD + 20))
         setPulling(true)
+      } else if (!pulling_.current) {
+        // Normal scroll — do nothing, let the browser handle it
+        startY.current = null
       }
     }
 
     async function onTouchEnd() {
-      if (distance >= THRESHOLD) {
+      if (pulling_.current && distance >= THRESHOLD) {
         setRefreshing(true)
         setDistance(THRESHOLD)
-        try { await onRefresh?.() } catch {}
-        setRefreshing(false)
+        try { await onRefresh?.() } catch (e) { console.error(e) }
+        setTimeout(() => {
+          setRefreshing(false)
+          setDistance(0)
+          setPulling(false)
+        }, 400)
+      } else {
+        setDistance(0)
+        setPulling(false)
       }
-      setDistance(0)
-      setPulling(false)
       startY.current = null
+      pulling_.current = false
     }
 
     node.addEventListener('touchstart', onTouchStart, { passive: true })
@@ -52,12 +64,7 @@ export default function PullToRefresh({ onRefresh, children }) {
   }, [distance, onRefresh])
 
   return (
-    <div ref={el} style={{
-      flex: 1, overflowY: 'auto', overflowX: 'hidden',
-      WebkitOverflowScrolling: 'touch',
-      overscrollBehavior: 'none',
-      minHeight: 0,
-    }}>
+    <div ref={el} className="app-scroll">
       {/* Pull indicator */}
       {(pulling || refreshing) && (
         <div style={{

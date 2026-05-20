@@ -3,84 +3,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Reset ─────────────────────────────────────── */
+/* ── Reset ──────────────────────────────────────────── */
 *, *::before, *::after {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
 }
 
-/* ── Root height — the correct cross-device fix ── */
-html, body, #root {
+html {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  overscroll-behavior: none;
+  /* Fixes iOS viewport height bugs */
+  height: -webkit-fill-available;
 }
 
 body {
+  height: 100%;
+  height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
   font-family: 'DM Sans', sans-serif;
   background: #e5e7eb;
-}
-
-/* ── App shell — works on ALL Android + iPhone ── */
-.app-root {
-  position: fixed;       /* KEY: fixed not relative */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* Prevent body bounce — scroll happens inside app-scroll only */
+  overscroll-behavior: none;
   overflow: hidden;
 }
 
+#root {
+  height: 100%;
+  height: -webkit-fill-available;
+}
+
+/* ── App root ────────────────────────────────────────── */
+.app-root {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
 .app-visible { opacity: 1; transition: opacity 0.3s ease; }
-.app-hidden  { opacity: 0; }
+.app-hidden  { opacity: 0; pointer-events: none; }
 
 .app-loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
   background: white;
 }
 
-/* The outer shell wrapper */
+/* ── Shell — outer wrapper ───────────────────────────── */
 .app-shell {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: #e5e7eb;
+  /* Tablet: grey sides, centred card */
+  background: #d1d5db;
   display: flex;
-  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
   overflow: hidden;
 }
 
-/* Centered card — max 448px on desktop, full width on mobile */
+/* ── Inner card ──────────────────────────────────────── */
 .app-inner {
+  /* Phone: full width. Tablet/desktop: capped at 500px */
   width: 100%;
-  max-width: 448px;
-  margin: 0 auto;
-  height: 100%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   background: white;
-  box-shadow: 0 0 40px rgba(0,0,0,0.12);
-  position: relative;
   overflow: hidden;
+  position: relative;
   /* iPhone notch */
   padding-top: env(safe-area-inset-top);
+  /* Subtle shadow on tablet */
+  box-shadow: 0 0 60px rgba(0,0,0,0.18);
 }
 
-/* Scrollable content area */
+/* ── Scroll area ─────────────────────────────────────── */
+/*
+ * THE CRITICAL FIX:
+ * - flex: 1 makes it fill remaining height
+ * - min-height: 0 forces flex to respect the constraint (without this it grows unbounded)
+ * - overflow-y: scroll (not auto) prevents the iOS "stuck at top" bug
+ * - overscroll-behavior: contain prevents scroll chaining to body
+ */
 .app-scroll {
   flex: 1;
-  overflow-y: auto;
+  min-height: 0;
+  overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-  /* This is the key: explicit min-height 0 forces correct flex sizing */
-  min-height: 0;
+  /* Ensure scroll position resets are smooth */
+  scroll-behavior: auto;
 }
 
-/* Onboarding wrapper */
+/* ── Onboarding wrapper ──────────────────────────────── */
 .app-onboarding {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -90,35 +106,66 @@ body {
   justify-content: center;
   overflow: hidden;
 }
-
 .app-onboarding-inner {
   width: 100%;
-  max-width: 448px;
+  max-width: 500px;
   height: 100%;
   background: white;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
-/* ── Typography ─────────────────────────────────── */
+/* ── Typography ──────────────────────────────────────── */
 .font-display { font-family: 'Fraunces', serif; }
 
-/* ── Scrollbar ──────────────────────────────────── */
+/* ── Scrollbar hidden ────────────────────────────────── */
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+.app-scroll::-webkit-scrollbar { display: none; }
+.app-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Forms — prevent iOS zoom ───────────────────── */
+/* ── Font sizes — 1px increase across the board ─────── */
+/*
+ * Base font is now 15px (was 14px).
+ * All text-[Xpx] classes in Tailwind remain as-is,
+ * but we bump the html root font-size so rem-based
+ * sizes scale up proportionally.
+ */
+html { font-size: 15px; }
+
+/* ── Forms — prevent iOS zoom ────────────────────────── */
 input, textarea, select {
   -webkit-appearance: none;
   font-size: 16px !important;
+  font-family: inherit;
 }
-button { user-select: none; }
+button {
+  user-select: none;
+  -webkit-user-select: none;
+}
 
-/* ── Safe area utilities ────────────────────────── */
+/* ── Safe area utilities ─────────────────────────────── */
 .safe-top    { padding-top:    env(safe-area-inset-top);    }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
-/* ── Animations ─────────────────────────────────── */
+/* ── Tablet responsive ───────────────────────────────── */
+@media (min-width: 640px) {
+  .app-shell {
+    /* Show grey background on tablet/desktop */
+    background: linear-gradient(135deg, #d1fae5, #e5e7eb);
+  }
+  .app-inner {
+    /* Tablet gets rounded corners and more shadow */
+    border-radius: 24px;
+    margin: 16px auto;
+    height: calc(100% - 32px);
+    max-width: 480px;
+  }
+}
+
+/* ── Animations ──────────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
