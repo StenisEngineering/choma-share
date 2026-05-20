@@ -3,39 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Reset ──────────────────────────────────────────── */
+/* ── Reset ──────────────────────────────── */
 *, *::before, *::after {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
 }
 
-html {
+html, body {
+  width: 100%;
   height: 100%;
-  /* Fixes iOS viewport height bugs */
-  height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
-  height: 100%;
-  height: -webkit-fill-available;
-  margin: 0;
-  padding: 0;
   font-family: 'DM Sans', sans-serif;
-  background: #e5e7eb;
-  /* Prevent body bounce — scroll happens inside app-scroll only */
-  overscroll-behavior: none;
-  overflow: hidden;
+  font-size: 15px;
+  background: #d1d5db;
 }
 
 #root {
+  width: 100%;
   height: 100%;
-  height: -webkit-fill-available;
+  overflow: hidden;
 }
 
-/* ── App root ────────────────────────────────────────── */
+/* ── App root ───────────────────────────── */
 .app-root {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 .app-visible { opacity: 1; transition: opacity 0.3s ease; }
@@ -45,45 +43,44 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100%;
   background: white;
 }
 
-/* ── Shell — outer wrapper ───────────────────────────── */
+/* ── Shell ──────────────────────────────── */
 .app-shell {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  /* Tablet: grey sides, centred card */
-  background: #d1d5db;
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: stretch;
   justify-content: center;
+  background: #d1d5db;
   overflow: hidden;
 }
 
-/* ── Inner card ──────────────────────────────────────── */
+/* ── Inner card ─────────────────────────── */
 .app-inner {
-  /* Phone: full width. Tablet/desktop: capped at 500px */
   width: 100%;
   max-width: 500px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: white;
   overflow: hidden;
   position: relative;
-  /* iPhone notch */
   padding-top: env(safe-area-inset-top);
-  /* Subtle shadow on tablet */
-  box-shadow: 0 0 60px rgba(0,0,0,0.18);
+  box-shadow: 0 0 40px rgba(0,0,0,0.15);
 }
 
-/* ── Scroll area ─────────────────────────────────────── */
-/*
- * THE CRITICAL FIX:
- * - flex: 1 makes it fill remaining height
- * - min-height: 0 forces flex to respect the constraint (without this it grows unbounded)
- * - overflow-y: scroll (not auto) prevents the iOS "stuck at top" bug
- * - overscroll-behavior: contain prevents scroll chaining to body
+/* ── THE SCROLL FIX ─────────────────────── 
+ * This is the one thing that must work perfectly.
+ * Rules:
+ * 1. flex:1 + min-height:0 = fills remaining space without overflow
+ * 2. overflow-y:scroll = ALWAYS scrollable, no "auto" quirks
+ * 3. -webkit-overflow-scrolling:touch = smooth iOS momentum scrolling
+ * 4. overscroll-behavior-y:contain = no body scroll leaking through
+ * 5. position:relative = required for some Android browsers
+ * 6. will-change:scroll-position = GPU compositing hint
  */
 .app-scroll {
   flex: 1;
@@ -92,18 +89,21 @@ body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-  /* Ensure scroll position resets are smooth */
-  scroll-behavior: auto;
+  position: relative;
+  will-change: scroll-position;
 }
 
-/* ── Onboarding wrapper ──────────────────────────────── */
+/* Hide scrollbar everywhere */
+.app-scroll::-webkit-scrollbar { display: none; }
+.app-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Onboarding ─────────────────────────── */
 .app-onboarding {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #f3f4f6;
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: flex-start;
   justify-content: center;
+  background: #f3f4f6;
   overflow: hidden;
 }
 .app-onboarding-inner {
@@ -116,26 +116,15 @@ body {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
 }
+.app-onboarding-inner::-webkit-scrollbar { display: none; }
+.app-onboarding-inner { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Typography ──────────────────────────────────────── */
+/* ── Typography ─────────────────────────── */
 .font-display { font-family: 'Fraunces', serif; }
-
-/* ── Scrollbar hidden ────────────────────────────────── */
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-.app-scroll::-webkit-scrollbar { display: none; }
-.app-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Font sizes — 1px increase across the board ─────── */
-/*
- * Base font is now 15px (was 14px).
- * All text-[Xpx] classes in Tailwind remain as-is,
- * but we bump the html root font-size so rem-based
- * sizes scale up proportionally.
- */
-html { font-size: 15px; }
-
-/* ── Forms — prevent iOS zoom ────────────────────────── */
+/* ── Forms — prevent iOS zoom ───────────── */
 input, textarea, select {
   -webkit-appearance: none;
   font-size: 16px !important;
@@ -146,26 +135,25 @@ button {
   -webkit-user-select: none;
 }
 
-/* ── Safe area utilities ─────────────────────────────── */
+/* ── Safe area ──────────────────────────── */
 .safe-top    { padding-top:    env(safe-area-inset-top);    }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
-/* ── Tablet responsive ───────────────────────────────── */
+/* ── Tablet ─────────────────────────────── */
 @media (min-width: 640px) {
   .app-shell {
-    /* Show grey background on tablet/desktop */
-    background: linear-gradient(135deg, #d1fae5, #e5e7eb);
+    background: linear-gradient(135deg, #d1fae5 0%, #e5e7eb 100%);
   }
   .app-inner {
-    /* Tablet gets rounded corners and more shadow */
-    border-radius: 24px;
-    margin: 16px auto;
+    margin: 16px 0;
     height: calc(100% - 32px);
     max-width: 480px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   }
 }
 
-/* ── Animations ──────────────────────────────────────── */
+/* ── Animations ─────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
