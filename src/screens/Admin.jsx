@@ -222,8 +222,35 @@ function SplitsTab({ toast }) {
 
   async function updateStatus(id, status) {
     const { error } = await supabase.from('splits').update({ status }).eq('id', id)
-    if (error) toast(error.message, 'error')
-    else { toast(`Split marked as ${status}`, 'success'); loadSplits() }
+    if (error) { toast(error.message, 'error'); return }
+
+    // Notify all members when admin changes status
+    try {
+      const split = splits.find(s => s.id === id)
+      if (split && split.split_members?.length) {
+        const memberIds = split.split_members.map(m => m.user_id)
+        const msgs = {
+          done:      { title: '✅ Split completed!', body: `${split.title} at ${split.store?.name || 'the store'} has been marked as completed.` },
+          cancelled: { title: '❌ Split cancelled', body: `${split.title} at ${split.store?.name || 'the store'} has been cancelled by the organiser.` },
+          full:      { title: '🎉 Split is full!',  body: `${split.title} at ${split.store?.name || 'the store'} is now full. Time to coordinate!` },
+        }
+        if (msgs[status]) {
+          for (const uid of memberIds) {
+            await supabase.from('notifications').insert({
+              user_id: uid,
+              title:   msgs[status].title,
+              body:    msgs[status].body,
+              type:    `split_${status}`,
+              data:    { split_id: id },
+              read:    false,
+            })
+          }
+        }
+      }
+    } catch (e) { console.error('Notification error:', e) }
+
+    toast(`Split marked as ${status}`, 'success')
+    loadSplits()
   }
 
   async function deleteSplit(id) {
