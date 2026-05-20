@@ -90,8 +90,8 @@ export default function Circles() {
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="font-display font-black text-[26px] text-gray-900 tracking-tight">Circles</h1>
-            <p className="text-[13px] text-gray-400 mt-0.5">Your trusted buying groups</p>
+            <h1 className="font-display font-black text-[27px] text-gray-900 tracking-tight">Circles</h1>
+            <p className="text-[17px] text-gray-400 mt-0.5">Your trusted buying groups</p>
           </div>
           <button onClick={() => setShowCreate(true)}
             className="w-10 h-10 rounded-full flex items-center justify-center text-white"
@@ -104,7 +104,7 @@ export default function Circles() {
         <div className="flex bg-gray-100 rounded-2xl p-1 mt-3">
           {[['mine','My Circles'],['discover','Discover']].map(([key, label]) => (
             <button key={key} onClick={() => setTab(key)}
-              className="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all"
+              className="flex-1 py-2 rounded-xl text-[17px] font-bold transition-all"
               style={{
                 background: tab === key ? '#fff' : 'transparent',
                 color: tab === key ? '#111827' : '#6b7280',
@@ -128,12 +128,12 @@ export default function Circles() {
                     <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{background:'#f3f4f6'}}>
                       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
                     </div>
-                    <p className="font-display font-bold text-[18px] text-gray-900 mb-2">No circles yet</p>
-                    <p className="text-[13px] text-gray-400 mb-5">
+                    <p className="font-display font-bold text-[21px] text-gray-900 mb-2">No circles yet</p>
+                    <p className="text-[17px] text-gray-400 mb-5">
                       Create a circle for your church group, family, or community — then split together every month.
                     </p>
                     <button onClick={() => setShowCreate(true)}
-                      className="flex items-center gap-2 mx-auto text-white px-5 py-2.5 rounded-2xl font-bold text-[13px]"
+                      className="flex items-center gap-2 mx-auto text-white px-5 py-2.5 rounded-2xl font-bold text-[17px]"
                       style={{ background: G }}>
                       <Plus size={15}/> Create a Circle
                     </button>
@@ -164,8 +164,8 @@ export default function Circles() {
                     <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{background:'#f3f4f6'}}>
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   </div>
-                    <p className="font-display font-bold text-[18px] text-gray-900 mb-2">No public circles yet</p>
-                    <p className="text-[13px] text-gray-400">Be the first to create a public circle in your area.</p>
+                    <p className="font-display font-bold text-[21px] text-gray-900 mb-2">No public circles yet</p>
+                    <p className="text-[17px] text-gray-400">Be the first to create a public circle in your area.</p>
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">
@@ -178,17 +178,17 @@ export default function Circles() {
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-bold text-[15px] text-gray-900">{circle.name}</h3>
+                            <h3 className="font-bold text-[17px] text-gray-900">{circle.name}</h3>
                             {circle.description && (
-                              <p className="text-[12px] text-gray-400 mt-0.5 line-clamp-2">{circle.description}</p>
+                              <p className="text-[17px] text-gray-400 mt-0.5 line-clamp-2">{circle.description}</p>
                             )}
                             <div className="flex items-center gap-2 mt-1">
                               <Globe size={11} color="#9ca3af"/>
-                              <span className="text-[11px] text-gray-400">Public · {circle.city}</span>
+                              <span className="text-[17px] text-gray-400">Public · {circle.city}</span>
                             </div>
                           </div>
                           <button onClick={() => joinCircle(circle.id)}
-                            className="text-white text-[12px] font-bold px-3 py-1.5 rounded-full flex-shrink-0"
+                            className="text-white text-[17px] font-bold px-3 py-1.5 rounded-full flex-shrink-0"
                             style={{ background: G }}>
                             Join
                           </button>
@@ -242,8 +242,8 @@ function CircleCard({ circle, role, onLeave, navigate, toast, userId }) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-[15px] text-gray-900">{circle?.name}</h3>
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full"
+              <h3 className="font-bold text-[17px] text-gray-900">{circle?.name}</h3>
+              <span className="text-[17px] font-bold px-2 py-0.5 rounded-full"
                 style={role === 'admin'
                   ? { background: '#fef3c7', color: '#a16207' }
                   : { background: '#ecfff5', color: G }}>
@@ -251,19 +251,19 @@ function CircleCard({ circle, role, onLeave, navigate, toast, userId }) {
               </span>
             </div>
             {circle?.description && (
-              <p className="text-[12px] text-gray-400 mt-0.5">{circle.description}</p>
+              <p className="text-[17px] text-gray-400 mt-0.5">{circle.description}</p>
             )}
             <div className="flex items-center gap-3 mt-1">
               <div className="flex items-center gap-1">
                 <Users size={11} color="#9ca3af"/>
-                <span className="text-[11px] text-gray-400">{memberCount} member{memberCount !== 1 ? 's' : ''}</span>
+                <span className="text-[17px] text-gray-400">{memberCount} member{memberCount !== 1 ? 's' : ''}</span>
               </div>
               <div className="flex items-center gap-1">
                 {circle?.is_private
                   ? <Lock size={11} color="#9ca3af"/>
                   : <Globe size={11} color="#9ca3af"/>
                 }
-                <span className="text-[11px] text-gray-400">{circle?.is_private ? 'Private' : 'Public'}</span>
+                <span className="text-[17px] text-gray-400">{circle?.is_private ? 'Private' : 'Public'}</span>
               </div>
             </div>
           </div>
@@ -271,12 +271,12 @@ function CircleCard({ circle, role, onLeave, navigate, toast, userId }) {
 
         <div className="flex gap-2 mt-3">
           <button onClick={copyInviteCode}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-bold"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[17px] font-bold"
             style={{ background: '#f0fdf4', color: G, border: '1px solid #b6f0d4' }}>
             <Copy size={13}/> Copy Invite Link
           </button>
           <button onClick={onLeave}
-            className="px-3 py-2.5 rounded-xl text-[12px] font-bold bg-red-50 text-red-500">
+            className="px-3 py-2.5 rounded-xl text-[17px] font-bold bg-red-50 text-red-500">
             Leave
           </button>
         </div>
@@ -330,13 +330,13 @@ function CreateCircleSheet({ userId, city, onClose, onCreated, toast }) {
         <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-4"/>
 
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-display font-bold text-[20px] text-gray-900">Create a Circle</h3>
+          <h3 className="font-display font-bold text-[21px] text-gray-900">Create a Circle</h3>
           <button onClick={onClose}><X size={20} color="#9ca3af"/></button>
         </div>
 
         <div className="space-y-3 mb-5">
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Circle name</label>
+            <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Circle name</label>
             <input value={name} onChange={e => setName(e.target.value)}
               placeholder="e.g. Church Food Circle, Family Group"
               autoFocus
@@ -344,7 +344,7 @@ function CreateCircleSheet({ userId, city, onClose, onCreated, toast }) {
           </div>
 
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Description (optional)</label>
+            <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 block">Description (optional)</label>
             <input value={desc} onChange={e => setDesc(e.target.value)}
               placeholder="What is this circle for?"
               style={{fontSize:"16px",fontFamily:"inherit"}} className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:border-[#0f7a4b] transition-colors"/>
@@ -353,8 +353,8 @@ function CreateCircleSheet({ userId, city, onClose, onCreated, toast }) {
           {/* Private toggle */}
           <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3">
             <div>
-              <div className="text-[14px] font-semibold text-gray-900">Private circle</div>
-              <div className="text-[11px] text-gray-400 mt-0.5">Only people with invite link can join</div>
+              <div className="text-[17px] font-semibold text-gray-900">Private circle</div>
+              <div className="text-[17px] text-gray-400 mt-0.5">Only people with invite link can join</div>
             </div>
             <button onClick={() => setIsPrivate(p => !p)}
               className="w-11 h-6 rounded-full relative flex-shrink-0 transition-colors"
@@ -366,7 +366,7 @@ function CreateCircleSheet({ userId, city, onClose, onCreated, toast }) {
         </div>
 
         <button onClick={create} disabled={!name.trim() || saving}
-          className="w-full text-white rounded-2xl py-4 text-[15px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
+          className="w-full text-white rounded-2xl py-4 text-[17px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
           style={{ background: G }}>
           {saving ? 'Creating...' : '✓ Create Circle'}
         </button>

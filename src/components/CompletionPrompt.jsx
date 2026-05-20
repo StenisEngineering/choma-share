@@ -87,17 +87,17 @@ export default function CompletionPrompt({ split, userId, onDone }) {
           style={{ background: '#fffbeb' }}>
           <span className="text-xl">📅</span>
           <div>
-            <div className="font-bold text-[13px] text-amber-800">Split date has passed</div>
-            <div className="text-[11px] text-amber-600">{date}</div>
+            <div className="font-bold text-[17px] text-amber-800">Split date has passed</div>
+            <div className="text-[17px] text-amber-600">{date}</div>
           </div>
         </div>
 
         {/* Question */}
         <div className="bg-white px-4 py-4">
-          <p className="font-display font-bold text-[16px] text-gray-900 mb-1">
+          <p className="font-display font-bold text-[17px] text-gray-900 mb-1">
             Did this split happen? 🛒
           </p>
-          <p className="text-[12px] text-gray-400 mb-4">
+          <p className="text-[17px] text-gray-400 mb-4">
             Your answer helps build trust for everyone in the community.
           </p>
 
@@ -105,8 +105,8 @@ export default function CompletionPrompt({ split, userId, onDone }) {
           <div className="bg-gray-50 rounded-2xl p-3 mb-4 flex items-center gap-3">
             <div className="text-2xl">🍠</div>
             <div>
-              <div className="font-semibold text-[13px] text-gray-900">{split.title}</div>
-              <div className="text-[11px] text-gray-400">
+              <div className="font-semibold text-[17px] text-gray-900">{split.title}</div>
+              <div className="text-[17px] text-gray-400">
                 {split.store?.name} · {split.split_members?.length ?? 0} members
                 {per > 0 ? ` · £${per} each` : ''}
               </div>
@@ -119,12 +119,12 @@ export default function CompletionPrompt({ split, userId, onDone }) {
           ) : (
             <div className="grid grid-cols-2 gap-2">
               <button onClick={() => confirm(true)}
-                className="py-3 rounded-2xl text-[14px] font-bold text-white flex items-center justify-center gap-2"
+                className="py-3 rounded-2xl text-[17px] font-bold text-white flex items-center justify-center gap-2"
                 style={{ background: G, boxShadow: '0 4px 12px rgba(15,122,75,.3)' }}>
                 ✓ Yes, it happened!
               </button>
               <button onClick={() => confirm(false)}
-                className="py-3 rounded-2xl text-[14px] font-bold bg-gray-100 text-gray-600 flex items-center justify-center gap-2">
+                className="py-3 rounded-2xl text-[17px] font-bold bg-gray-100 text-gray-600 flex items-center justify-center gap-2">
                 ✗ No, it didn't
               </button>
             </div>

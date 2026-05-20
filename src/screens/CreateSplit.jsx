@@ -126,7 +126,7 @@ export default function CreateSplit() {
   if (!isSunderland) return (
     <div className="flex flex-col h-full bg-gray-50">
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
-        <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[17px] font-medium">
           <ArrowLeft size={16}/> Back
         </button>
       </div>
@@ -134,13 +134,13 @@ export default function CreateSplit() {
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{background:'#f0fdf4'}}>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0f7a4b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-        <h2 className="font-display font-bold text-[22px] text-gray-900 tracking-tight mb-2">
+        <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-2">
           Coming to {profile.city} soon
         </h2>
-        <p className="text-[14px] text-gray-400 mb-6 leading-relaxed">
+        <p className="text-[17px] text-gray-400 mb-6 leading-relaxed">
           Splits are live in Sunderland right now. We're expanding to {profile.city} very soon — you'll be notified first.
         </p>
-        <div className="px-5 py-3 rounded-2xl text-[13px] font-bold"
+        <div className="px-5 py-3 rounded-2xl text-[17px] font-bold"
           style={{ background: '#f0fdf4', color: '#0f7a4b', border: '1px solid #b6f0d4' }}>
           You're on the waitlist for {profile.city}
         </div>
@@ -151,11 +151,11 @@ export default function CreateSplit() {
   return (
     <div className="flex flex-col h-full bg-gray-50">
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
-        <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[13px] font-medium mb-3">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-gray-400 text-[17px] font-medium mb-3">
           <ArrowLeft size={16}/> Back
         </button>
-        <h1 className="font-display font-black text-[24px] text-gray-900 tracking-tight">Create a Split</h1>
-        <p className="text-[13px] text-gray-400 mt-0.5">Find people to buy bulk with you</p>
+        <h1 className="font-display font-black text-[25px] text-gray-900 tracking-tight">Create a Split</h1>
+        <p className="text-[17px] text-gray-400 mt-0.5">Find people to buy bulk with you</p>
       </div>
 
       <div className="flex-1 overflow-y-auto scrollbar-none">
@@ -163,7 +163,7 @@ export default function CreateSplit() {
 
           {/* STEP 1 — Select Store First */}
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+            <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
               1. Which store?
             </label>
             {loadingS ? <Spinner size={20}/> : (
@@ -179,8 +179,8 @@ export default function CreateSplit() {
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
                       style={{ background: '#ecfff5' }}>🏪</div>
                     <div className="text-left flex-1">
-                      <div className="text-[14px] font-bold text-gray-900">{s.name}</div>
-                      <div className="text-[11px] text-gray-400">{s.address}</div>
+                      <div className="text-[17px] font-bold text-gray-900">{s.name}</div>
+                      <div className="text-[17px] text-gray-400">{s.address}</div>
                     </div>
                     <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all"
                       style={{ background: store === s.id ? G : 'transparent', borderColor: store === s.id ? G : '#d1d5db' }}>
@@ -195,11 +195,11 @@ export default function CreateSplit() {
           {/* STEP 2 — Select Item (from store's real items) */}
           {store && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 2. What are you splitting?
               </label>
               {allItems.length === 0 ? (
-                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-[13px] text-amber-700">
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-[17px] text-amber-700">
                   No items listed for this store yet.
                 </div>
               ) : (
@@ -217,8 +217,8 @@ export default function CreateSplit() {
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-2" style={{ background: bg }}>
                           {icon}
                         </div>
-                        <div className="text-[13px] font-bold text-gray-900">{it.name}</div>
-                        <div className="text-[11px] font-semibold mt-0.5" style={{ color: G }}>£{it.bulk_price}</div>
+                        <div className="text-[17px] font-bold text-gray-900">{it.name}</div>
+                        <div className="text-[17px] font-semibold mt-0.5" style={{ color: G }}>£{it.bulk_price}</div>
                       </button>
                     )
                   })}
@@ -230,15 +230,15 @@ export default function CreateSplit() {
           {/* STEP 2b — Price Range */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 2b. What's the price range? (optional)
               </label>
-              <p className="text-[11px] text-gray-400 mb-2">
+              <p className="text-[17px] text-gray-400 mb-2">
                 Prices vary at stores. Enter a min and max so members know what to expect.
               </p>
               <div className="flex items-center gap-2">
                 <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
-                  <span className="text-[14px] font-bold text-gray-400">£</span>
+                  <span className="text-[17px] font-bold text-gray-400">£</span>
                   <input
                     type="number"
                     value={priceMin}
@@ -250,7 +250,7 @@ export default function CreateSplit() {
                 </div>
                 <span className="text-gray-400 font-bold">—</span>
                 <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
-                  <span className="text-[14px] font-bold text-gray-400">£</span>
+                  <span className="text-[17px] font-bold text-gray-400">£</span>
                   <input
                     type="number"
                     value={priceMax}
@@ -264,8 +264,8 @@ export default function CreateSplit() {
               {priceMin && priceMax && (
                 <div className="mt-2 flex gap-2">
                   <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
-                    <div className="font-display font-bold text-[16px]" style={{ color: '#0f7a4b' }}>£{perMin}–£{perMax}</div>
-                    <div className="text-[10px] text-gray-400 font-semibold">per person</div>
+                    <div className="font-display font-bold text-[17px]" style={{ color: '#0f7a4b' }}>£{perMin}–£{perMax}</div>
+                    <div className="text-[17px] text-gray-400 font-semibold">per person</div>
                   </div>
                 </div>
               )}
@@ -275,7 +275,7 @@ export default function CreateSplit() {
           {/* STEP 3 — People */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 3. How many people?
               </label>
               <div className="bg-white border border-gray-200 rounded-2xl p-3.5 flex items-center gap-3">
@@ -286,7 +286,7 @@ export default function CreateSplit() {
                 </button>
                 <div className="flex-1 text-center">
                   <div className="font-display font-bold text-[28px] leading-none" style={{ color: G }}>{people}</div>
-                  <div className="text-[11px] text-gray-400 mt-0.5">people total</div>
+                  <div className="text-[17px] text-gray-400 mt-0.5">people total</div>
                 </div>
                 <button onClick={() => setPeople(p => Math.min(6, p+1))}
                   className="w-9 h-9 rounded-full flex items-center justify-center"
@@ -296,16 +296,16 @@ export default function CreateSplit() {
               </div>
               <div className="mt-2 flex gap-2">
                 <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
-                  <div className="font-display font-bold text-[18px]" style={{ color: G }}>
+                  <div className="font-display font-bold text-[21px]" style={{ color: G }}>
                     {priceMin && priceMax ? `£${perMin}–£${perMax}` : perHead > 0 ? `£${perHead}` : '£0'}
                   </div>
-                  <div className="text-[10px] text-gray-400 font-semibold">each pays</div>
+                  <div className="text-[17px] text-gray-400 font-semibold">each pays</div>
                 </div>
                 <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
-                  <div className="font-display font-bold text-[18px]" style={{ color: G }}>
+                  <div className="font-display font-bold text-[21px]" style={{ color: G }}>
                     {midPrice > 0 ? `£${Math.round(midPrice - perHead)}` : '£0'}
                   </div>
-                  <div className="text-[10px] text-gray-400 font-semibold">each saves</div>
+                  <div className="text-[17px] text-gray-400 font-semibold">each saves</div>
                 </div>
               </div>
             </div>
@@ -314,7 +314,7 @@ export default function CreateSplit() {
           {/* STEP 4 — Date */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 4. Preferred day
               </label>
               <div className="grid grid-cols-4 gap-2">
@@ -329,7 +329,7 @@ export default function CreateSplit() {
                         borderColor: sel ? G : isWeekend ? '#d1fae5' : '#e5e7eb',
                         borderWidth: sel ? 2 : 1.5,
                       }}>
-                      <div className="text-[10px] font-bold uppercase"
+                      <div className="text-[17px] font-bold uppercase"
                         style={{ color: sel ? G : isWeekend ? '#059669' : '#9ca3af' }}>
                         {d.toLocaleDateString('en-GB', { weekday: 'short' })}
                       </div>
@@ -337,14 +337,14 @@ export default function CreateSplit() {
                         style={{ color: sel ? G : '#111827' }}>
                         {d.getDate()}
                       </div>
-                      <div className="text-[9px] text-gray-400">
+                      <div className="text-[17px] text-gray-400">
                         {d.toLocaleDateString('en-GB', { month: 'short' })}
                       </div>
                     </button>
                   )
                 })}
               </div>
-              <p className="text-[10px] text-gray-400 mt-1">
+              <p className="text-[17px] text-gray-400 mt-1">
                 <span style={{ color: '#059669', fontWeight: 600 }}>Green border</span> = weekend
               </p>
             </div>
@@ -353,13 +353,13 @@ export default function CreateSplit() {
           {/* STEP 5 — Time */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 5. Preferred time
               </label>
               <div className="flex gap-2 flex-wrap">
                 {TIMES.map(t => (
                   <button key={t} onClick={() => setTime(t)}
-                    className="text-[12px] font-bold px-3 py-2 rounded-xl border transition-all"
+                    className="text-[17px] font-bold px-3 py-2 rounded-xl border transition-all"
                     style={{ background: time === t ? '#f0fdf4' : '#fff', borderColor: time === t ? G : '#e5e7eb', color: time === t ? G : '#4b5563' }}>
                     {t}
                   </button>
@@ -371,13 +371,13 @@ export default function CreateSplit() {
           {/* Recurring */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 Monthly recurring
               </label>
               <div className="bg-white border border-gray-200 rounded-2xl p-4 flex items-center justify-between">
                 <div>
-                  <div className="text-[14px] font-semibold text-gray-900">Make this a monthly split</div>
-                  <div className="text-[11px] text-gray-400 mt-0.5">Repeat automatically each month</div>
+                  <div className="text-[17px] font-semibold text-gray-900">Make this a monthly split</div>
+                  <div className="text-[17px] text-gray-400 mt-0.5">Repeat automatically each month</div>
                 </div>
                 <button onClick={() => setRecur(r => !r)}
                   className="w-11 h-6 rounded-full relative flex-shrink-0 transition-colors"
@@ -392,20 +392,20 @@ export default function CreateSplit() {
           {/* Notes */}
           {item && (
             <div>
-              <label className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                 Notes (optional)
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder="Any extra details for your split partners..."
                 rows={3}
-                className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-[14px] text-gray-900 outline-none resize-none placeholder:text-gray-300"/>
+                className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-[17px] text-gray-900 outline-none resize-none placeholder:text-gray-300"/>
             </div>
           )}
 
           {/* Submit */}
           <button onClick={submit}
             disabled={!item || !store || !date || submitting}
-            className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
+            className="w-full text-white rounded-2xl py-4 text-[17px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
             style={{ background: G, boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
             {submitting ? <Spinner size={20} color="white"/> : <>Post My Split <ArrowRight size={18}/></>}
           </button>

@@ -34,8 +34,8 @@ export default function MySplits() {
 
       {/* Header */}
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
-        <h1 className="font-display font-black text-[26px] text-gray-900 tracking-tight">My Splits</h1>
-        <p className="text-[13px] text-gray-400 mt-0.5">Splits you created or joined</p>
+        <h1 className="font-display font-black text-[27px] text-gray-900 tracking-tight">My Splits</h1>
+        <p className="text-[17px] text-gray-400 mt-0.5">Splits you created or joined</p>
       </div>
 
       <div className="flex-1 overflow-y-auto scrollbar-none">
@@ -47,10 +47,10 @@ export default function MySplits() {
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{background:'#f3f4f6'}}>
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
             </div>
-            <p className="font-display font-bold text-[18px] text-gray-900 mb-2">No splits yet</p>
-            <p className="text-[13px] text-gray-400 mb-5">Create your first split and share it with your community.</p>
+            <p className="font-display font-bold text-[21px] text-gray-900 mb-2">No splits yet</p>
+            <p className="text-[17px] text-gray-400 mb-5">Create your first split and share it with your community.</p>
             <button onClick={() => navigate('/create')}
-              className="flex items-center gap-2 mx-auto text-white px-6 py-3 rounded-2xl font-bold text-[14px]"
+              className="flex items-center gap-2 mx-auto text-white px-6 py-3 rounded-2xl font-bold text-[17px]"
               style={{ background: '#0f7a4b' }}>
               <Plus size={16}/> Create a Split
             </button>
@@ -60,7 +60,7 @@ export default function MySplits() {
         {active.length > 0 && (
           <>
             <div className="px-4 pt-3 pb-1">
-              <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Active</h2>
+              <h2 className="font-display font-bold text-[17px] text-gray-900 tracking-tight">Active</h2>
             </div>
             <div className="px-4 flex flex-col gap-3">
               {active.map(m => <SplitRow key={m.split_id} m={m} navigate={navigate}/>)}
@@ -71,7 +71,7 @@ export default function MySplits() {
         {past.length > 0 && (
           <>
             <div className="px-4 pt-5 pb-2">
-              <h2 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">Past</h2>
+              <h2 className="font-display font-bold text-[17px] text-gray-900 tracking-tight">Past</h2>
             </div>
             <div className="px-4 flex flex-col gap-2 pb-4">
               {past.map(m => <SplitRow key={m.split_id} m={m} navigate={navigate}/>)}
@@ -110,22 +110,22 @@ function SplitRow({ m, navigate }) {
         style={{ background: 'linear-gradient(90deg,#0f7a4b,#c8f26d)' }}/>
 
       <div className="flex justify-between items-start mb-2 mt-0.5">
-        <h3 className="font-display font-bold text-[16px] tracking-tight text-gray-900">{split?.title}</h3>
-        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full ml-2 whitespace-nowrap"
+        <h3 className="font-display font-bold text-[17px] tracking-tight text-gray-900">{split?.title}</h3>
+        <span className="text-[17px] font-bold px-2.5 py-1 rounded-full ml-2 whitespace-nowrap"
           style={{ background: status.bg, color: status.color }}>
           {status.label}
         </span>
       </div>
 
-      <div className="text-[12px] text-gray-400 mb-3">
+      <div className="text-[17px] text-gray-400 mb-3">
         {split?.store?.name} · {split?.preferred_date ? formatDate(split.preferred_date) : 'Date TBC'}
       </div>
 
       <div className="flex items-center justify-between">
-        <div className="text-[12px] font-semibold" style={{ color: '#0f7a4b' }}>
+        <div className="text-[17px] font-semibold" style={{ color: '#0f7a4b' }}>
           £{per} per person · saves £{saving}
         </div>
-        <div className="text-[11px] text-gray-400">
+        <div className="text-[17px] text-gray-400">
           {joined}/{needed} joined · {left === 0 ? 'Full' : `${left} left`}
         </div>
       </div>

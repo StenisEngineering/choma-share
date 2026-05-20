@@ -9,10 +9,10 @@ export default function Privacy() {
         <button onClick={() => navigate(-1)}>
           <ArrowLeft size={20} color="#6b7280"/>
         </button>
-        <h1 className="font-display font-bold text-[18px] text-gray-900">Privacy Policy</h1>
+        <h1 className="font-display font-bold text-[21px] text-gray-900">Privacy Policy</h1>
       </div>
       <div className="px-5 py-5 max-w-2xl mx-auto prose prose-sm text-gray-600">
-        <p className="text-[12px] text-gray-400 mb-4">Last updated: May 2026 · © Creovate Global Ltd</p>
+        <p className="text-[17px] text-gray-400 mb-4">Last updated: May 2026 · © Creovate Global Ltd</p>
 
         <Section title="1. Who We Are">
           Choma Share is a product of Creovate Global Ltd, based in Sunderland, United Kingdom. We built Choma Share to help African households in the UK coordinate bulk grocery purchases together.
@@ -54,8 +54,8 @@ export default function Privacy() {
 
       {/* Footer */}
       <div className="px-5 py-6 border-t border-gray-100 text-center">
-        <p className="text-[11px] text-gray-300">© 2026 Creovate Global Ltd. All rights reserved.</p>
-        <p className="text-[11px] text-gray-300 mt-1">Choma Share · share.choma.app</p>
+        <p className="text-[17px] text-gray-300">© 2026 Creovate Global Ltd. All rights reserved.</p>
+        <p className="text-[17px] text-gray-300 mt-1">Choma Share · share.choma.app</p>
       </div>
     </div>
   )
@@ -64,8 +64,8 @@ export default function Privacy() {
 function Section({ title, children }) {
   return (
     <div className="mb-5">
-      <h2 className="font-display font-bold text-[15px] text-gray-900 mb-1.5">{title}</h2>
-      <p className="text-[13px] text-gray-600 leading-relaxed">{children}</p>
+      <h2 className="font-display font-bold text-[17px] text-gray-900 mb-1.5">{title}</h2>
+      <p className="text-[17px] text-gray-600 leading-relaxed">{children}</p>
     </div>
   )
 }

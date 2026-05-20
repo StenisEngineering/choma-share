@@ -35,7 +35,6 @@ function Guard({ children }) {
 
 function Shell({ children }) {
   function handleRefresh() {
-    // Refresh data without full page reload
     window.dispatchEvent(new Event('choma-refresh'))
   }
   return (

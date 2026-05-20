@@ -18,7 +18,7 @@ export function ToastProvider({ children }) {
       {children}
       <div className="fixed bottom-24 inset-x-0 flex flex-col items-center gap-2 z-50 pointer-events-none px-4">
         {toasts.map(t => (
-          <div key={t.id} className={`${bg[t.type] ?? bg.info} text-white px-5 py-2.5 rounded-full text-[13px] font-semibold shadow-lg animate-fade-up`}>
+          <div key={t.id} className={`${bg[t.type] ?? bg.info} text-white px-5 py-2.5 rounded-full text-[17px] font-semibold shadow-lg animate-fade-up`}>
             {t.msg}
           </div>
         ))}

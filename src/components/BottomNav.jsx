@@ -61,7 +61,7 @@ export default function BottomNav() {
             }}>
             <Icon size={22} color={active ? '#c8f26d' : '#fff'} strokeWidth={2}/>
             <span style={{
-              fontSize: '10px', fontWeight: 700,
+              fontSize: '15px', fontWeight: 700,
               color: active ? '#c8f26d' : '#fff',
               fontFamily: 'DM Sans, sans-serif',
             }}>{t.label}</span>
