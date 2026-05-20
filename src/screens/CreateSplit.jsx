@@ -48,6 +48,7 @@ export default function CreateSplit() {
   const [item,      setItem]     = useState(null) // selected store_item object
   const [priceMin,  setPriceMin]  = useState('')
   const [priceMax,  setPriceMax]  = useState('')
+  const [priceTBC,  setPriceTBC]  = useState(false)
   const [store,     setStore]    = useState(null) // selected store id
   const [people,    setPeople]   = useState(3)
   const [date,      setDate]     = useState(null)
@@ -95,9 +96,10 @@ export default function CreateSplit() {
         store_id:        store,
         creator_id:      user.id,
         title:           item.name,
-        total_price:     midPrice,
-        price_min:       parseFloat(priceMin) || item.bulk_price || 0,
-        price_max:       parseFloat(priceMax) || item.bulk_price || 0,
+        total_price:     priceTBC ? 0 : midPrice,
+        price_min:       priceTBC ? 0 : (parseFloat(priceMin) || item.bulk_price || 0),
+        price_max:       priceTBC ? 0 : (parseFloat(priceMax) || item.bulk_price || 0),
+        price_tbc:       priceTBC,
         people_needed:   people,
         people_joined:   1,
         preferred_date:  date.toISOString().split('T')[0],
@@ -227,46 +229,87 @@ export default function CreateSplit() {
             </div>
           )}
 
-          {/* STEP 2b — Price Range */}
+          {/* STEP 2b — Price (with TBC toggle) */}
           {item && (
             <div>
-              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
-                2b. What's the price range? (optional)
-              </label>
-              <p className="text-[17px] text-gray-400 mb-2">
-                Prices vary at stores. Enter a min and max so members know what to expect.
-              </p>
-              <div className="flex items-center gap-2">
-                <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
-                  <span className="text-[17px] font-bold text-gray-400">£</span>
-                  <input
-                    type="number"
-                    value={priceMin}
-                    onChange={e => setPriceMin(e.target.value)}
-                    placeholder="Min e.g. 60"
-                    style={{ fontSize: '16px' }}
-                    className="flex-1 bg-transparent outline-none text-gray-900 font-semibold"
-                  />
-                </div>
-                <span className="text-gray-400 font-bold">—</span>
-                <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
-                  <span className="text-[17px] font-bold text-gray-400">£</span>
-                  <input
-                    type="number"
-                    value={priceMax}
-                    onChange={e => setPriceMax(e.target.value)}
-                    placeholder="Max e.g. 80"
-                    style={{ fontSize: '16px' }}
-                    className="flex-1 bg-transparent outline-none text-gray-900 font-semibold"
-                  />
-                </div>
-              </div>
-              {priceMin && priceMax && (
-                <div className="mt-2 flex gap-2">
-                  <div className="flex-1 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
-                    <div className="font-display font-bold text-[17px]" style={{ color: '#0f7a4b' }}>£{perMin}–£{perMax}</div>
-                    <div className="text-[17px] text-gray-400 font-semibold">per person</div>
+              {/* Header + toggle */}
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400">
+                  2b. Price range?
+                </label>
+                {/* TBC Toggle */}
+                <button
+                  onClick={() => {
+                    setPriceTBC(t => !t)
+                    if (!priceTBC) { setPriceMin(''); setPriceMax('') }
+                  }}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full text-[13px] font-bold transition-all"
+                  style={{
+                    background: priceTBC ? '#fef3c7' : '#f3f4f6',
+                    color:      priceTBC ? '#a16207' : '#6b7280',
+                    border:     priceTBC ? '1.5px solid #fcd34d' : '1.5px solid #e5e7eb',
+                  }}>
+                  <div className="w-4 h-4 rounded-full flex items-center justify-center"
+                    style={{ background: priceTBC ? '#f59e0b' : '#d1d5db' }}>
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round">
+                      {priceTBC
+                        ? <polyline points="20 6 9 17 4 12"/>
+                        : <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>
+                      }
+                    </svg>
                   </div>
+                  {priceTBC ? 'TBC — price unknown' : 'Set as TBC'}
+                </button>
+              </div>
+
+              {priceTBC ? (
+                /* TBC state */
+                <div className="flex items-center gap-3 p-4 rounded-2xl"
+                  style={{ background: '#fffbeb', border: '1.5px solid #fcd34d' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a16207" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <div>
+                    <div className="text-[14px] font-bold text-amber-800">Price to be confirmed</div>
+                    <div className="text-[12px] text-amber-600 mt-0.5">Members will see "Price TBC" on this split</div>
+                  </div>
+                </div>
+              ) : (
+                /* Price input state */
+                <div>
+                  <p className="text-[13px] text-gray-400 mb-2">
+                    Enter a min and max — prices vary at stores.
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
+                      <span className="text-[14px] font-bold text-gray-400">£</span>
+                      <input
+                        type="number"
+                        value={priceMin}
+                        onChange={e => setPriceMin(e.target.value)}
+                        placeholder="Min e.g. 60"
+                        style={{ fontSize: '16px' }}
+                        className="flex-1 bg-transparent outline-none text-gray-900 font-semibold"
+                      />
+                    </div>
+                    <span className="text-gray-400 font-bold">—</span>
+                    <div className="flex-1 bg-white border border-gray-200 rounded-2xl px-3 py-3 flex items-center gap-2 focus-within:border-[#0f7a4b]">
+                      <span className="text-[14px] font-bold text-gray-400">£</span>
+                      <input
+                        type="number"
+                        value={priceMax}
+                        onChange={e => setPriceMax(e.target.value)}
+                        placeholder="Max e.g. 80"
+                        style={{ fontSize: '16px' }}
+                        className="flex-1 bg-transparent outline-none text-gray-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+                  {priceMin && priceMax && (
+                    <div className="mt-2 rounded-xl p-2.5 text-center" style={{ background: '#ecfff5', border: '1px solid #d1fae5' }}>
+                      <div className="font-display font-bold text-[17px]" style={{ color: '#0f7a4b' }}>£{perMin}–£{perMax} each</div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

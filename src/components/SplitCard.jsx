@@ -39,11 +39,13 @@ export default function SplitCard({ split, onJoin, joining }) {
 
   const priceLabel = isFull
     ? null
-    : priceRange
-      ? priceRange.text
-      : perHead > 0
-        ? `£${perHead} each`
-        : 'Price TBC'
+    : split.price_tbc
+      ? 'Price TBC'
+      : priceRange
+        ? priceRange.text
+        : perHead > 0
+          ? `£${perHead} each`
+          : 'Price TBC'
 
   const dateLabel = split.preferred_date
     ? formatDate(split.preferred_date) + (split.preferred_time ? ` · ${split.preferred_time}` : '')
