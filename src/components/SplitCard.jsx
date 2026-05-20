@@ -75,15 +75,15 @@ export default function SplitCard({ split, onJoin, joining }) {
 
           {/* Title + price badge */}
           <div className="flex items-start justify-between gap-2 mb-1">
-            <h3 className="font-display font-bold text-[17px] tracking-tight text-gray-900 leading-tight flex-1 min-w-0">
+            <h3 className="font-display font-bold text-[16px] tracking-tight text-gray-900 leading-tight flex-1 min-w-0">
               {split.title || split.item?.name}
             </h3>
             {isFull ? (
-              <span className="text-[17px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 whitespace-nowrap flex-shrink-0">
+              <span className="text-[16px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 whitespace-nowrap flex-shrink-0">
                 Full
               </span>
             ) : (
-              <span className="text-[17px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
+              <span className="text-[16px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
                 style={{ background: '#ecfff5', color: '#0f7a4b', border: '1px solid #b6f0d4' }}>
                 {priceLabel}
               </span>
@@ -91,7 +91,7 @@ export default function SplitCard({ split, onJoin, joining }) {
           </div>
 
           {/* Store + date */}
-          <div className="text-[17px] text-gray-400 font-medium mb-2 space-y-0.5">
+          <div className="text-[16px] text-gray-400 font-medium mb-2 space-y-0.5">
             <div className="flex items-center gap-1">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
@@ -115,7 +115,7 @@ export default function SplitCard({ split, onJoin, joining }) {
               <div className="flex">
                 {members.slice(0, 3).map((m, i) => (
                   <div key={m.id}
-                    className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[17px] font-bold -ml-1 first:ml-0"
+                    className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[16px] font-bold -ml-1 first:ml-0"
                     style={{ background: AVATAR_COLOURS[i % AVATAR_COLOURS.length].bg, color: AVATAR_COLOURS[i % AVATAR_COLOURS.length].color }}>
                     {m.user?.name?.[0]?.toUpperCase() ?? '?'}
                   </div>
@@ -128,7 +128,7 @@ export default function SplitCard({ split, onJoin, joining }) {
               </div>
 
               {/* Count label */}
-              <span className={`text-[17px] font-bold px-1.5 py-0.5 rounded-full ${
+              <span className={`text-[16px] font-bold px-1.5 py-0.5 rounded-full ${
                 isFull
                   ? 'bg-gray-100 text-gray-500'
                   : left === 1
@@ -145,7 +145,7 @@ export default function SplitCard({ split, onJoin, joining }) {
               <button
                 onClick={e => { e.stopPropagation(); onJoin?.(split.id) }}
                 disabled={joining}
-                className="text-white text-[17px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform disabled:opacity-50"
+                className="text-white text-[16px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform disabled:opacity-50"
                 style={{ background: '#0f7a4b', boxShadow: '0 2px 8px rgba(15,122,75,0.3)' }}>
                 {joining ? '...' : 'Join'}
               </button>

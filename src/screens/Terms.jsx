@@ -9,10 +9,10 @@ export default function Terms() {
         <button onClick={() => navigate(-1)}>
           <ArrowLeft size={20} color="#6b7280"/>
         </button>
-        <h1 className="font-display font-bold text-[21px] text-gray-900">Terms of Service</h1>
+        <h1 className="font-display font-bold text-[20px] text-gray-900">Terms of Service</h1>
       </div>
       <div className="px-5 py-5 max-w-2xl mx-auto">
-        <p className="text-[17px] text-gray-400 mb-4">Last updated: May 2026 · © Creovate Global Ltd</p>
+        <p className="text-[16px] text-gray-400 mb-4">Last updated: May 2026 · © Creovate Global Ltd</p>
 
         <Section title="1. What Choma Share Does">
           Choma Share is a coordination platform that helps people organise bulk grocery purchases together. We connect shoppers — we do not sell goods, handle payments, or provide delivery services.
@@ -57,8 +57,8 @@ export default function Terms() {
 
       {/* Footer */}
       <div className="px-5 py-6 border-t border-gray-100 text-center">
-        <p className="text-[17px] text-gray-300">© 2026 Creovate Global Ltd. All rights reserved.</p>
-        <p className="text-[17px] text-gray-300 mt-1">Choma Share · share.choma.app</p>
+        <p className="text-[16px] text-gray-300">© 2026 Creovate Global Ltd. All rights reserved.</p>
+        <p className="text-[16px] text-gray-300 mt-1">Choma Share · share.choma.app</p>
       </div>
     </div>
   )
@@ -67,8 +67,8 @@ export default function Terms() {
 function Section({ title, children }) {
   return (
     <div className="mb-5">
-      <h2 className="font-display font-bold text-[17px] text-gray-900 mb-1.5">{title}</h2>
-      <p className="text-[17px] text-gray-600 leading-relaxed">{children}</p>
+      <h2 className="font-display font-bold text-[16px] text-gray-900 mb-1.5">{title}</h2>
+      <p className="text-[16px] text-gray-600 leading-relaxed">{children}</p>
     </div>
   )
 }

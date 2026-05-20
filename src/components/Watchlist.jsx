@@ -47,10 +47,10 @@ export default function Watchlist({ userId }) {
 
   return (
     <div className="mx-4 mt-3">
-      <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2">
+      <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2">
         My Watchlist
       </div>
-      <p className="text-[17px] text-gray-400 mb-3">
+      <p className="text-[16px] text-gray-400 mb-3">
         Get notified when a split is created for items you watch.
       </p>
       <div className="flex flex-wrap gap-2">
@@ -59,7 +59,7 @@ export default function Watchlist({ userId }) {
           const busy   = saving === item
           return (
             <button key={item} onClick={() => toggle(item)} disabled={busy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[17px] font-bold border transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[16px] font-bold border transition-all"
               style={{
                 background:   active ? '#f0fdf4' : '#f9fafb',
                 borderColor:  active ? G : '#e5e7eb',
@@ -82,7 +82,7 @@ export default function Watchlist({ userId }) {
         })}
       </div>
       {watched.length > 0 && (
-        <p className="text-[17px] mt-2" style={{ color: G }}>
+        <p className="text-[16px] mt-2" style={{ color: G }}>
           Watching {watched.length} item{watched.length !== 1 ? 's' : ''}
         </p>
       )}

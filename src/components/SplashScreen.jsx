@@ -93,7 +93,7 @@ export default function SplashScreen({ onDone }) {
         <div style={{ ...fade(0.15), marginBottom: '10px' }}>
           <h1 style={{
             fontFamily: 'Fraunces, Georgia, serif',
-            fontSize: '43px',
+            fontSize: '42.5px',
             fontWeight: 900,
             color: 'white',
             letterSpacing: '-1.5px',
@@ -108,7 +108,7 @@ export default function SplashScreen({ onDone }) {
         {/* Primary tagline */}
         <div style={{ ...fade(0.28), marginBottom: '14px' }}>
           <p style={{
-            fontSize: '17px',
+            fontSize: '16.5px',
             fontWeight: 700,
             color: '#f8c85a',
             textAlign: 'center',
@@ -123,7 +123,7 @@ export default function SplashScreen({ onDone }) {
         {/* Description */}
         <div style={{ ...fade(0.42), marginBottom: '24px' }}>
           <p style={{
-            fontSize: '13.5px',
+            fontSize: '13px',
             fontWeight: 400,
             color: 'rgba(255,255,255,0.5)',
             textAlign: 'center',
@@ -154,7 +154,7 @@ export default function SplashScreen({ onDone }) {
               border: '1px solid rgba(255,255,255,0.1)',
             }}>
               <Icon size={13} color="rgba(255,255,255,0.55)"/>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.3px' }}>
+              <span style={{ fontSize: '11.5px', fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.3px' }}>
                 {text}
               </span>
             </div>
@@ -177,7 +177,7 @@ export default function SplashScreen({ onDone }) {
           padding: '5px 14px',
         }}>
           <IconPin size={12} color="#c8f26d"/>
-          <span style={{ fontSize: '12px', fontWeight: 700, color: '#c8f26d', letterSpacing: '0.8px', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#c8f26d', letterSpacing: '0.8px', textTransform: 'uppercase' }}>
             Live in Sunderland
           </span>
         </div>

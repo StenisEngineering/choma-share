@@ -38,8 +38,8 @@ export default function Stores() {
 
       {/* Header */}
       <div className="bg-white px-5 pt-3 pb-3 border-b border-gray-100 flex-shrink-0">
-        <h1 className="font-display font-black text-[25px] text-gray-900 tracking-tight">Partner Stores</h1>
-        <p className="text-[17px] text-gray-400 mt-0.5">{stores.length} verified African stores</p>
+        <h1 className="font-display font-black text-[24px] text-gray-900 tracking-tight">Partner Stores</h1>
+        <p className="text-[16px] text-gray-400 mt-0.5">{stores.length} verified African stores</p>
 
         {/* City filter chips */}
         {cities.length > 1 && (
@@ -48,7 +48,7 @@ export default function Stores() {
               const isLive = c === 'Sunderland' || c === 'All'
               return (
                 <button key={c} onClick={() => setCityFilter(c)}
-                  className="flex-shrink-0 text-[17px] font-bold px-3 py-1.5 rounded-full border transition-all flex items-center gap-1.5"
+                  className="flex-shrink-0 text-[16px] font-bold px-3 py-1.5 rounded-full border transition-all flex items-center gap-1.5"
                   style={{
                     background:   cityFilter === c ? '#07130e' : '#fff',
                     color:        cityFilter === c ? '#fff' : '#6b7280',
@@ -56,7 +56,7 @@ export default function Stores() {
                   }}>
                   {c}
                   {c !== 'All' && (
-                    <span className="text-[17px] font-bold px-1.5 py-0.5 rounded-full"
+                    <span className="text-[16px] font-bold px-1.5 py-0.5 rounded-full"
                       style={{
                         background: isLive
                           ? cityFilter === c ? 'rgba(200,242,109,0.3)' : '#ecfff5'
@@ -76,7 +76,7 @@ export default function Stores() {
       <div className="flex-1 overflow-y-auto scrollbar-none">
         {loading && <Spinner/>}
         {loadError && (
-          <div className="mx-4 mt-4 p-4 bg-red-50 border border-red-100 rounded-2xl text-[17px] text-red-600">
+          <div className="mx-4 mt-4 p-4 bg-red-50 border border-red-100 rounded-2xl text-[16px] text-red-600">
             Could not load stores. Please check your connection and try again.
           </div>
         )}
@@ -87,9 +87,9 @@ export default function Stores() {
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <p className="font-semibold text-gray-700 mb-1">No stores in {cityFilter} yet</p>
-            <p className="text-[17px] text-gray-400">We're expanding soon. Try viewing All stores.</p>
+            <p className="text-[16px] text-gray-400">We're expanding soon. Try viewing All stores.</p>
             <button onClick={() => setCityFilter('All')}
-              className="mt-3 text-[17px] font-bold px-4 py-2 rounded-xl text-white"
+              className="mt-3 text-[16px] font-bold px-4 py-2 rounded-xl text-white"
               style={{ background: '#0f7a4b' }}>
               View all stores
             </button>
@@ -110,24 +110,24 @@ export default function Stores() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-display font-bold text-[17px] text-gray-900 tracking-tight">
+                      <h3 className="font-display font-bold text-[16px] text-gray-900 tracking-tight">
                         {store.name}
                       </h3>
                       {/* City label */}
-                      <span className="text-[17px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
+                      <span className="text-[16px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: '#ecfff5', color: '#0f7a4b', border: '1px solid #b6f0d4' }}>
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="#0f7a4b"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> {store.city}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[17px] text-gray-400 mt-0.5">
+                    <div className="flex items-center gap-1.5 text-[16px] text-gray-400 mt-0.5">
                       <MapPin size={11}/> {store.address}
                     </div>
                     {store.phone && (
-                      <div className="flex items-center gap-1.5 text-[17px] text-gray-400 mt-0.5">
+                      <div className="flex items-center gap-1.5 text-[16px] text-gray-400 mt-0.5">
                         <Phone size={11}/> {store.phone}
                       </div>
                     )}
-                    <div className="text-[17px] text-gray-300 mt-1">
+                    <div className="text-[16px] text-gray-300 mt-1">
                       {store.store_items?.filter(i => i.available && i.bulk_price > 0).length ?? 0} items available
                     </div>
                   </div>
@@ -141,7 +141,7 @@ export default function Stores() {
                   <div className="mt-3 pt-3 border-t border-gray-100">
                     {store.store_items?.filter(i => i.available).length > 0 ? (
                       <>
-                        <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2">
+                        <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2">
                           Available Items
                         </div>
                         <div className="flex flex-col gap-1.5">
@@ -150,16 +150,16 @@ export default function Stores() {
                               className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
                               <div className="flex items-center gap-2">
                                 <ShoppingBag size={13} color="#0f7a4b"/>
-                                <span className="text-[17px] font-semibold text-gray-900">{item.name}</span>
+                                <span className="text-[16px] font-semibold text-gray-900">{item.name}</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <span className="font-display font-bold text-[17px]"
+                                <span className="font-display font-bold text-[16px]"
                                   style={{ color: item.bulk_price > 0 ? '#0f7a4b' : '#f59e0b' }}>
                                   {item.bulk_price > 0 ? `£${item.bulk_price}` : 'TBC'}
                                 </span>
                                 <button
                                   onClick={e => { e.stopPropagation(); navigate('/create') }}
-                                  className="text-[17px] font-bold px-2.5 py-1 rounded-full text-white"
+                                  className="text-[16px] font-bold px-2.5 py-1 rounded-full text-white"
                                   style={{ background: '#0f7a4b' }}>
                                   Split
                                 </button>
@@ -169,7 +169,7 @@ export default function Stores() {
                         </div>
                       </>
                     ) : (
-                      <p className="text-[17px] text-gray-400 text-center py-2">
+                      <p className="text-[16px] text-gray-400 text-center py-2">
                         Items coming soon
                       </p>
                     )}
@@ -182,8 +182,8 @@ export default function Stores() {
 
         {/* Info box */}
         <div className="mx-4 mb-4 p-3.5 bg-white border border-gray-100 rounded-2xl shadow-sm">
-          <div className="font-bold text-[17px] text-gray-900 mb-1">💡 How stores work</div>
-          <p className="text-[17px] text-gray-400 leading-relaxed">
+          <div className="font-bold text-[16px] text-gray-900 mb-1">💡 How stores work</div>
+          <p className="text-[16px] text-gray-400 leading-relaxed">
             Verified partner stores. Meet together, choose your own portions, pay the store directly. Choma Share only coordinates — we never handle payments or deliveries.
           </p>
         </div>

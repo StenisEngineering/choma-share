@@ -50,8 +50,8 @@ export default function AdminLogin() {
             style={{ background: 'rgba(200,242,109,0.15)', border: '1px solid rgba(200,242,109,0.3)' }}>
             <ShieldCheck size={32} color="#c8f26d"/>
           </div>
-          <h1 className="font-display font-black text-[25px] text-white tracking-tight">Admin Panel</h1>
-          <p className="text-[17px] mt-1" style={{ color: 'rgba(255,255,255,0.55)' }}>
+          <h1 className="font-display font-black text-[24px] text-white tracking-tight">Admin Panel</h1>
+          <p className="text-[16px] mt-1" style={{ color: 'rgba(255,255,255,0.55)' }}>
             Choma Share · Restricted Access
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function AdminLogin() {
               placeholder="Admin email"
               autoFocus
               autoComplete="email"
-              className="flex-1 bg-transparent text-[17px] font-medium text-gray-900 outline-none placeholder:text-gray-300"
+              className="flex-1 bg-transparent text-[16px] font-medium text-gray-900 outline-none placeholder:text-gray-300"
             />
           </div>
 
@@ -79,7 +79,7 @@ export default function AdminLogin() {
               onChange={e => setPassword(e.target.value)}
               placeholder="Password"
               autoComplete="current-password"
-              className="flex-1 bg-transparent text-[17px] font-medium text-gray-900 outline-none placeholder:text-gray-300"
+              className="flex-1 bg-transparent text-[16px] font-medium text-gray-900 outline-none placeholder:text-gray-300"
             />
             <button type="button" onClick={() => setShowPw(s => !s)}>
               {showPw ? <EyeOff size={17} color="#9ca3af"/> : <Eye size={17} color="#9ca3af"/>}
@@ -89,7 +89,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={!email.trim() || !password || loading}
-            className="w-full text-white rounded-2xl py-4 text-[17px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 transition-opacity"
+            className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 transition-opacity"
             style={{ background: '#0f7a4b', boxShadow: '0 6px 20px rgba(15,122,75,0.3)' }}>
             {loading ? <Spinner size={20} color="white"/> : (
               <><ShieldCheck size={18}/> Sign in as Admin</>
@@ -97,7 +97,7 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="text-center text-[17px] text-gray-400 pb-5">
+        <p className="text-center text-[16px] text-gray-400 pb-5">
           Restricted to authorised users only
         </p>
       </div>

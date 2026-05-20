@@ -110,7 +110,7 @@ export default function Onboarding() {
           {/* App name */}
           <h1 style={{
             fontFamily: 'Fraunces, Georgia, serif',
-            fontSize: '37px',
+            fontSize: '36.5px',
             fontWeight: 900,
             color: 'white',
             letterSpacing: '-1px',
@@ -172,7 +172,7 @@ export default function Onboarding() {
         {/* ── How it works ── */}
         {step === 'auth' && (
           <div className="mb-5">
-            <p className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-3 text-center">
+            <p className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-3 text-center">
               How it works
             </p>
             <div className="flex flex-col gap-2">
@@ -183,13 +183,13 @@ export default function Onboarding() {
                 { n:'4', title:'Save money together',   sub:'Everyone gets what they need without buying too much',      color:'#7c3aed' },
               ].map(s => (
                 <div key={s.n} className="flex items-center gap-3 bg-gray-50 rounded-2xl px-3.5 py-3">
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-[17px] font-bold text-white"
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-[16px] font-bold text-white"
                     style={{ background: s.color }}>
                     {s.n}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[17px] font-bold text-gray-900">{s.title}</div>
-                    <div className="text-[17px] text-gray-400 mt-0.5 leading-relaxed">{s.sub}</div>
+                    <div className="text-[16px] font-bold text-gray-900">{s.title}</div>
+                    <div className="text-[16px] text-gray-400 mt-0.5 leading-relaxed">{s.sub}</div>
                   </div>
                 </div>
               ))}
@@ -197,7 +197,7 @@ export default function Onboarding() {
 
             {/* Trust note */}
             <div className="mt-3 p-3 rounded-2xl bg-amber-50 border border-amber-100">
-              <p className="text-[17px] text-amber-700 text-center leading-relaxed">
+              <p className="text-[16px] text-amber-700 text-center leading-relaxed">
                 <strong>Choma Share does not hold payments or deliver orders.</strong> We help people connect to share bulk food items safely and clearly.
               </p>
             </div>
@@ -211,17 +211,17 @@ export default function Onboarding() {
             <div className="flex bg-gray-100 rounded-2xl p-1 mb-6">
               {['signup','login'].map(m => (
                 <button key={m} type="button" onClick={() => setMode(m)}
-                  className="flex-1 py-2.5 rounded-xl text-[17px] font-bold transition-all"
+                  className="flex-1 py-2.5 rounded-xl text-[16px] font-bold transition-all"
                   style={{ background: mode===m ? '#fff' : 'transparent', color: mode===m ? '#111827' : '#6b7280', boxShadow: mode===m ? '0 1px 4px rgba(0,0,0,0.1)' : 'none' }}>
                   {m === 'signup' ? 'Create account' : 'Sign in'}
                 </button>
               ))}
             </div>
 
-            <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">
+            <h2 className="font-display font-bold text-[22px] text-gray-900 tracking-tight mb-1">
               {mode === 'signup' ? 'Join Choma Share' : 'Welcome back'}
             </h2>
-            <p className="text-[17px] text-gray-400 mb-5">
+            <p className="text-[16px] text-gray-400 mb-5">
               {mode === 'signup' ? 'Create your account to start splitting.' : 'Sign in to your account.'}
             </p>
 
@@ -246,7 +246,7 @@ export default function Onboarding() {
             </div>
 
             <button type="submit" disabled={!email.trim() || password.length < 6 || loading}
-              className="w-full text-white rounded-2xl py-4 text-[17px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 transition-opacity"
+              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40 transition-opacity"
               style={{ background: G, boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
               {loading ? <Spinner size={20} color="white"/> : <>{mode === 'signup' ? 'Create account' : 'Sign in'} <ArrowRight size={18}/></>}
             </button>
@@ -258,21 +258,21 @@ export default function Onboarding() {
           <form onSubmit={saveProfile}>
             <div className="flex items-center gap-2 mb-5 p-3 rounded-2xl" style={{ background: '#ecfff5' }}>
               <span style={{ color: G }}>✓</span>
-              <span className="text-[17px] font-semibold" style={{ color: G }}>Account created successfully!</span>
+              <span className="text-[16px] font-semibold" style={{ color: G }}>Account created successfully!</span>
             </div>
 
-            <h2 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">Almost there 👋</h2>
-            <p className="text-[17px] text-gray-400 mb-5">Your name and city so nearby shoppers can find you.</p>
+            <h2 className="font-display font-bold text-[22px] text-gray-900 tracking-tight mb-1">Almost there 👋</h2>
+            <p className="text-[16px] text-gray-400 mb-5">Your name and city so nearby shoppers can find you.</p>
 
             <div className="mb-5">
-              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Your name</label>
+              <label className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Your name</label>
               <input type="text" value={name} onChange={e => setName(e.target.value)}
                 placeholder="First name" autoFocus autoComplete="given-name"
                 style={{ fontSize: "16px", fontFamily: "inherit" }} className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3.5 font-medium text-gray-900 outline-none focus:border-[#0f7a4b] transition-colors placeholder:text-gray-300"/>
             </div>
 
             <div className="mb-8">
-              <label className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Your city</label>
+              <label className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Your city</label>
               <div className="grid grid-cols-2 gap-2">
                 {CITIES.map(c => {
                   const live = c === 'Sunderland'
@@ -280,24 +280,24 @@ export default function Onboarding() {
                   return (
                     <button key={c} type="button"
                       onClick={() => setCity(c)}
-                      className="py-3 rounded-xl text-[17px] font-bold transition-all relative overflow-hidden"
+                      className="py-3 rounded-xl text-[16px] font-bold transition-all relative overflow-hidden"
                       style={{
                         background: sel ? '#f0fdf4' : '#f9fafb',
                         border: `${sel ? 2 : 1.5}px solid ${sel ? G : '#e5e7eb'}`,
                         color: sel ? G : live ? '#4b5563' : '#9ca3af',
                       }}>
                       {c}
-                      {live && <span className="block text-[17px] font-semibold mt-0.5" style={{color:G}}>✓ Live now</span>}
-                      {!live && <span className="block text-[17px] font-semibold mt-0.5" style={{color:'#f8c85a'}}>Coming soon</span>}
+                      {live && <span className="block text-[16px] font-semibold mt-0.5" style={{color:G}}>✓ Live now</span>}
+                      {!live && <span className="block text-[16px] font-semibold mt-0.5" style={{color:'#f8c85a'}}>Coming soon</span>}
                     </button>
                   )
                 })}
               </div>
-              {city && <p className="text-[17px] mt-2 text-center font-semibold" style={{ color: G }}>✓ {city} selected</p>}
+              {city && <p className="text-[16px] mt-2 text-center font-semibold" style={{ color: G }}>✓ {city} selected</p>}
             </div>
 
             <button type="submit" disabled={!name.trim() || !city || loading}
-              className="w-full text-white rounded-2xl py-4 text-[17px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
+              className="w-full text-white rounded-2xl py-4 text-[16px] font-bold flex items-center justify-center gap-2 disabled:opacity-40"
               style={{ background: G, boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
               {loading ? <Spinner size={20} color="white"/> : <>Let's go <ArrowRight size={18}/></>}
             </button>
@@ -307,7 +307,7 @@ export default function Onboarding() {
       </div>
       {/* Creovate footer */}
       <div className="text-center py-3">
-        <p className="text-[17px] text-gray-300">© 2026 Creovate Global Ltd · Choma Share</p>
+        <p className="text-[16px] text-gray-300">© 2026 Creovate Global Ltd · Choma Share</p>
       </div>
     </div>
   )

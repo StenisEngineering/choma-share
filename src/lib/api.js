@@ -57,6 +57,7 @@ export async function getSplits() {
       split_members(id, user_id, status, user:users(id, name, city, reliability_score))
     `)
     .eq('status', 'open')
+    .not('status', 'eq', 'archived')
     .order('created_at', { ascending: false })
   if (error) throw error
   return data ?? []

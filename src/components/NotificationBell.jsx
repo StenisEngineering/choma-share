@@ -66,7 +66,7 @@ export default function NotificationBell() {
         className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center relative">
         <Bell size={18} color="#6b7280"/>
         {unread > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 w-5 h-5 rounded-full text-white text-[17px] font-bold flex items-center justify-center"
+          <span className="absolute -top-0.5 -right-0.5 w-5 h-5 rounded-full text-white text-[16px] font-bold flex items-center justify-center"
             style={{ background: '#ef4444' }}>
             {unread > 9 ? '9+' : unread}
           </span>
@@ -80,10 +80,10 @@ export default function NotificationBell() {
           <div className="absolute right-0 top-12 w-80 bg-white rounded-3xl shadow-2xl z-50 overflow-hidden border border-gray-100"
             style={{ maxHeight: '70vh' }}>
             <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="font-display font-bold text-[17px] text-gray-900">Notifications</h3>
+              <h3 className="font-display font-bold text-[16px] text-gray-900">Notifications</h3>
               {unread > 0 && (
                 <button onClick={markAllRead}
-                  className="text-[17px] font-semibold" style={{ color: '#0f7a4b' }}>
+                  className="text-[16px] font-semibold" style={{ color: '#0f7a4b' }}>
                   Mark all read
                 </button>
               )}
@@ -93,8 +93,8 @@ export default function NotificationBell() {
               {notifs.length === 0 ? (
                 <div className="px-4 py-8 text-center">
                   <div className="text-3xl mb-2">🔔</div>
-                  <p className="text-[17px] text-gray-400">No notifications yet</p>
-                  <p className="text-[17px] text-gray-300 mt-1">
+                  <p className="text-[16px] text-gray-400">No notifications yet</p>
+                  <p className="text-[16px] text-gray-300 mt-1">
                     You'll be notified when someone joins your split or a new split is created nearby
                   </p>
                 </div>
@@ -108,9 +108,9 @@ export default function NotificationBell() {
                     {TYPE_ICON[n.type] ?? TYPE_ICON.default}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-[17px] text-gray-900 leading-tight">{n.title}</div>
-                    <div className="text-[17px] text-gray-500 mt-0.5 leading-relaxed">{n.body}</div>
-                    <div className="text-[17px] text-gray-300 mt-1">
+                    <div className="font-semibold text-[16px] text-gray-900 leading-tight">{n.title}</div>
+                    <div className="text-[16px] text-gray-500 mt-0.5 leading-relaxed">{n.body}</div>
+                    <div className="text-[16px] text-gray-300 mt-1">
                       {new Date(n.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>

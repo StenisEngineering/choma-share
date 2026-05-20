@@ -60,18 +60,18 @@ export default function SplitDetail() {
       <div className="flex-shrink-0 px-5 pt-4 pb-6 relative overflow-hidden"
         style={{ background: 'linear-gradient(145deg,#0c2118,#0f2d1e)' }}>
         <button onClick={() => navigate(-1)}
-          className="flex items-center gap-1.5 text-gray-400 text-[17px] font-medium mb-4">
+          className="flex items-center gap-1.5 text-gray-400 text-[16px] font-medium mb-4">
           <ArrowLeft size={17}/> Back
         </button>
         {isOpen && (
-          <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 mb-3 text-[17px] font-bold"
+          <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 mb-3 text-[16px] font-bold"
             style={{ background: 'rgba(200,242,109,.15)', color: '#c8f26d', border: '1px solid rgba(200,242,109,.25)' }}>
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#c8f26d' }}/>
             LIVE · {left} spot{left !== 1 ? 's' : ''} left
           </div>
         )}
         {isFull && (
-          <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 mb-3 text-[17px] font-bold"
+          <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 mb-3 text-[16px] font-bold"
             style={{ background: 'rgba(248,200,90,.15)', color: '#f8c85a', border: '1px solid rgba(248,200,90,.25)' }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f8c85a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Split is Full
           </div>
@@ -79,7 +79,7 @@ export default function SplitDetail() {
         <h1 className="font-display font-black text-[30px] text-white tracking-tight leading-none mb-2">
           {split.title || split.item?.name}
         </h1>
-        <div className="flex items-center gap-1.5 text-gray-400 text-[17px]">
+        <div className="flex items-center gap-1.5 text-gray-400 text-[16px]">
           <MapPin size={13}/> {split.store?.name} · {split.store?.city}
         </div>
       </div>
@@ -90,14 +90,14 @@ export default function SplitDetail() {
         {/* Savings card */}
         <div className="mx-4 mt-2 bg-white border border-gray-100 rounded-3xl p-4 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-1">Your share</div>
+            <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-1">Your share</div>
             <div className="font-display font-black text-[38px] leading-none" style={{ color: '#0f7a4b' }}>£{perHead}</div>
-            <div className="text-[17px] text-gray-400 mt-1">{Math.round((saving/split.total_price)*100)}% less than buying alone</div>
+            <div className="text-[16px] text-gray-400 mt-1">{Math.round((saving/split.total_price)*100)}% less than buying alone</div>
           </div>
           <div className="text-right">
-            <div className="text-[17px] text-gray-300 line-through">£{split.total_price}</div>
+            <div className="text-[16px] text-gray-300 line-through">£{split.total_price}</div>
             <div className="font-display font-black text-[30px] text-gray-900 leading-none">£{saving}</div>
-            <div className="text-[17px] text-gray-400 mt-1">you save</div>
+            <div className="text-[16px] text-gray-400 mt-1">you save</div>
           </div>
         </div>
 
@@ -117,8 +117,8 @@ export default function SplitDetail() {
             <div key={i} className={`flex items-center gap-3 px-4 py-3.5 ${i < arr.length-1 ? 'border-b border-gray-100' : ''}`}>
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: r.bg }}>{r.icon}</div>
               <div>
-                <div className="text-[17px] font-semibold text-gray-900">{r.p}</div>
-                <div className="text-[17px] text-gray-400 mt-0.5">{r.s}</div>
+                <div className="text-[16px] font-semibold text-gray-900">{r.p}</div>
+                <div className="text-[16px] text-gray-400 mt-0.5">{r.s}</div>
               </div>
             </div>
           ))}
@@ -126,21 +126,21 @@ export default function SplitDetail() {
 
         {/* Members */}
         <div className="mx-4 mt-3 mb-4">
-          <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2">Split Members</div>
+          <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2">Split Members</div>
           <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
             {members.map((m, i) => {
               const c = COLOURS[i % COLOURS.length]
               return (
                 <div key={m.id} className={`flex items-center gap-3 px-4 py-3 ${i < members.length-1 ? 'border-b border-gray-100' : ''}`}>
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-[17px] flex-shrink-0"
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-[16px] flex-shrink-0"
                     style={{ background: c.bg, color: c.text }}>
                     {m.user?.name?.[0]?.toUpperCase() ?? '?'}
                   </div>
                   <div className="flex-1">
-                    <div className="text-[17px] font-semibold text-gray-900">{m.user?.name}</div>
-                    <div className="text-[17px] text-gray-400">{m.user?.city}</div>
+                    <div className="text-[16px] font-semibold text-gray-900">{m.user?.name}</div>
+                    <div className="text-[16px] text-gray-400">{m.user?.city}</div>
                   </div>
-                  <span className="text-[17px] font-bold px-2.5 py-1 rounded-full"
+                  <span className="text-[16px] font-bold px-2.5 py-1 rounded-full"
                     style={m.user_id === split.creator_id
                       ? { background: '#fffbeb', color: '#a16207' }
                       : { background: '#ecfff5', color: '#0f7a4b' }}>
@@ -155,7 +155,7 @@ export default function SplitDetail() {
             {Array.from({ length: left }).map((_, i) => (
               <div key={i} className="flex items-center gap-3 px-4 py-3 border-t border-gray-100 opacity-35">
                 <div className="w-10 h-10 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-300 flex-shrink-0">+</div>
-                <div className="text-[17px] text-gray-400">Open spot — join this split</div>
+                <div className="text-[16px] text-gray-400">Open spot — join this split</div>
               </div>
             ))}
           </div>
@@ -167,7 +167,7 @@ export default function SplitDetail() {
 
       {/* Trust note */}
       <div className="mx-4 mb-2 p-3 bg-amber-50 border border-amber-100 rounded-2xl">
-        <p className="text-[17px] text-amber-700 leading-relaxed">
+        <p className="text-[16px] text-amber-700 leading-relaxed">
           ⚠️ <strong>Choma Share only coordinates splits.</strong> Payment is agreed directly between members. Only join people you trust.
         </p>
       </div>
@@ -183,8 +183,8 @@ export default function SplitDetail() {
         {/* Member, split still open */}
         {isMember && isOpen && (
           <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center mb-2">
-            <div className="text-[17px] font-bold" style={{ color: '#0f7a4b' }}>✓ You're in this split</div>
-            <div className="text-[17px] text-gray-400 mt-1">
+            <div className="text-[16px] font-bold" style={{ color: '#0f7a4b' }}>✓ You're in this split</div>
+            <div className="text-[16px] text-gray-400 mt-1">
               Waiting for {left} more person{left !== 1 ? 's' : ''} to join
             </div>
           </div>
@@ -193,7 +193,7 @@ export default function SplitDetail() {
         {/* Not member, open — show join */}
         {!isMember && isOpen && (
           <button onClick={handleJoin} disabled={joining}
-            className="w-full text-white rounded-2xl py-4 text-[17px] font-bold disabled:opacity-50 mb-2"
+            className="w-full text-white rounded-2xl py-4 text-[16px] font-bold disabled:opacity-50 mb-2"
             style={{ background: '#0f7a4b', boxShadow: '0 6px 20px rgba(15,122,75,.3)' }}>
             {joining ? 'Joining...' : 'Join This Split'}
           </button>
@@ -201,14 +201,14 @@ export default function SplitDetail() {
 
         {/* Not member, closed */}
         {!isMember && !isOpen && (
-          <div className="bg-gray-100 rounded-2xl p-4 text-center text-[17px] font-semibold text-gray-500 mb-2">
+          <div className="bg-gray-100 rounded-2xl p-4 text-center text-[16px] font-semibold text-gray-500 mb-2">
             {isFull ? 'This split is full — no spots left' : `This split is ${split.status}`}
           </div>
         )}
 
         {/* Share always visible */}
         <button onClick={() => setShare(true)}
-          className="w-full bg-transparent border border-gray-200 rounded-2xl py-3.5 text-[17px] font-semibold text-gray-600 flex items-center justify-center gap-2 active:bg-gray-50">
+          className="w-full bg-transparent border border-gray-200 rounded-2xl py-3.5 text-[16px] font-semibold text-gray-600 flex items-center justify-center gap-2 active:bg-gray-50">
           <Share2 size={17}/> Share to WhatsApp
         </button>
       </div>
@@ -250,8 +250,8 @@ function SplitFullCoordination({ split, members }) {
           <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{background:'rgba(200,242,109,0.15)'}}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8f26d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-          <div className="font-display font-bold text-[17px] text-white mb-1">Split is Full!</div>
-          <div className="text-[17px]" style={{ color: 'rgba(255,255,255,0.7)' }}>
+          <div className="font-display font-bold text-[16px] text-white mb-1">Split is Full!</div>
+          <div className="text-[16px]" style={{ color: 'rgba(255,255,255,0.7)' }}>
             All {split.people_needed} members joined. Time to coordinate!
           </div>
         </div>
@@ -264,8 +264,8 @@ function SplitFullCoordination({ split, members }) {
             { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>, text: `£${per} each — pay store directly` },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-2">
-              <span className="text-[17px]">{r.icon}</span>
-              <span className="text-[17px] font-medium" style={{ color: 'rgba(255,255,255,0.85)' }}>{r.text}</span>
+              <span className="text-[16px]">{r.icon}</span>
+              <span className="text-[16px] font-medium" style={{ color: 'rgba(255,255,255,0.85)' }}>{r.text}</span>
             </div>
           ))}
         </div>
@@ -277,7 +277,7 @@ function SplitFullCoordination({ split, members }) {
             const tColours = ['#065f46','#92400e','#1e40af','#5b21b6','#9d174d']
             return (
               <div key={m.id}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-[17px] font-bold"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[16px] font-bold"
                 style={{ background: colours[i % colours.length], color: tColours[i % tColours.length] }}>
                 {m.user?.name?.[0]?.toUpperCase() ?? '?'}
               </div>
@@ -287,7 +287,7 @@ function SplitFullCoordination({ split, members }) {
 
         {/* WhatsApp button */}
         <a href={waUrl} target="_blank" rel="noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-[17px] font-bold"
+          className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-[16px] font-bold"
           style={{ background: '#25D366', color: '#fff', boxShadow: '0 4px 14px rgba(37,211,102,0.4)' }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>

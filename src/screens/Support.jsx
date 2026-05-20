@@ -75,18 +75,18 @@ export default function Support() {
       {/* Header */}
       <div className="bg-white px-5 pt-4 pb-4 border-b border-gray-100 flex-shrink-0">
         <button onClick={() => navigate(-1)}
-          className="flex items-center gap-1.5 text-gray-400 text-[17px] font-medium mb-3">
+          className="flex items-center gap-1.5 text-gray-400 text-[16px] font-medium mb-3">
           <ArrowLeft size={16}/> Back
         </button>
-        <h1 className="font-display font-black text-[27px] text-gray-900 tracking-tight">Help & Support</h1>
-        <p className="text-[17px] text-gray-400 mt-0.5">We're here to help</p>
+        <h1 className="font-display font-black text-[26px] text-gray-900 tracking-tight">Help & Support</h1>
+        <p className="text-[16px] text-gray-400 mt-0.5">We're here to help</p>
       </div>
 
       <div className="flex-1 overflow-y-auto">
 
         {/* Contact options */}
         <div className="px-4 pt-4 pb-2">
-          <p className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-3">Contact Us</p>
+          <p className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-3">Contact Us</p>
           <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
 
             {/* WhatsApp */}
@@ -98,8 +98,8 @@ export default function Support() {
                 <MessageCircle size={18} color={G}/>
               </div>
               <div className="flex-1">
-                <div className="text-[17px] font-semibold text-gray-900">WhatsApp Support</div>
-                <div className="text-[17px] text-gray-400">Fastest response — usually within 1 hour</div>
+                <div className="text-[16px] font-semibold text-gray-900">WhatsApp Support</div>
+                <div className="text-[16px] text-gray-400">Fastest response — usually within 1 hour</div>
               </div>
               <ChevronRight size={15} color="#d1d5db"/>
             </a>
@@ -112,8 +112,8 @@ export default function Support() {
                 <Mail size={18} color="#3b82f6"/>
               </div>
               <div className="flex-1">
-                <div className="text-[17px] font-semibold text-gray-900">Email Support</div>
-                <div className="text-[17px] text-gray-400">support@choma.app</div>
+                <div className="text-[16px] font-semibold text-gray-900">Email Support</div>
+                <div className="text-[16px] text-gray-400">support@choma.app</div>
               </div>
               <ChevronRight size={15} color="#d1d5db"/>
             </a>
@@ -122,7 +122,7 @@ export default function Support() {
 
         {/* Send message form */}
         <div className="px-4 py-3">
-          <p className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-3">Send a Message</p>
+          <p className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-3">Send a Message</p>
           {sent ? (
             <div className="bg-white rounded-3xl border border-gray-100 p-5 text-center shadow-sm">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
@@ -131,10 +131,10 @@ export default function Support() {
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
               </div>
-              <p className="font-bold text-[17px] text-gray-900 mb-1">Message sent!</p>
-              <p className="text-[17px] text-gray-400">We'll get back to you at {user?.email || 'your email'} shortly.</p>
+              <p className="font-bold text-[16px] text-gray-900 mb-1">Message sent!</p>
+              <p className="text-[16px] text-gray-400">We'll get back to you at {user?.email || 'your email'} shortly.</p>
               <button onClick={() => setSent(false)}
-                className="mt-4 text-[17px] font-semibold"
+                className="mt-4 text-[16px] font-semibold"
                 style={{ color: G }}>
                 Send another message
               </button>
@@ -150,12 +150,12 @@ export default function Support() {
                 className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:border-green-400 transition-colors resize-none text-gray-900 placeholder:text-gray-300"
               />
               {user?.email && (
-                <p className="text-[17px] text-gray-400 mt-2 mb-3">
+                <p className="text-[16px] text-gray-400 mt-2 mb-3">
                   Reply will be sent to <strong>{user.email}</strong>
                 </p>
               )}
               <button onClick={sendMessage} disabled={!message.trim() || sending}
-                className="w-full py-3.5 rounded-2xl text-[17px] font-bold text-white flex items-center justify-center gap-2 disabled:opacity-40"
+                className="w-full py-3.5 rounded-2xl text-[16px] font-bold text-white flex items-center justify-center gap-2 disabled:opacity-40"
                 style={{ background: G }}>
                 {sending ? <Spinner size={18}/> : 'Send Message'}
               </button>
@@ -165,7 +165,7 @@ export default function Support() {
 
         {/* FAQs */}
         <div className="px-4 py-3">
-          <p className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-3">
+          <p className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-3">
             Frequently Asked Questions
           </p>
           <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
@@ -176,9 +176,9 @@ export default function Support() {
                   className="w-full flex items-start gap-3 px-4 py-3.5 text-left active:bg-gray-50">
                   <HelpCircle size={16} color={G} className="flex-shrink-0 mt-0.5"/>
                   <div className="flex-1">
-                    <p className="text-[17px] font-semibold text-gray-900">{faq.q}</p>
+                    <p className="text-[16px] font-semibold text-gray-900">{faq.q}</p>
                     {open === i && (
-                      <p className="text-[17px] text-gray-500 mt-2 leading-relaxed">{faq.a}</p>
+                      <p className="text-[16px] text-gray-500 mt-2 leading-relaxed">{faq.a}</p>
                     )}
                   </div>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -194,8 +194,8 @@ export default function Support() {
 
         {/* Footer */}
         <div className="px-4 py-6 text-center">
-          <p className="text-[17px] text-gray-300">© 2026 Creovate Global Ltd</p>
-          <p className="text-[17px] text-gray-300 mt-0.5">Choma Share · share.choma.app</p>
+          <p className="text-[16px] text-gray-300">© 2026 Creovate Global Ltd</p>
+          <p className="text-[16px] text-gray-300 mt-0.5">Choma Share · share.choma.app</p>
         </div>
       </div>
     </div>

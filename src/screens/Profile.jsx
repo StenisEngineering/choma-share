@@ -71,17 +71,17 @@ export default function Profile() {
           style={{ background: 'linear-gradient(135deg,#0f7a4b,#15a66a)', boxShadow: '0 6px 20px rgba(15,122,75,.35)' }}>
           {profile.name?.[0]?.toUpperCase()}
         </div>
-        <h1 className="font-display font-bold text-[23px] text-gray-900 tracking-tight mb-1">{profile.name}</h1>
-        <div className="flex items-center justify-center gap-1.5 text-[17px] text-gray-400 mb-3">
+        <h1 className="font-display font-bold text-[22px] text-gray-900 tracking-tight mb-1">{profile.name}</h1>
+        <div className="flex items-center justify-center gap-1.5 text-[16px] text-gray-400 mb-3">
           <MapPin size={13}/> {profile.city}, UK
         </div>
         <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5"
           style={{ background: '#ecfff5', border: '1px solid #b6f0d4' }}>
           <Star size={14} fill={G} color={G}/>
-          <span className="font-display font-bold text-[17px] leading-none" style={{ color: G }}>
+          <span className="font-display font-bold text-[16px] leading-none" style={{ color: G }}>
             {profile.reliability_score ?? '5.0'}
           </span>
-          <span className="text-[17px] font-semibold" style={{ color: G }}>Reliability Score</span>
+          <span className="text-[16px] font-semibold" style={{ color: G }}>Reliability Score</span>
         </div>
       </div>
 
@@ -95,21 +95,21 @@ export default function Profile() {
             { v: circleCount,                        l: 'Circles' },
           ].map(s => (
             <div key={s.l} className="bg-white border border-gray-100 rounded-2xl p-3 text-center shadow-sm">
-              <div className="font-display font-bold text-[21px]" style={{ color: G }}>{s.v}</div>
-              <div className="text-[17px] text-gray-400 font-bold uppercase tracking-wide mt-0.5">{s.l}</div>
+              <div className="font-display font-bold text-[20px]" style={{ color: G }}>{s.v}</div>
+              <div className="text-[16px] text-gray-400 font-bold uppercase tracking-wide mt-0.5">{s.l}</div>
             </div>
           ))}
         </div>
 
         {/* Badges — dynamic */}
         <div className="mx-4 mt-4">
-          <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2">
+          <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2">
             Trusted Shopper Badges
           </div>
           <div className="flex flex-wrap gap-2">
             {badges.map(b => (
               <span key={b.l}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[17px] font-bold border"
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[16px] font-bold border"
                 style={{ background: b.bg, color: b.c, borderColor: b.bc }}>
                 <Star size={11} fill={b.c} color={b.c}/> {b.l}
               </span>
@@ -119,9 +119,9 @@ export default function Profile() {
 
         {/* My splits */}
         <div className="mx-4 mt-4">
-          <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2">My Splits</div>
+          <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2">My Splits</div>
           {loading ? <Spinner size={20}/> : splits.length === 0 ? (
-            <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center text-[17px] text-gray-400 shadow-sm">
+            <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center text-[16px] text-gray-400 shadow-sm">
               No splits yet — create your first one!
             </div>
           ) : (
@@ -133,12 +133,12 @@ export default function Profile() {
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
                     style={{ background: '#ecfff5' }}>🛒</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[17px] font-semibold text-gray-900 truncate">
+                    <div className="text-[16px] font-semibold text-gray-900 truncate">
                       {m.split?.title || 'Split'}
                     </div>
-                    <div className="text-[17px] text-gray-400">{m.split?.store?.name}</div>
+                    <div className="text-[16px] text-gray-400">{m.split?.store?.name}</div>
                   </div>
-                  <span className="text-[17px] font-bold px-2 py-1 rounded-full"
+                  <span className="text-[16px] font-bold px-2 py-1 rounded-full"
                     style={m.split?.status === 'open'
                       ? { background: '#ecfff5', color: G }
                       : m.split?.status === 'full'
@@ -158,7 +158,7 @@ export default function Profile() {
 
         {/* Settings */}
         <div className="mx-4 mt-4 mb-2">
-          <div className="text-[17px] font-bold uppercase tracking-widest text-gray-400 mb-2">Settings</div>
+          <div className="text-[16px] font-bold uppercase tracking-widest text-gray-400 mb-2">Settings</div>
           <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
             {/* Location — tappable */}
             <div
@@ -167,8 +167,8 @@ export default function Profile() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#ecfff5' }}>
                 <MapPin size={17} color={G}/>
               </div>
-              <div className="flex-1 text-[17px] font-semibold text-gray-900">Location</div>
-              <div className="text-[17px] text-gray-400">{profile.city}</div>
+              <div className="flex-1 text-[16px] font-semibold text-gray-900">Location</div>
+              <div className="text-[16px] text-gray-400">{profile.city}</div>
               <ChevronRight size={15} color="#d1d5db"/>
             </div>
 
@@ -185,8 +185,8 @@ export default function Profile() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#fffbeb' }}>
                 <Bell size={17} color="#a16207"/>
               </div>
-              <div className="flex-1 text-[17px] font-semibold text-gray-900">Notifications</div>
-              <div className="text-[17px] font-semibold" style={{ color: pushEnabled ? '#0f7a4b' : '#f59e0b' }}>
+              <div className="flex-1 text-[16px] font-semibold text-gray-900">Notifications</div>
+              <div className="text-[16px] font-semibold" style={{ color: pushEnabled ? '#0f7a4b' : '#f59e0b' }}>
                 {pushEnabled ? 'Enabled' : 'Tap to enable'}
               </div>
               <ChevronRight size={15} color="#d1d5db"/>
@@ -197,8 +197,8 @@ export default function Profile() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#eff6ff' }}>
                 <Phone size={17} color="#1e40af"/>
               </div>
-              <div className="flex-1 text-[17px] font-semibold text-gray-900">Account</div>
-              <div className="text-[17px] text-gray-400 truncate max-w-[140px]">{user?.email ?? 'Signed in'}</div>
+              <div className="flex-1 text-[16px] font-semibold text-gray-900">Account</div>
+              <div className="text-[16px] text-gray-400 truncate max-w-[140px]">{user?.email ?? 'Signed in'}</div>
               <ChevronRight size={15} color="#d1d5db"/>
             </div>
 
@@ -211,7 +211,7 @@ export default function Profile() {
                   style={{ background: '#f0fdf4' }}>
                   <ShieldCheck size={17} color={G}/>
                 </div>
-                <div className="flex-1 text-[17px] font-semibold" style={{ color: G }}>Admin Panel</div>
+                <div className="flex-1 text-[16px] font-semibold" style={{ color: G }}>Admin Panel</div>
                 <ChevronRight size={15} color={G}/>
               </div>
             )}
@@ -223,7 +223,7 @@ export default function Profile() {
                 style={{ background: '#eff6ff' }}>
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
               </div>
-              <div className="flex-1 text-[17px] font-semibold text-gray-900">Help & Support</div>
+              <div className="flex-1 text-[16px] font-semibold text-gray-900">Help & Support</div>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
@@ -233,7 +233,7 @@ export default function Profile() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-gray-50">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
-              <div className="flex-1 text-[17px] font-semibold text-gray-700">Privacy Policy</div>
+              <div className="flex-1 text-[16px] font-semibold text-gray-700">Privacy Policy</div>
               <ChevronRight size={15} color="#d1d5db"/>
             </div>
 
@@ -243,7 +243,7 @@ export default function Profile() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-gray-50">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
               </div>
-              <div className="flex-1 text-[17px] font-semibold text-gray-700">Terms of Service</div>
+              <div className="flex-1 text-[16px] font-semibold text-gray-700">Terms of Service</div>
               <ChevronRight size={15} color="#d1d5db"/>
             </div>
 
@@ -254,15 +254,15 @@ export default function Profile() {
                 style={{ background: '#fef2f2' }}>
                 <LogOut size={17} color="#ef4444"/>
               </div>
-              <div className="text-[17px] font-semibold text-red-500">Sign out</div>
+              <div className="text-[16px] font-semibold text-red-500">Sign out</div>
             </button>
           </div>
         </div>
 
         {/* Creovate branding */}
         <div className="text-center py-4">
-          <p className="text-[17px] text-gray-300 font-medium">© 2026 Creovate Global Ltd</p>
-          <p className="text-[17px] text-gray-300 mt-0.5">Choma Share · share.choma.app</p>
+          <p className="text-[16px] text-gray-300 font-medium">© 2026 Creovate Global Ltd</p>
+          <p className="text-[16px] text-gray-300 mt-0.5">Choma Share · share.choma.app</p>
         </div>
         <div style={{ height: 8 }}/>
       </div>
@@ -305,8 +305,8 @@ function ChangeCityModal({ currentCity, userId, onClose, onChanged, toast }) {
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center" onClick={onClose}>
       <div className="w-full max-w-md bg-white rounded-t-3xl p-5" onClick={e => e.stopPropagation()}>
         <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-4"/>
-        <h3 className="font-display font-bold text-[21px] text-gray-900 mb-1">Change Location</h3>
-        <p className="text-[17px] text-gray-400 mb-5">
+        <h3 className="font-display font-bold text-[20px] text-gray-900 mb-1">Change Location</h3>
+        <p className="text-[16px] text-gray-400 mb-5">
           You'll see splits in your new city immediately.
         </p>
         <div className="grid grid-cols-2 gap-2 mb-5">
@@ -315,25 +315,25 @@ function ChangeCityModal({ currentCity, userId, onClose, onChanged, toast }) {
             const isSel  = city === c
             return (
               <button key={c} type="button" onClick={() => setCity(c)}
-                className="py-3 rounded-xl text-[17px] font-bold transition-all relative"
+                className="py-3 rounded-xl text-[16px] font-bold transition-all relative"
                 style={{
                   background:  isSel ? '#f0fdf4' : '#f9fafb',
                   border: `${isSel ? 2 : 1.5}px solid ${isSel ? G : '#e5e7eb'}`,
                   color: isSel ? G : isLive ? '#4b5563' : '#9ca3af',
                 }}>
                 {c}
-                {isLive && <span className="block text-[17px] font-semibold mt-0.5" style={{ color: G }}>✓ Live</span>}
-                {!isLive && <span className="block text-[17px] font-semibold mt-0.5" style={{ color: '#f8c85a' }}>Soon</span>}
+                {isLive && <span className="block text-[16px] font-semibold mt-0.5" style={{ color: G }}>✓ Live</span>}
+                {!isLive && <span className="block text-[16px] font-semibold mt-0.5" style={{ color: '#f8c85a' }}>Soon</span>}
               </button>
             )
           })}
         </div>
         <button onClick={save} disabled={saving || city === currentCity}
-          className="w-full py-4 rounded-2xl text-[17px] font-bold text-white disabled:opacity-40"
+          className="w-full py-4 rounded-2xl text-[16px] font-bold text-white disabled:opacity-40"
           style={{ background: G }}>
           {saving ? 'Saving...' : `Update to ${city}`}
         </button>
-        <button onClick={onClose} className="w-full py-3 text-[17px] font-semibold text-gray-400 mt-2">
+        <button onClick={onClose} className="w-full py-3 text-[16px] font-semibold text-gray-400 mt-2">
           Cancel
         </button>
       </div>
