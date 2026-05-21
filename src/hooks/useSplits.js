@@ -23,7 +23,12 @@ export function useSplits() {
   useEffect(() => {
     load()
     const ch = supabase.channel('splits-feed')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'splits' }, load)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'splits' }, () => {
+        load()
+        // Also fire choma-refresh so MySplits and other screens update
+        window.dispatchEvent(new Event('choma-refresh'))
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'split_members' }, load)
       .subscribe()
     return () => supabase.removeChannel(ch)
   }, [load])

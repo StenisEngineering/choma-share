@@ -47,6 +47,7 @@ export async function getStores() {
 
 // SPLITS
 export async function getSplits() {
+  // Only show open and full splits — hide done, cancelled, archived
   const { data, error } = await supabase
     .from('splits')
     .select(`
@@ -56,8 +57,7 @@ export async function getSplits() {
       creator:users!splits_creator_id_fkey(id, name, city),
       split_members(id, user_id, status, user:users(id, name, city, reliability_score))
     `)
-    .eq('status', 'open')
-    .not('status', 'eq', 'archived')
+    .in('status', ['open', 'full'])
     .order('created_at', { ascending: false })
   if (error) throw error
   return data ?? []

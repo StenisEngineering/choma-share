@@ -8,8 +8,9 @@ import Spinner from '../components/Spinner'
 const STATUS_STYLE = {
   open:      { bg: '#ecfff5', color: '#0f7a4b', label: 'Open' },
   full:      { bg: '#fffbeb', color: '#a16207', label: 'Full' },
-  done:      { bg: '#f3f4f6', color: '#6b7280', label: 'Done' },
+  done:      { bg: '#f3f4f6', color: '#6b7280', label: 'Completed' },
   cancelled: { bg: '#fef2f2', color: '#ef4444', label: 'Cancelled' },
+  archived:  { bg: '#f5f3ff', color: '#7c3aed', label: 'Archived' },
 }
 
 export default function MySplits() {
@@ -18,16 +19,22 @@ export default function MySplits() {
   const [splits,  setSplits]  = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  function loadSplits() {
     if (!user) return
     getMySplits(user.id)
       .then(setSplits)
       .catch(() => {})
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    loadSplits()
+    window.addEventListener('choma-refresh', loadSplits)
+    return () => window.removeEventListener('choma-refresh', loadSplits)
   }, [user])
 
   const active = splits.filter(m => m.split?.status === 'open' || m.split?.status === 'full')
-  const past   = splits.filter(m => m.split?.status === 'done' || m.split?.status === 'cancelled')
+  const past   = splits.filter(m => ['done','cancelled','archived'].includes(m.split?.status))
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
