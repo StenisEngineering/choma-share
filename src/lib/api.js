@@ -150,9 +150,11 @@ export async function getMySplits(userId) {
   const { data, error } = await supabase
     .from('split_members')
     .select(`split_id, status, joined_at, split:splits(*, store:stores(name, city), item:store_items(name))`)
-    .eq('user_id', userId).order('joined_at', { ascending: false })
+    .eq('user_id', userId)
+    .order('joined_at', { ascending: false })
   if (error) throw error
-  return data ?? []
+  // Filter out orphaned rows where split was deleted
+  return (data ?? []).filter(m => m.split !== null)
 }
 
 // HELPERS
